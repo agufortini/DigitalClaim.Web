@@ -1,0 +1,7 @@
+input:disabled {
+    cursor: default !important;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+}

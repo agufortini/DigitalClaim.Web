@@ -1,0 +1,67 @@
+<div class="container myAnimated myFast myFadeIn">
+    <div class="card card-register mx-auto mt-5">
+
+        <div class="card-header myCardHeader">Datos Personales</div>
+        <div class="card-body">
+
+            <form [formGroup]="frmPerfil">
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label for="dni">DNI</label>
+                        <input formControlName="dni" type="number" class="form-control" [value]="user.usu_dni">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="usuario">USUARIO</label>
+                            <input formControlName="usuario" type="text" class="form-control" [value]="user.usu_username">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password">CONTRASEÑA</label>
+                            <input formControlName="password" type="password" class="form-control" [value]="user.usu_password">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="nombre">NOMBRE</label>
+                            <input formControlName="nombre" type="text" class="form-control" [value]="user.usu_nombre">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellido">APELLIDO</label>
+                            <input formControlName="apellido" type="text" class="form-control" [value]="user.usu_apellido">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="telefono">TELEFONO</label>
+                            <input formControlName="telefono" type="number" class="form-control" [value]="user.usu_telefono">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">EMAIL</label>
+                            <input formControlName="email" type="email" class="form-control" [value]="user.usu_email">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-primary btn-block btnPrimario myBtnCard">
+                            Guardar <i class="fa fa-fw fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

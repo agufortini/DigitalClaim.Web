@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+}
+
+mat-form-field {
+    font-size: 16px;
+    width: 100%;
+}
+
+.btnFiltro {
+    background-color: #1e88e5;
+    float: right;
+}
+
+input.mat-input-element {
+    width: 91% !important;
+}
+
+.mat-select {
+    width: 91% !important;
+}
+
+.ddlEstado {
+    width: 50% !important;
+}

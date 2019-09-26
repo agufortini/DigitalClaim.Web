@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-5">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Canal">
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="can_IDCanal">
+                <th mat-header-cell *matHeaderCellDef>IDCanal</th>
+                <td mat-cell *matCellDef="let element">{{ element.can_IDCanal }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="can_nombre">
+                <th mat-header-cell *matHeaderCellDef style="width: 300px;">Canal</th>
+                <td mat-cell *matCellDef="let element">{{ element.can_nombre }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Editar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
+                <td mat-cell *matCellDef="let element">
+                    <button (click)="mostrarDataCanal(element.can_IDCanal, element.can_nombre)" mat-flat-button color="primary">
+                        <i class="material-icons">create</i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div class="col-md-7">
+        <div class="container myAnimated myFast myFadeIn">
+            <div class="card card-register mx-auto mt-5">
+                <div class="card-header myCardHeader">Registrar Canal</div>
+                <div class="card-body">
+                    <form [formGroup]="frmCanal">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <label>NOMBRE*</label>
+                                <input matInput id="txtCanal" formControlName="nombre" [(ngModel)]="inputCanal" type="text" class="form-control" placeholder="Ingrese nombre de Canal">
+                                <button *ngIf="inputCanal !== ''" mat-button (click)="resetForm()" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <button id="btnClear" (click)="registrarCanal(boBand)" [disabled]="!frmCanal.valid" class="btn btn-block btnPrimario myBtnCard">
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

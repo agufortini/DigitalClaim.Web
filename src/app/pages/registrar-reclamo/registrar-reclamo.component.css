@@ -1,0 +1,15 @@
+.lblMensajePlazo {
+    font-size: 18px;
+    text-align: center;
+}
+
+.lblMensajeEnvio {
+    color: red;
+    font-weight: 500;
+    font-size: 15px;
+    text-align: center;
+}
+
+.lblConfirmar {
+    float: left;
+}

@@ -1,0 +1,33 @@
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Calificar Reclamo</h4>
+        </div>
+        <div class="col-md-6">
+            <button mat-button (click)="cerrarModal()" class="btnCerrar">X</button>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="frmCalificarReclamo">
+    <div class="form-group">
+        <ngb-rating [(rate)]="currentRate">
+            <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+        </ngb-rating>
+        <br><br>
+        <pre>Calificación: <b>{{currentRate}}</b></pre>
+
+        <div class="form-group">
+            <div class="form-row">
+                <label>COMENTARIO</label>
+                <textarea formControlName="comentario" [(ngModel)]="comentario" class="form-control" placeholder="Deje un comentario" cols="100" rows="3"></textarea>
+            </div>
+        </div>
+
+        <button mat-stroked-button class="btn btnPrimario" style="float: right;">
+            Enviar <i class="mdi mdi-share"></i>
+        </button>
+    </div>
+</form>

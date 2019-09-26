@@ -1,0 +1,64 @@
+<div class="container myAnimated myFadeIn">
+    <div class="card card-register mx-auto mt-3">
+
+        <div class="card-header myCardHeader">Registrar Orden de Servicio</div>
+        <div class="card-body">
+
+            <form [formGroup]="frmRegistrarOrden">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>FECHA DESDE</label>
+                            <input formControlName="fechaDesde" class="form-control" type="date" [min]="minDate" matTooltip="Seleccionar fecha desde" matTooltipPosition="above">
+                        </div>
+                        <div class="col-md-6">
+                            <label>FECHA HASTA</label>
+                            <input formControlName="fechaHasta" class="form-control" type="date" [min]="minDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>RESPONSABLE</label>
+                            <mat-select class="form-control" formControlName="responsable">
+                                <mat-option value="" disabled>Seleccione Responsable...</mat-option>
+                                <mat-option *ngFor="let item of arrResp" [value]="item.usu_IDUsuario">
+                                    {{ item.usu_nombreCompleto }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>PERSONAL</label>
+                            <mat-select class="form-control" formControlName="personal" placeholder="Seleccione Personal" multiple>
+                                <mat-option *ngFor="let item of arrPer" [value]="item.per_IDPersonal">{{ item.per_nombreCompleto }}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>OBSERVACIONES</label>
+                    <div class="form-row">
+                        <textarea class="form-control" formControlName="observaciones" [(ngModel)]="observaciones" cols="100" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button routerLink="/crear-orden-servicio" type="button" class="btn btn-block btnCancelar">
+                              Cancelar
+                            </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button [disabled]="!frmRegistrarOrden.valid" (click)="registrarOrdenServicio()" type="submit" class="btn btn-block btnPrimario">
+                            Registrar <i class="mdi mdi-pencil"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="container myAnimated myFast myFadeIn">
+    <div class="card card-register mx-auto mt-5">
+
+        <div class="card-header myCardHeader">Reportes</div>
+        <div class="card-body">
+
+            <form [formGroup]="frmReporte">
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>FECHA DESDE</label>
+                            <input formControlName="fechaDesde" type="date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>FECHA HASTA</label>
+                            <input formControlName="fechaHasta" type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>AREA DE SERVICIO</label>
+                            <mat-select (selectionChange)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
+                                <mat-option value="" disabled>Seleccione Área de Servicio...</mat-option>
+                                <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                    {{ item.arServ_nombre }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>TIPO DE RECLAMO</label>
+                            <mat-select (selectionChange)="selectTipoReclamo()" [(ngModel)]="TipoReclamoID" formControlName="tipoReclamo" class="form-control">
+                                <mat-option value="" disabled>Seleccione Tipo de Reclamo...</mat-option>
+                                <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                                    {{ item.tipRec_nombre }}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="barrio">BARRIO</label>
+                    <mat-select formControlName="barrio" class="form-control">
+                        <mat-option value="" disabled>Seleccione Barrio...</mat-option>
+                        <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                            {{ item.bar_nombre }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-block btnPrimario myBtnCard">
+                          Ver reporte <i class="fa fa-fw fa-search"></i>
+                      </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- <br>
+
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ lstReclamo.arServ_nombre }}</h4>
+                <app-grafico [chartLabels]="lstReclamo.arServ_nombre" [chartData]="" [chartType]="">
+                </app-grafico>
+            </div>
+        </div>
+    </div>
+</div> -->

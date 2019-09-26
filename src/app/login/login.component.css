@@ -1,0 +1,133 @@
+.example-form-field {
+    width: 100%;
+    color: white;
+}
+
+
+/* Cambio de color a label de control */
+
+::ng-deep.mat-focused .mat-form-field-label {
+    color: white !important;
+}
+
+
+/* Cambio de color a linea por debajo */
+
+ ::ng-deep.mat-form-field-underline {
+    background-color: white !important;
+}
+
+
+/* Cambio de color a linea por debajo cuando se hace foco*/
+
+::ng-deep.mat-form-field-ripple {
+    background-color: white !important;
+}
+
+h3 {
+    color: white;
+}
+
+.divValid {
+    font-size: 12px !important;
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+.linkRedirect {
+    color: lightblue !important;
+}
+
+.linkRedirect :hover {
+    color: cyan !important;
+}
+
+:disabled {
+    cursor: not-allowed;
+}
+
+
+/* -------------------- </MODIFICACIONES GLOBALES> -------------------- */
+
+
+/* -------------------- <LOGIN> -------------------- */
+
+.recordarPass {
+    font-size: 12px;
+    color: white;
+}
+
+.btnIngresar {
+    background-color: white !important;
+    color: black !important;
+    text-transform: uppercase;
+}
+
+.btnIngresar:hover {
+    background-color: rgb(33, 37, 41) !important;
+    color: #3FBCEF !important;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+
+/* -------------------- </LOGIN> -------------------- */
+
+
+/* -------------------- <RECUPERAR PASSWORD> -------------------- */
+
+.pMensaje {
+    text-align: center;
+    color: white;
+}
+
+
+/* -------------------- </RECUPERAR PASSWORD> -------------------- */
+
+.bgLogin {
+    background-color: steelblue !important;
+}
+
+.verticalScroll {
+    overflow-y: scroll !important;
+}
+
+.login-register {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    width: 100%;
+    padding: 10% 0;
+    position: fixed;
+}
+
+.login-box {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.login-box .footer {
+    width: 100%;
+    left: 0px;
+    right: 0px;
+}
+
+.login-box .social {
+    display: block;
+    margin-bottom: 30px;
+}
+
+#recoverform {
+    display: none;
+}
+
+.login-sidebar {
+    padding: 0px;
+    margin-top: 0px;
+}
+
+.login-sidebar .login-box {
+    right: 0px;
+    position: absolute;
+    height: 100%;
+}

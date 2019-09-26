@@ -1,0 +1,192 @@
+<div class="container myAnimated myFast myFadeIn">
+    <div class="card card-register mx-auto mt-5">
+        <div class="card-header myCardHeader">Consultar Reclamo</div>
+        <div class="card-body">
+            <form [formGroup]="frmConsultarReclamo">
+                <div *ngIf="user.usu_IDRol === 1" class="form-group">
+                    <div class="form-row">
+                        <mat-label>Reclamos:</mat-label>
+                        <div class="ml-1"></div>
+                        <mat-select formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
+                            <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
+                                {{ item.estRec_nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)">
+                    </mat-form-field>
+                    <p>Para realizar la consulta de su reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
+                </div>
+
+                <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>FECHA DESDE</label>
+                                <input formControlName="fechaDesde" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha desde" matTooltipPosition="above">
+                            </div>
+                            <div class="col-md-6">
+                                <label>FECHA HASTA</label>
+                                <input formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>CODIGO DE RECLAMO</label>
+                                <input matInput (keypress)="validarIngreso($event)" formControlName="codRec" [(ngModel)]="inputCodRec" class="form-control" type="text" placeholder="Código de reclamo">
+                                <button mat-button (click)="inputCodRec=''" *ngIf="inputCodRec" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <label>DNI</label><br>
+                                <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
+                                <button mat-button (click)="inputDNI=''" *ngIf="inputDNI" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button (click)="masFiltros()" mat-mini-fab class="btnFiltro" matTooltip="{{ ttpFiltro }}" matTooltipPosition="right"><i id="btnIcon" class="material-icons">add</i></button>
+                    <br><br>
+
+                    <div *ngIf="moreFilter">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>AREA DE SERVICIO</label>
+                                    <mat-select (selectionChange)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
+                                        <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                            {{ item.arServ_nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-button (click)="ddlArServ=''" *ngIf="ddlArServ" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>TIPO DE RECLAMO</label>
+                                    <mat-select (selectionChange)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control" placeholder="Seleccione Reclamo">
+                                        <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                                            {{ item.tipRec_nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-button (click)="TipoReclamoID=''" *ngIf="TipoReclamoID" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>ESTADO</label>
+                                    <mat-select formControlName="estado" class="form-control" [(ngModel)]="ddlEstRec" placeholder="Seleccione Estado">
+                                        <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
+                                            {{ item.estRec_nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-button (click)="ddlEstRec=''" *ngIf="ddlEstRec" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>PRIORIDAD</label>
+                                    <mat-select formControlName="prioridad" class="form-control" [(ngModel)]="ddlPri" placeholder="Seleccione Prioridad">
+                                        <mat-option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
+                                            {{ item.pri_nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-button (click)="ddlPri=''" *ngIf="ddlPri" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="ddlBarrio">BARRIO</label><br>
+                                    <mat-select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
+                                        <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                                            {{ item.bar_nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <button mat-button (click)="ddlBar=''" *ngIf="ddlBar" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                        <i class="material-icons">clear</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button mat-stroked-button (click)="selectReclamo()" class="btn btn-block btnPrimario myBtnCard">
+                                Consultar <i class="fa fa-fw fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div id="idTableConsulta" style="visibility: hidden;">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="rec_codigo">
+            <th mat-header-cell *matHeaderCellDef>Código</th>
+            <td mat-cell *matCellDef="let element">{{ element.rec_codigo }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rec_fechaAlta">
+            <th mat-header-cell *matHeaderCellDef style="width: 120px;">
+                Fecha Alta
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.rec_fechaAlta }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="arServ_nombre">
+            <th mat-header-cell *matHeaderCellDef>Area Servicio</th>
+            <td mat-cell *matCellDef="let element">{{ element.arServ_nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipRec_nombre">
+            <th mat-header-cell *matHeaderCellDef style="width: 300px;">Reclamo</th>
+            <td mat-cell *matCellDef="let element">{{ element.tipRec_nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rec_direccion">
+            <th mat-header-cell *matHeaderCellDef>Dirección</th>
+            <td mat-cell *matCellDef="let element">{{ element.rec_direccion }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bar_nombre">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px;">Barrio</th>
+            <td mat-cell *matCellDef="let element">{{ element.bar_nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Ver">
+            <th mat-header-cell *matHeaderCellDef>Ver</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-flat-button (click)="verEstados(element)" color="primary" matTooltip="Detalle del Reclamo" matTooltipPosition="below">
+                    <i class="material-icons">remove_red_eye</i>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

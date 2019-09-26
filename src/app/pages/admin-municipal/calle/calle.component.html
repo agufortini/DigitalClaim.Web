@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-5">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Calle">
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="cal_IDCalle">
+                <th mat-header-cell *matHeaderCellDef>IDCalle</th>
+                <td mat-cell *matCellDef="let element">{{ element.cal_IDCalle }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="cal_nombre">
+                <th mat-header-cell *matHeaderCellDef style="width: 300px;">Calle</th>
+                <td mat-cell *matCellDef="let element">{{ element.cal_nombre }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Editar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
+                <td mat-cell *matCellDef="let element">
+                    <button (click)="mostrarDataCalle(element.cal_IDCalle, element.cal_nombre)" mat-flat-button color="primary">
+                        <i class="material-icons">create</i>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div class="col-md-7">
+        <div class="container myAnimated myFast myFadeIn">
+            <div class="card card-register mx-auto mt-5">
+                <div class="card-header myCardHeader">Registrar Calle</div>
+                <div class="card-body">
+                    <form [formGroup]="frmCalle">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <label>NOMBRE*</label>
+                                <input matInput id="txtCalle" formControlName="nombre" [(ngModel)]="inputCalle" type="text" class="form-control" placeholder="Ingrese nombre de Calle">
+                                <button *ngIf="inputCalle !== ''" mat-button (click)="resetForm()" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <button id="btnClear" (click)="registrarCalle(boBand)" [disabled]="!frmCalle.valid" class="btn btn-block btnPrimario myBtnCard">
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li *ngIf="user.usu_IDRol === 1">
+                    <a [routerLink]="'/home'" routerLinkActive="active"><i class="material-icons">home</i>Inicio</a>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 1 || user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">assignment</i>
+                        <span class="hide-menu">Reclamo</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/generar-reclamo'" routerLinkActive="active">Registrar</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/consultar-reclamo'" routerLinkActive="active">Consultar</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 1">
+                    <a [routerLink]="'/contacto'" routerLinkActive="active"><i class="material-icons">forum</i>Contacto</a>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 1">
+                    <a [routerLink]="'/ayuda'" routerLinkActive="active">
+                        <i class="material-icons">help</i>Ayuda</a>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                    <a [routerLink]="'/reporte'" routerLinkActive="active">
+                        <i class="material-icons">bar_chart</i>Reportes</a>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 5">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">how_to_reg</i>
+                            <span class="hide-menu">Dominio</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/area-servicio'" routerLinkActive="active">Area de Servicio</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/barrio'" routerLinkActive="active">Barrio</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/calle'" routerLinkActive="active">Calle</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/canal'" routerLinkActive="active">Canal</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/usuario'" routerLinkActive="active">Usuario</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6" class="nav-small-cap text-white">
+                    Area de Servicio: {{ areaServicio | uppercase }}
+                </li>
+                <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="material-icons">assignment</i><span class="hide-menu">Orden de Servicio</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/crear-ordenServicio'" routerLinkActive="active">Registrar</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/gestionar-ordenServicio'" routerLinkActive="active">Gestionar</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 6">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">how_to_reg</i>
+                            <span class="hide-menu">Dominio</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/reclamo'" routerLinkActive="active">Reclamo</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/usuario'" routerLinkActive="active">Usuario</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

@@ -1,0 +1,257 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Cursor para formulario de cambio de colores, en configuración */
+
+
+/* ----------------------------- <ANGULAR MATERIAL> ----------------------------- */
+
+#themecolors a {
+    cursor: pointer !important;
+}
+
+
+/* TOOLTIP */
+
+.mat-tooltip {
+    font-size: 14px !important;
+}
+
+
+/* TABLE */
+
+th.mat-header-cell {
+    text-align: center !important;
+    font-size: 15px;
+    color: black;
+}
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+    text-align: center !important;
+}
+
+
+/* botón cerrar ventana modal */
+
+.btnCerrar {
+    padding: 0px !important;
+    float: right !important;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+
+/* ----------------------------- </ANGULAR MATERIAL> ----------------------------- */
+
+
+/* ----------------------------- <BOTONES> ----------------------------- */
+
+.btnPrimario {
+    background-color: #1e88e5 !important;
+    color: #fff !important;
+}
+
+.btnPrimario:hover {
+    background-color: rgb(33, 37, 41) !important;
+    color: #3FBCEF !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btnSecundario:hover {
+    background-color: #3FBCEF;
+    color: whitesmoke !important;
+}
+
+.myBtnCard {
+    float: right !important;
+    width: 50% !important;
+}
+
+:disabled {
+    cursor: not-allowed !important;
+}
+
+.btnLimpiar {
+    background-color: #1e88e5 !important;
+    float: right !important;
+}
+
+
+/* ----------------------------- </BOTONES> ----------------------------- */
+
+.btnCancelar {
+    background-color: #f55 !important;
+    color: white;
+}
+
+.btnCancelar:hover {
+    background-color: red !important;
+}
+
+.imgHome {
+    width: 141px !important;
+}
+
+
+/* ----------------------------- INICIO ----------------------------- */
+
+.p-Lema {
+    font-size: 1.2em !important;
+    text-align: center;
+    line-height: 35px !important;
+    font-weight: 500;
+}
+
+.p-Inicio {
+    font-size: 1.2em !important;
+    text-align: justify !important;
+    line-height: 35px !important;
+    width: 100% !important;
+    /* margin-left: 2%; */
+}
+
+.imgMuniVM {
+    width: 30%;
+}
+
+.carousel-ProcesoReclamo {
+    width: 80%;
+    height: 450px;
+    border-radius: 10px;
+}
+
+.lblCarousel {
+    color: white !important;
+    font-size: 25px !important;
+    text-shadow: 2px 2px 4px black;
+}
+
+.p-Carousel {
+    font-size: 20px;
+    text-align: center !important;
+}
+
+.myCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    border-radius: 2% !important;
+}
+
+.cardIcon {
+    margin-top: 10px !important;
+    color: #1e88e5 !important;
+}
+
+.myCardHeader {
+    text-align: center;
+    font-weight: 500;
+    color: black;
+    background-color: lightgray;
+}
+
+
+/* ----------------------------- <RECLAMO> ----------------------------- */
+
+.lblCampoObligatorio {
+    color: red !important;
+    float: left !important;
+}
+
+.btnSiguiente {
+    width: 20% !important;
+    float: right;
+    color: white !important;
+    background-color: #1e88e5;
+}
+
+.lbl-Imagenes {
+    font-size: 12px !important;
+}
+
+.p-Importante {
+    font-size: 15px;
+    text-align: justify;
+    font-weight: 500;
+    color: red;
+}
+
+
+/* ----------------------------- <CONTACTO> ----------------------------- */
+
+.h1-Info {
+    margin-left: 15%;
+}
+
+.i-Info {
+    margin-left: 2% !important;
+}
+
+.emailInfo {
+    color: #1F2532;
+}
+
+.emailInfo:hover {
+    color: #3FBCEF;
+    text-decoration: none;
+}
+
+.img-AtencionVecino {
+    border-radius: .25em;
+    width: 450px;
+    height: 250px;
+    margin-left: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 900px) {
+    .img-AtencionVecino {
+        width: 85%;
+        margin-left: 10%;
+    }
+}
+
+
+/* ----------------------------- </CONTACTO> ----------------------------- */
+
+
+/* Animaciones */
+
+.myAnimated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.myFast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes myFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.myFadeIn {
+    animation-name: fadeIn;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
