@@ -68,7 +68,6 @@ export class CrearOrdenServicioComponent implements OnInit {
   constructor(private ddlService: SelectService,
               private router: Router,
               private formBuilder: FormBuilder,
-              private ordServService: OrdenServicioService,
               private datePipe: DatePipe,
               private reclamoService: ReclamoService) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
@@ -115,7 +114,7 @@ export class CrearOrdenServicioComponent implements OnInit {
         usu_IDAreaServicio: this.user.usu_IDAreaServicio
       };
 
-      this.ordServService.selectReclamosPendientes(this.objIDArServ).subscribe(data => {
+      this.reclamoService.selectReclamosPendientes(this.objIDArServ).subscribe(data => {
           this.lstReclamo = JSON.parse(data);
           this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);
         }
@@ -171,7 +170,8 @@ export class CrearOrdenServicioComponent implements OnInit {
 
   registrarOrdenServicio() {
     try {
-      localStorage.setItem('arrReclamosPendientes', JSON.stringify(this.lstReclamo));
+      const arrReclamosPendientes: ReclamoPendiente[] = this.selection.selected;
+      localStorage.setItem('reclamosPendientes', JSON.stringify(arrReclamosPendientes));
       this.router.navigateByUrl('/registrar-ordenServicio');
     } catch (error) {
       console.log(error);

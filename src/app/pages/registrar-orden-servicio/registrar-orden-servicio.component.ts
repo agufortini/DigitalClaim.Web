@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 // SERVICIOS
 import { SelectService } from '../../services/select-service.service';
@@ -13,7 +14,7 @@ import { Historial } from '../../_entities/historial.entities';
 import { OrdenServicio, DetalleOrdServ } from '../../_entities/orden-servicio.entities';
 import { PersonalPorOrdenServicio, PersonalOrdServ } from '../../_entities/personal-por-orden-servicio.entities';
 import { Usuario } from '../../_entities/usuario.entities';
-import Swal from 'sweetalert2';
+import { ReclamoPendiente } from 'src/app/_entities/reclamo.entities';
 
 @Component({
   selector: 'app-registrar-orden-servicio',
@@ -23,7 +24,7 @@ import Swal from 'sweetalert2';
 export class RegistrarOrdenServicioComponent implements OnInit {
   frmRegistrarOrden: FormGroup;
   user: Usuario;
-  lstReclamosPendientes: any;
+  arrReclamosPendientes: ReclamoPendiente[];
 
   // CARGA DDL
   arrResp: any;
@@ -55,14 +56,11 @@ export class RegistrarOrdenServicioComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.arrReclamosPendientes = JSON.parse(localStorage.getItem('reclamosPendientes'));
     this.fechaHoy = this.datePipe.transform(this.fecha, 'dd/MM/yyyy');
   }
 
   ngOnInit() {
-    this.lstReclamosPendientes = JSON.parse(
-      localStorage.getItem('arrReclamosPendientes')
-    );
-
     // CONTROLES
     this.frmRegistrarOrden = this.formBuilder.group({
       fechaDesde: [null, Validators.required],
@@ -128,7 +126,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
           }
           this.splitted = this.IDOrdServYNum.split(';', 2);
 
-          this.lstReclamosPendientes.forEach(element => {
+          this.arrReclamosPendientes.forEach(element => {
             this.objDetalle = new DetalleOrdServ();
             this.objDetalle.ordServ_IDOrdenServicio = +this.splitted[0];
             this.objDetalle.ordServ_numero = +this.splitted[1];
@@ -172,5 +170,10 @@ export class RegistrarOrdenServicioComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  cancelarRegistro() {
+    localStorage.removeItem('reclamosPendientes');
+    this.router.navigateByUrl('crear-ordenServicio');
   }
 }

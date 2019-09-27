@@ -1,3 +1,5 @@
+/* -------------------- CLASES -------------------- */
+
 export class ValidarReclamo {
     rec_IDReclamo: number;
     rec_altura: number;
@@ -33,6 +35,22 @@ export class ReclamoC {
     tic_IDUsuario: number;
     constructor() {}
 }
+
+export class ReclamoPendiente {
+    rec_IDReclamo: number;
+    rec_fechaAlta: string;
+    tipRec_IDTipoReclamo: number;
+    tipRec_nombre: string;
+    rec_altura: number;
+    cal_nombre: string;
+    rec_direccion: string;
+    pri_IDPrioridad: number;
+    bar_IDBarrio: number;
+    bar_nombre: string;
+    constructor() {}
+}
+
+/* -------------------- INTERFACES -------------------- */
 
 export interface ConsultarReclamo {
     rec_codigo: number;

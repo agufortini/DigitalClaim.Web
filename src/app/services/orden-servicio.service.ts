@@ -19,12 +19,6 @@ export class OrdenServicioService {
         return this.httpClient.post<any>(`${environment.apiUrl}api/OrdenServicioController/SelectOrdenServicio`, IDAreaServicio);
     }
 
-    selectReclamosPendientes(objIDArServ: any) {
-        return this.httpClient.get<any>(`${environment.apiUrl}api/OrdenServicioController/SelectReclamosPendientes`, {
-            params: new HttpParams().set('stObj', JSON.stringify(objIDArServ))
-        });
-    }
-
     registrarOrdenServicio(objOrdServ: OrdenServicio): Observable<OrdenServicio> {
         return this.httpClient.post<OrdenServicio>(`${environment.apiUrl}api/OrdenServicioController/RegistrarOrdenServicio`, objOrdServ);
     }

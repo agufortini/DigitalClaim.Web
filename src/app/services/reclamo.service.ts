@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { Ticket } from '../_entities/ticket.entities';
 import { Historial } from '../_entities/historial.entities';
 import { Contacto } from '../_entities/contacto.entities';
+import { ReclamoPendiente } from '../_entities/reclamo.entities';
 
 @Injectable({
   providedIn: 'root'
@@ -57,8 +58,8 @@ export class ReclamoService {
   // POST
   registrarReclamo(objReclamo: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/RegistrarReclamo`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objReclamo)
-    )});
+      params: new HttpParams().set('stObj', JSON.stringify(objReclamo))
+    });
   }
 
   // POST
@@ -89,6 +90,12 @@ export class ReclamoService {
     });
   }
 
+  selectReclamosPendientes(objIDArServ: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectReclamosPendientes`, {
+        params: new HttpParams().set('stObj', JSON.stringify(objIDArServ))
+    });
+  }
+
   selectHistorial(stCodRec: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectHistorial`, {
       params: new HttpParams().set('stObj', JSON.stringify(stCodRec))
@@ -108,6 +115,6 @@ export class ReclamoService {
   }
 
   registrarConsulta(objCon: Contacto): Observable<Contacto> {
-    return this.httpClient.post<Contacto>(`${ environment.apiUrl }api/ReclamoController/RegistrarConsulta`, objCon);
+    return this.httpClient.post<Contacto>(`${environment.apiUrl}api/ReclamoController/RegistrarConsulta`, objCon);
   }
 }

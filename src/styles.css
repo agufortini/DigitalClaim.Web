@@ -162,7 +162,7 @@ th.mat-header-cell {
 
 .btnSiguiente {
     width: 20% !important;
-    float: right;
+    float: right !important;
     color: white !important;
     background-color: #1e88e5;
 }

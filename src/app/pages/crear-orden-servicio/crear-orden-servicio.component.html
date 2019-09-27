@@ -63,13 +63,13 @@
                     </div>
                 </div>
 
-                <!-- <div class="row">
+                <div class="row">
                     <div class="col-md-8">
                         <button mat-stroked-button class="btn btn-block btnPrimario myBtnCard">
                             Buscar <i class="fa fa-fw fa-search"></i>
                         </button>
                     </div>
-                </div> -->
+                </div>
             </form>
         </div>
     </div>
@@ -126,6 +126,12 @@
 
 <br>
 
-<button mat-stroked-button [disabled]="" (click)="registrarOrdenServicio()" class="btn btn-block btnSiguiente" matTooltip="Registro Orden de Servicio" matTooltipPosition="left">
+<div class="form-group" style="float: left !important;">
+    <div class="text-center lblCampoObligatorio">
+        *Para registrar una orden de servicio seleccione al menos 1 reclamo.
+    </div>
+</div>
+
+<button mat-stroked-button (click)="registrarOrdenServicio()" [disabled]="selection.selected.length === 0" class="btn btn-block btnSiguiente" matTooltip="Registrar Orden de Servicio" matTooltipPosition="left">
     Siguiente <i class="fa fa-fw fa-chevron-right"></i>
 </button>

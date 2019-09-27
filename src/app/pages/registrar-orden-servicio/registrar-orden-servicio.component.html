@@ -47,9 +47,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <button routerLink="/crear-orden-servicio" type="button" class="btn btn-block btnCancelar">
-                              Cancelar
-                            </button>
+                        <button (click)="cancelarRegistro()" type="button" class="btn btn-block btnCancelar">
+                            Cancelar
+                        </button>
                     </div>
                     <div class="col-md-6">
                         <button [disabled]="!frmRegistrarOrden.valid" (click)="registrarOrdenServicio()" type="submit" class="btn btn-block btnPrimario">
