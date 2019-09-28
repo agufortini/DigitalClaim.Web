@@ -5,7 +5,7 @@
             <form [formGroup]="frmConsultarReclamo">
                 <div *ngIf="user.usu_IDRol === 1" class="form-group">
                     <div class="form-row">
-                        <mat-label>Reclamos:</mat-label>
+                        <label>Reclamos:</label>
                         <div class="ml-1"></div>
                         <mat-select formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
                             <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
@@ -13,6 +13,7 @@
                             </mat-option>
                         </mat-select>
                     </div>
+                    <br>
                     <mat-form-field>
                         <input matInput (keyup)="applyFilter($event.target.value)">
                     </mat-form-field>

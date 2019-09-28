@@ -4,23 +4,30 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-modal-calificarreclamo',
-  templateUrl: './modal-calificarreclamo.component.html',
-  styleUrls: ['./modal-calificarreclamo.component.css']
+  selector: 'app-calificar-reclamo',
+  templateUrl: './calificar-reclamo.component.html'
 })
-export class ModalCalificarreclamoComponent implements OnInit {
+export class CalificarReclamoComponent implements OnInit {
 
   frmCalificarReclamo: FormGroup;
-  currentRate = 0;
-  comentario: string;
 
-  constructor(private dialogRef: MatDialogRef<ModalCalificarreclamoComponent>,
+  rating = 0;
+  starCount = 5;
+  starColor = 'primary';
+  comentario = '';
+
+  constructor(private dialogRef: MatDialogRef<CalificarReclamoComponent>,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.frmCalificarReclamo = this.formBuilder.group({
       comentario: ['']
     });
+  }
+
+  onRatingChanged(rating) {
+    console.log(rating);
+    this.rating = rating;
   }
 
   cerrarModal() {

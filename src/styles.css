@@ -45,6 +45,13 @@ th.mat-header-cell {
 }
 
 
+/* Para ocultar bordes al hacer foco en botones */
+
+button:focus {
+    outline: none !important;
+}
+
+
 /* ----------------------------- </ANGULAR MATERIAL> ----------------------------- */
 
 

@@ -34,7 +34,8 @@ import { CanalComponent } from '../pages/admin-municipal/canal/canal.component';
 import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';
 import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.component';
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
-import { ModalCalificarreclamoComponent } from './modal-calificarreclamo/modal-calificarreclamo.component';
+import { CalificarReclamoComponent } from './calificar/calificar-reclamo/calificar-reclamo.component';
+import { StarRatingComponent } from './calificar/star-rating/star-rating.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -55,17 +56,18 @@ import { ModalCalificarreclamoComponent } from './modal-calificarreclamo/modal-c
         ModalEstadoreclamoComponent,
         AyudaComponent,
         GraficoComponent,
-        ModalCalificarreclamoComponent,
+        CalificarReclamoComponent,
         AreaServicioComponent,
         BarrioComponent,
         CalleComponent,
         ReclamoComponent,
         UsuarioComponent,
-        CanalComponent
+        CanalComponent,
+        StarRatingComponent
     ],
     exports: [
         HomeComponent,
-        ModalCalificarreclamoComponent
+        CalificarReclamoComponent
     ],
     imports: [
         CommonModule,
@@ -86,8 +88,8 @@ import { ModalCalificarreclamoComponent } from './modal-calificarreclamo/modal-c
     ],
     entryComponents: [
         ModalEstadoreclamoComponent,
-        ModalCalificarreclamoComponent
+        CalificarReclamoComponent
     ],
-    bootstrap: [ModalCalificarreclamoComponent]
+    bootstrap: [CalificarReclamoComponent]
 })
 export class PagesModule { }

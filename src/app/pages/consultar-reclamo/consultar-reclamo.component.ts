@@ -100,6 +100,7 @@ export class ConsultarReclamoComponent implements OnInit {
 
         this.ddlService.selectEntitie('ReclamoController', 'SelectEstadoReclamo').subscribe(data => {
           this.arrEstado = JSON.parse(data);
+          this.f.estado.patchValue(this.arrEstado[0].estRec_IDEstadoReclamo);
         });
 
         this.listarReclamos();
