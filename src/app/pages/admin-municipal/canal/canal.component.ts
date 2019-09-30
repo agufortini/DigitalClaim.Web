@@ -13,8 +13,7 @@ import { CanalService } from '../../../services/canal.service';
 
 @Component({
   selector: 'app-canal',
-  templateUrl: './canal.component.html',
-  styleUrls: ['./canal.component.css']
+  templateUrl: './canal.component.html'
 })
 export class CanalComponent implements OnInit {
 
@@ -26,7 +25,6 @@ export class CanalComponent implements OnInit {
 
   // TABLA
   displayedColumns = [
-    'can_IDCanal',
     'can_nombre',
     'Editar'
   ];

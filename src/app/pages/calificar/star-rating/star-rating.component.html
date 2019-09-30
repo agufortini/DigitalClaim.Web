@@ -1,5 +1,5 @@
 <button mat-icon-button (click)="onClick(i+1)" [color]="color" *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i">
-        <mat-icon>
+        <mat-icon style="color: #FFD740 !important;">
           {{ showIcon(i) }}
         </mat-icon>
       </button>

@@ -10,6 +10,7 @@ import { Calle, ICalle } from '../../../_entities/calle.entities';
 // SERVICIOS
 import { SelectService } from '../../../services/select-service.service';
 import { CalleService } from '../../../services/calle.service';
+import { ReclamoService } from '../../../services/reclamo.service';
 
 @Component({
   selector: 'app-calle',
@@ -21,12 +22,14 @@ export class CalleComponent implements OnInit {
   frmCalle: FormGroup;
   objCalle: Calle;
   inputCalle = '';
+  selectBar: any;
   boBand = true;
   IDCalle: number;
+  arrBarrio: any;
+  lstBarrio: any[] = [];
 
   // TABLA
   displayedColumns = [
-    'cal_IDCalle',
     'cal_nombre',
     'Editar'
   ];
@@ -36,14 +39,17 @@ export class CalleComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private selectService: SelectService,
-              private calleService: CalleService) { }
+              private calleService: CalleService,
+              private reclamoService: ReclamoService) { }
 
   ngOnInit() {
     this.frmCalle = this.formBuilder.group({
-      nombre: ['', Validators.required]
+      nombre: ['', Validators.required],
+      barrio: ['', Validators.required]
     });
 
     this.selectCalle();
+    this.selectBarrio();
   }
 
   selectCalle() {
@@ -51,6 +57,12 @@ export class CalleComponent implements OnInit {
       this.lstCalle = JSON.parse(data);
       this.dataSource = new MatTableDataSource<ICalle>(this.lstCalle);
       this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  selectBarrio() {
+    this.selectService.selectEntitie('BarrioController', 'SelectBarrio').subscribe(data => {
+      this.arrBarrio = JSON.parse(data);
     });
   }
 
@@ -82,7 +94,7 @@ export class CalleComponent implements OnInit {
               'success'
             );
 
-            this.resetForm();
+            this.resetForm('');
             this.selectCalle();
           } else {
             Swal.close();
@@ -92,7 +104,7 @@ export class CalleComponent implements OnInit {
               'warning'
             );
 
-            this.resetForm();
+            this.resetForm('');
           }
         });
       } else {
@@ -105,7 +117,7 @@ export class CalleComponent implements OnInit {
               'success'
             );
 
-            this.resetForm();
+            this.resetForm('');
             this.selectCalle();
           }
         });
@@ -119,10 +131,26 @@ export class CalleComponent implements OnInit {
     this.boBand = false;
     this.IDCalle = IDCalle; // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
     this.inputCalle = stCalle;
+
+    const objCalle = {
+      cal_nombre: stCalle
+    };
+
+    this.reclamoService.selectBarrioPorCalle(objCalle).subscribe(data => {
+      this.selectBar = JSON.parse(data);
+    });
   }
 
-  resetForm() {
-    this.inputCalle = '';
+  resetForm(stValue: string) {
+    if (stValue === 'calle') {
+      this.inputCalle = '';
+    } else if (stValue === 'barrio') {
+      this.selectBar = '';
+    } else {
+      this.inputCalle = '';
+      this.selectBar = '';
+    }
+
     this.boBand = true;
     document.getElementById('txtCalle').focus();
   }

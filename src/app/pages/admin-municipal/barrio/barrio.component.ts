@@ -14,8 +14,7 @@ import { BarrioService } from '../../../services/barrio.service';
 
 @Component({
   selector: 'app-barrio',
-  templateUrl: './barrio.component.html',
-  styleUrls: ['./barrio.component.css']
+  templateUrl: './barrio.component.html'
 })
 export class BarrioComponent implements OnInit {
 
@@ -27,9 +26,8 @@ export class BarrioComponent implements OnInit {
 
   // TABLA
   displayedColumns = [
-    'bar_IDBarrio',
     'bar_nombre',
-    'Ver'
+    'Editar'
   ];
   dataSource: MatTableDataSource<IBarrio>;
   lstBarrio: IBarrio[];

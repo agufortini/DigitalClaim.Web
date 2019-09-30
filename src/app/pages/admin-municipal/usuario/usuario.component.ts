@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import Swal from 'sweetalert2';
 import { Complementos } from '../../../complementos';
 
@@ -22,8 +22,8 @@ export class UsuarioComponent implements OnInit {
   objUser: Usuario;
   boBand = true;
   IDUsuario: number;
+  IDRol: number;
   objIDUser: any;
-  objUserType: any;
 
   // NG MODEL
   inputDNI: number;
@@ -36,14 +36,13 @@ export class UsuarioComponent implements OnInit {
 
   // TABLA
   displayedColumns = [
-    'usu_IDUsuario',
     'usu_dni',
     'usu_nombreCompleto',
-    'Ver'
+    'Editar'
   ];
   dataSource: MatTableDataSource<IUsuario>;
   lstUsuario: IUsuario[];
-  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private formBuilder: FormBuilder,
               private loginService: UsuarioService,
@@ -60,36 +59,30 @@ export class UsuarioComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       telefono: [''],
-      email: ['', Validators.required]
+      email: ['']
     });
 
     if (this.user.usu_IDRol === 5) {
-      this.objUserType = {
-        userType: 'Municipal'
-      };
-      this.selectUsuario(this.objUserType);
+      this.selectUsuarioMunicipal();
     } else {
-      this.objUserType = {
-        userType: 'Operativo'
-      };
-      this.selectUsuario(this.objUserType);
+      this.selectUsuarioOperativo();
     }
   }
 
-  selectUsuario(objUserType: any) {
-    if (objUserType.userType === 'Municipal') {
-      this.selectService.selectUsuario(this.objUserType).subscribe(data => {
-        this.lstUsuario = JSON.parse(data);
-        this.dataSource = new MatTableDataSource<IUsuario>(this.lstUsuario);
-        // this.dataSource.paginator = this.paginator;
-      });
-    } else {
-      this.selectService.selectUsuario(this.objUserType).subscribe(data => {
-        this.lstUsuario = JSON.parse(data);
-        this.dataSource = new MatTableDataSource<IUsuario>(this.lstUsuario);
-        // this.dataSource.paginator = this.paginator;
-      });
-    }
+  selectUsuarioMunicipal() {
+    this.selectService.selectUsuarioMunicipal().subscribe(data => {
+      this.lstUsuario = JSON.parse(data);
+      this.dataSource = new MatTableDataSource<IUsuario>(this.lstUsuario);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  selectUsuarioOperativo() {
+    this.selectService.selectUsuarioOperativo().subscribe(data => {
+      this.lstUsuario = JSON.parse(data);
+      this.dataSource = new MatTableDataSource<IUsuario>(this.lstUsuario);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
@@ -115,7 +108,7 @@ export class UsuarioComponent implements OnInit {
       this.objUser.usu_apellido = this.inputApellido;
       this.objUser.usu_telefono = this.inputTel;
       this.objUser.usu_email = this.inputEmail;
-      this.objUser.usu_IDRol = this.user.usu_IDRol;
+      this.objUser.usu_IDRol = this.IDRol;
 
       if (boBand) {
         this.loginService.registrarUsuario(this.objUser).subscribe(data => {
@@ -130,8 +123,11 @@ export class UsuarioComponent implements OnInit {
               });
 
               this.resetForm();
-              this.objUserType.userType = (this.user.usu_IDRol === 5) ? 'Municipal' : 'Operativo';
-              this.selectUsuario(this.objUserType);
+              if (this.user.usu_IDRol === 5) {
+                this.selectUsuarioMunicipal();
+              } else {
+                this.selectUsuarioOperativo();
+              }
             } else {
               Swal.close();
               Swal.fire({
@@ -154,8 +150,11 @@ export class UsuarioComponent implements OnInit {
             });
 
             this.resetForm();
-            this.objUserType.userType = (this.user.usu_IDRol === 5) ? 'Municipal' : 'Operativo';
-            this.selectUsuario(this.objUserType);
+            if (this.user.usu_IDRol === 5) {
+              this.selectUsuarioMunicipal();
+            } else {
+              this.selectUsuarioOperativo();
+            }
           }
         });
       }
@@ -164,10 +163,10 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  selectDataUsuario(IDUsuario: number, userDNI: number) {
+  selectDataUsuario(IDUsuario: number, userDNI: number, IDRol: number) {
     this.boBand = false;
-    // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
-    this.IDUsuario = IDUsuario;
+    this.IDUsuario = IDUsuario; // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
+    this.IDRol = IDRol;
 
     this.objIDUser = {
       usu_IDUsuario: IDUsuario
@@ -199,6 +198,15 @@ export class UsuarioComponent implements OnInit {
 
     this.boBand = true;
     document.getElementById('inputDNI').focus();
+  }
+
+  // FILTRO TABLA
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   validarNum(event) {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://DCWebApi.somee.com/'
+  apiUrl: 'http://localhost:4210/'
 };
 
 // http://DCWebApi.somee.com/

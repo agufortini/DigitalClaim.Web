@@ -36,9 +36,8 @@ export class AreaServicioComponent implements OnInit {
 
     // TABLA
     displayedColumns = [
-      'arServ_IDAreaServicio',
       'arServ_nombre',
-      'Ver'
+      'Editar'
     ];
     dataSource: MatTableDataSource<IAreaServicio>;
     lstAreaServicio: IAreaServicio[];
@@ -59,6 +58,7 @@ export class AreaServicioComponent implements OnInit {
     });
 
     this.selectAreaServicio();
+    console.log(this.lstAreaServicio);
   }
 
   selectAreaServicio() {

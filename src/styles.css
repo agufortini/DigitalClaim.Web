@@ -51,6 +51,10 @@ button:focus {
     outline: none !important;
 }
 
+.inputAbm {
+    width: 91% !important;
+}
+
 
 /* ----------------------------- </ANGULAR MATERIAL> ----------------------------- */
 

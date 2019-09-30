@@ -18,4 +18,5 @@ export interface IUsuario {
     usu_IDUsuario: number;
     usu_dni: number;
     usu_nombreCompleto: string;
+    usu_IDRol: number;
 }

@@ -39,10 +39,12 @@ export class SelectService {
     });
   }
 
-  selectUsuario(objUserType: any): Observable<any> {
-    return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/SelectUsuario`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objUserType))
-    });
+  selectUsuarioMunicipal(): Observable<any> {
+    return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/SelectUsuarioMunicipal`);
+  }
+
+  selectUsuarioOperativo(): Observable<any> {
+    return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/SelectUsuarioOperativo`);
   }
 
 }
