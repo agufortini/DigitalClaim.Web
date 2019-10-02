@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 
 // ENTIDADES
-import { Barrio } from '../../../_entities/ddl.entities';
+import { Barrio } from '../../../_entities/barrio.entities';
 import { IBarrio } from '../../../_entities/barrio.entities';
 
 // SERVICIOS

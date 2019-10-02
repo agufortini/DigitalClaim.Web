@@ -17,7 +17,10 @@ import { ReclamoService } from '../../services/reclamo.service';
 
 // ENTIDADES
 import { Usuario } from '../../_entities/usuario.entities';
-import { TipoReclamo, Prioridad, Barrio } from '../../_entities/ddl.entities';
+import { TipoReclamo } from '../../_entities/ddl.entities';
+import { Prioridad } from '../../_entities/prioridad.entities';
+import { Barrio } from '../../_entities/barrio.entities';
+
 
 @Component({
   selector: 'app-crear-orden-servicio',

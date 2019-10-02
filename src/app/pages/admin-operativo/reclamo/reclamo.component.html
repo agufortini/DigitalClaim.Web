@@ -1,20 +1,18 @@
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Reclamo">
+        </mat-form-field>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="tipRec_IDTipoReclamo">
-                <th mat-header-cell *matHeaderCellDef>IDTipRec</th>
-                <td mat-cell *matCellDef="let element">{{ element.tipRec_IDTipoReclamo }}</td>
-            </ng-container>
-
             <ng-container matColumnDef="tipRec_nombre">
                 <th mat-header-cell *matHeaderCellDef style="width: 300px;">Reclamo</th>
                 <td mat-cell *matCellDef="let element">{{ element.tipRec_nombre }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="Actualizar">
-                <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+            <ng-container matColumnDef="Editar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-flat-button color="primary" matTooltip="Actualizar datos" matTooltipPosition="below">
+                    <button mat-flat-button (click)="mostrarDataReclamo(element.tipRec_IDTipoReclamo, element.tipRec_nombre, element.tipRec_IDPrioridad)" color="primary">
                         <i class="material-icons">create</i>
                     </button>
                 </td>
@@ -24,9 +22,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
 
-        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-8">
         <div class="container myAnimated myFast myFadeIn">
             <div class="card card-register mx-auto mt-5">
                 <div class="card-header myCardHeader">Registrar Tipo de Reclamo</div>
@@ -35,20 +33,20 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <label>NOMBRE*</label>
-                                <input matInput formControlName="nombre" type="text" class="form-control" placeholder="Ingrese nombre de Tipo de Reclamo">
-                                <button mat-button (click)="clearNombre()" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
+                                <input id="txtReclamo" matInput formControlName="nombre" [(ngModel)]="inputRec" type="text" class="form-control inputAbm" placeholder="Ingrese nombre de Tipo de Reclamo">
+                                <button mat-button *ngIf="inputRec !== ''" (click)="resetForm('reclamo')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
                                     <i class="material-icons">clear</i>
                                 </button>
                             </div>
                             <br>
                             <div class="form-row">
                                 <label>PRIORIDAD</label>
-                                <mat-select formControlName="prioridad" class="form-control" placeholder="Seleccione Prioridad">
+                                <mat-select formControlName="prioridad" [(ngModel)]="inputPri" class="form-control" placeholder="Seleccione Prioridad">
                                     <mat-option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
                                         {{ item.pri_nombre }}
                                     </mat-option>
                                 </mat-select>
-                                <button mat-button (click)="clearPrioridad()" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
+                                <button mat-button (click)="resetForm('prioridad')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
                                     <i class="material-icons">clear</i>
                                 </button>
                             </div>

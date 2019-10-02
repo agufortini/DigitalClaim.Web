@@ -32,10 +32,13 @@ import { AreaServicioComponent } from '../pages/admin-municipal/area-servicio/ar
 import { BarrioComponent } from '../pages/admin-municipal/barrio/barrio.component';
 import { CanalComponent } from '../pages/admin-municipal/canal/canal.component';
 import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';
+import { PrioridadComponent } from './admin-operativo/prioridad/prioridad.component';
 import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.component';
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
 import { CalificarReclamoComponent } from './calificar/calificar-reclamo/calificar-reclamo.component';
 import { StarRatingComponent } from './calificar/star-rating/star-rating.component';
+import { MatPaginatorIntl } from '@angular/material';
+import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -63,7 +66,9 @@ import { StarRatingComponent } from './calificar/star-rating/star-rating.compone
         ReclamoComponent,
         UsuarioComponent,
         CanalComponent,
-        StarRatingComponent
+        StarRatingComponent,
+        PrioridadComponent,
+        RolComponent
     ],
     exports: [
         HomeComponent,
@@ -90,6 +95,6 @@ import { StarRatingComponent } from './calificar/star-rating/star-rating.compone
         ModalEstadoreclamoComponent,
         CalificarReclamoComponent
     ],
-    bootstrap: [CalificarReclamoComponent]
+    bootstrap: [CalificarReclamoComponent],
 })
 export class PagesModule { }

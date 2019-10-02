@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 // ENTIDADES
 import { ITipoReclamo } from '../../../_entities/reclamo.entities';
@@ -21,19 +21,22 @@ export class ReclamoComponent implements OnInit {
 
   frmTipoReclamo: FormGroup;
   user: Usuario;
+  inputRec = '';
+  inputPri = '';
   objIDArServ: any;
   arrPrioridad: any;
   objTipRec: TipoReclamo;
+  boBand = true;
+  IDTipoReclamo: number;
 
   // TABLA
   displayedColumns = [
-    'tipRec_IDTipoReclamo',
     'tipRec_nombre',
-    'Actualizar'
+    'Editar'
   ];
   dataSource: MatTableDataSource<ITipoReclamo>;
   lstTipoReclamo: ITipoReclamo[];
-  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -50,7 +53,7 @@ export class ReclamoComponent implements OnInit {
 
     this.selectTipoReclamo();
 
-    this.selectService.selectEntitie('TipoReclamoController', 'SelectPrioridad').subscribe(data => {
+    this.selectService.selectEntitie('PrioridadController', 'SelectPrioridad').subscribe(data => {
       this.arrPrioridad = JSON.parse(data);
     });
   }
@@ -63,7 +66,7 @@ export class ReclamoComponent implements OnInit {
     this.selectService.selectTipoReclamo(this.objIDArServ).subscribe(data => {
       this.lstTipoReclamo = JSON.parse(data);
       this.dataSource = new MatTableDataSource<ITipoReclamo>(this.lstTipoReclamo);
-      // this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -95,7 +98,7 @@ export class ReclamoComponent implements OnInit {
               'success'
             );
 
-            this.resetForm();
+            this.resetForm('');
             this.selectTipoReclamo();
           } else {
             Swal.close();
@@ -105,7 +108,7 @@ export class ReclamoComponent implements OnInit {
               'warning'
             );
 
-            this.resetForm();
+            this.resetForm('');
           }
         });
     } catch (error) {
@@ -113,27 +116,33 @@ export class ReclamoComponent implements OnInit {
     }
   }
 
-  clearNombre() {
-    this.frmTipoReclamo.reset({
-      nombre: ''
-    });
-
-    document.getElementById('btnClear').focus();
+  mostrarDataReclamo(IDTipRec: number, stReclamo: string, IDPri: number) {
+    this.boBand = false;
+    this.IDTipoReclamo = IDTipRec; // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
+    this.inputRec = stReclamo;
+    this.f.prioridad.patchValue(this.arrPrioridad[IDPri].pri_IDPrioridad);
   }
 
-  clearPrioridad() {
-    this.frmTipoReclamo.reset({
-      prioridad: ''
-    });
+  resetForm(stValue: string) {
+    if (stValue === 'reclamo') {
+      this.inputRec = '';
+    } else if (stValue === 'prioridad') {
+      this.inputPri = '';
+    } else {
+      this.inputRec = '';
+      this.inputPri = '';
+    }
+
+    this.boBand = true;
+    document.getElementById('txtReclamo').focus();
   }
 
-  resetForm() {
-    this.frmTipoReclamo.reset({
-      nombre: '',
-      prioridad: ''
-    });
+  // FILTRO TABLA
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    document.getElementById('btnClear').focus();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-
 }

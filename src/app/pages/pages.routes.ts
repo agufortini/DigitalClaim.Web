@@ -17,6 +17,8 @@ import { BarrioComponent } from '../pages/admin-municipal/barrio/barrio.componen
 import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';
 import { CanalComponent } from './admin-municipal/canal/canal.component';
 import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.component';
+import { PrioridadComponent } from '../pages/admin-operativo/prioridad/prioridad.component';
+import { RolComponent } from './admin-municipal/rol/rol.component';
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
 
 // LOGIN GUARD
@@ -43,6 +45,8 @@ const pagesRoutes: Routes = [
             { path: 'calle', component: CalleComponent, data: { titulo: 'Dominio', subtitulo: 'Calle'}, canActivate: [LoginGuard]},
             { path: 'canal', component: CanalComponent, data: { titulo: 'Dominio', subtitulo: 'Canal'}, canActivate: [LoginGuard]},
             { path: 'reclamo', component: ReclamoComponent, data: { titulo: 'Dominio', subtitulo: 'Reclamo'}, canActivate: [LoginGuard]},
+            { path: 'prioridad', component: PrioridadComponent, data: { titulo: 'Dominio', subtitulo: 'Prioridad'}, canActivate: [LoginGuard]},
+            { path: 'rol', component: RolComponent, data: { titulo: 'Dominio', subtitulo: 'Rol'}, canActivate: [LoginGuard]},
             { path: 'usuario', component: UsuarioComponent, data: { titulo: 'Dominio', subtitulo: 'Usuario' }, canActivate: [LoginGuard]},
             { path: '**', redirectTo: '/login'}
         ]
