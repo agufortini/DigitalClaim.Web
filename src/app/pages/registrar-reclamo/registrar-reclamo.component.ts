@@ -72,9 +72,9 @@ export class RegistrarReclamoComponent implements OnInit {
       this.objReclamo.rec_altura = +this.objRec.altura;
       this.objReclamo.rec_observaciones = (this.objRec.observaciones) ? this.objRec.observaciones : null;
       this.objReclamo.rec_IDOrdenServicio = null;
-      this.objReclamo.rec_IDTipoReclamo = +this.objRec.tipoReclamo
-        .tipRec_IDTipoReclamo;
+      this.objReclamo.rec_IDTipoReclamo = +this.objRec.tipoReclamo.tipRec_IDTipoReclamo;
       this.objReclamo.rec_IDEstadoReclamo = 1;
+      this.objReclamo.rec_IDRating = null;
 
       // CREACION DE OBJETO TICKET
       this.objTicket = new Ticket();

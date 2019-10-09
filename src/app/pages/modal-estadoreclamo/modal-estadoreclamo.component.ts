@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 import { ReclamoService } from '../../services/reclamo.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { CalificarReclamoComponent } from '../calificar/calificar-reclamo/calificar-reclamo.component';
+import { RatingReclamoComponent } from '../rating/rating-reclamo/rating-reclamo.component';
 
 @Component({
   selector: 'app-modal-estadoreclamo',
@@ -56,7 +56,7 @@ export class ModalEstadoreclamoComponent implements OnInit {
 
   calificarReclamo() {
     try {
-      this.dialog.open(CalificarReclamoComponent, {
+      this.dialog.open(RatingReclamoComponent, {
         width: '50%'
       });
     } catch (error) {

@@ -35,8 +35,8 @@ import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';
 import { PrioridadComponent } from './admin-operativo/prioridad/prioridad.component';
 import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.component';
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
-import { CalificarReclamoComponent } from './calificar/calificar-reclamo/calificar-reclamo.component';
-import { StarRatingComponent } from './calificar/star-rating/star-rating.component';
+import { RatingReclamoComponent } from './rating/rating-reclamo/rating-reclamo.component';
+import { StarRatingComponent } from './rating/star-rating/star-rating.component';
 import { MatPaginatorIntl } from '@angular/material';
 import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
 
@@ -59,7 +59,7 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
         ModalEstadoreclamoComponent,
         AyudaComponent,
         GraficoComponent,
-        CalificarReclamoComponent,
+        RatingReclamoComponent,
         AreaServicioComponent,
         BarrioComponent,
         CalleComponent,
@@ -72,7 +72,7 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
     ],
     exports: [
         HomeComponent,
-        CalificarReclamoComponent
+        RatingReclamoComponent
     ],
     imports: [
         CommonModule,
@@ -93,8 +93,8 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
     ],
     entryComponents: [
         ModalEstadoreclamoComponent,
-        CalificarReclamoComponent
+        RatingReclamoComponent
     ],
-    bootstrap: [CalificarReclamoComponent],
+    bootstrap: [RatingReclamoComponent],
 })
 export class PagesModule { }

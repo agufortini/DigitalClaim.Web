@@ -19,14 +19,12 @@ export class StarRatingComponent implements OnInit {
   constructor(private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    console.log('a ' + this.starCount);
     for (let index = 0; index < this.starCount; index++) {
       this.ratingArr.push(index);
     }
   }
 
   onClick(rating: number) {
-    console.log(rating);
     this.snackBar.open('Su calificación es: ' + rating, '', {
       duration: this.snackBarDuration
     });

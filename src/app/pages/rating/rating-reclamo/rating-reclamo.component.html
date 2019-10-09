@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<form [formGroup]="frmCalificarReclamo">
+<form [formGroup]="frmRatingReclamo">
     <app-star-rating [rating]="rating" [starCount]="starCount" [color]="starColor" (ratingUpdated)="onRatingChanged($event)"></app-star-rating>
     <br><br>
     <div class="form-group">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <button [disabled]="comentario.length === 0" mat-stroked-button class="btn btnPrimario" style="float: right;">
+    <button (click)="registrarRating()" [disabled]="comentario.length === 0" mat-stroked-button class="btn btnPrimario" style="float: right;">
         Enviar <i class="mdi mdi-share"></i>
     </button>
 </form>

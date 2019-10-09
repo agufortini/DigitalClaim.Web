@@ -19,6 +19,7 @@ export class Reclamo {
     rec_IDTipoReclamo: number;
     rec_IDCallePorBarrio: number;
     rec_IDEstadoReclamo: number;
+    rec_IDRating: number;
 }
 
 export class ReclamoC {
