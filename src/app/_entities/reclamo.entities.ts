@@ -54,6 +54,7 @@ export class ReclamoPendiente {
 /* -------------------- INTERFACES -------------------- */
 
 export interface ConsultarReclamo {
+    rec_IDReclamo: number;
     rec_codigo: number;
     rec_fechaAlta: string;
     arServ_nombre: string;

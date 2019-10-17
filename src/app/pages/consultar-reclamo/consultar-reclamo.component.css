@@ -12,14 +12,6 @@ mat-form-field {
     float: right;
 }
 
-input.mat-input-element {
-    width: 91% !important;
-}
-
-.mat-select {
-    width: 91% !important;
-}
-
 .ddlEstado {
     width: 50% !important;
 }

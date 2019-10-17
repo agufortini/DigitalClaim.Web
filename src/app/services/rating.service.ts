@@ -14,6 +14,8 @@ export class RatingService {
     constructor(private httpClient: HttpClient) {}
 
     registrarRating(objRating: Rating): Observable<Rating> {
-        return this.httpClient.post<Rating>(`${environment.apiUrl}api/ReclamoController/RegistrarReclamo`, objRating);
+        return this.httpClient.get<Rating>(`${environment.apiUrl}api/ReclamoController/RegistrarRating`, {
+            params: new HttpParams().set('stObj', JSON.stringify(objRating))
+        });
     }
 }

@@ -18,6 +18,7 @@ export class RatingReclamoComponent implements OnInit {
 
   frmRatingReclamo: FormGroup;
   objRating: Rating;
+  IDReclamo: number;
 
   rating = 0;
   starCount = 5;
@@ -27,7 +28,9 @@ export class RatingReclamoComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<RatingReclamoComponent>,
               private formBuilder: FormBuilder,
               private router: Router,
-              private ratingService: RatingService) { }
+              private ratingService: RatingService) {
+    this.IDReclamo = JSON.parse(localStorage.getItem('rec_IDReclamo'));
+  }
 
   ngOnInit() {
     this.frmRatingReclamo = this.formBuilder.group({
@@ -57,6 +60,7 @@ export class RatingReclamoComponent implements OnInit {
       this.objRating = new Rating();
       this.objRating.rat_rating = this.rating;
       this.objRating.rat_comentario = this.f.comentario.value;
+      this.objRating.rat_IDReclamo = this.IDReclamo;
 
       this.ratingService.registrarRating(this.objRating).subscribe(data => {
         if (+data === 1) {
@@ -68,6 +72,8 @@ export class RatingReclamoComponent implements OnInit {
             text: 'El reclamo ha sido calificado correctamente. Gracias por su colaboración'
           }).then(result => {
             if (result.value) {
+              localStorage.removeItem('rec_IDReclamo');
+              this.dialogRef.close();
               this.router.navigateByUrl('/home');
             }
           });

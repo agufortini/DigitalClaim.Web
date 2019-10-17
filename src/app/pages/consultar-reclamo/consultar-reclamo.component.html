@@ -7,7 +7,7 @@
                     <div class="form-row">
                         <label>Reclamos:</label>
                         <div class="ml-1"></div>
-                        <mat-select formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
+                        <mat-select (selectionChange)="listarReclamosPorEstado()" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
                             <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
                                 {{ item.estRec_nombre }}
                             </mat-option>
@@ -39,16 +39,10 @@
                             <div class="col-md-6">
                                 <label>CODIGO DE RECLAMO</label>
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="codRec" [(ngModel)]="inputCodRec" class="form-control" type="text" placeholder="Código de reclamo">
-                                <button mat-button (click)="inputCodRec=''" *ngIf="inputCodRec" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                    <i class="material-icons">clear</i>
-                                </button>
                             </div>
                             <div class="col-md-6">
                                 <label>DNI</label><br>
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
-                                <button mat-button (click)="inputDNI=''" *ngIf="inputDNI" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                    <i class="material-icons">clear</i>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -66,20 +60,14 @@
                                             {{ item.arServ_nombre }}
                                         </mat-option>
                                     </mat-select>
-                                    <button mat-button (click)="ddlArServ=''" *ngIf="ddlArServ" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                        <i class="material-icons">clear</i>
-                                    </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>TIPO DE RECLAMO</label>
+                                    <label>RECLAMO</label>
                                     <mat-select (selectionChange)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control" placeholder="Seleccione Reclamo">
                                         <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
                                             {{ item.tipRec_nombre }}
                                         </mat-option>
                                     </mat-select>
-                                    <button mat-button (click)="TipoReclamoID=''" *ngIf="TipoReclamoID" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                        <i class="material-icons">clear</i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -93,9 +81,6 @@
                                             {{ item.estRec_nombre }}
                                         </mat-option>
                                     </mat-select>
-                                    <button mat-button (click)="ddlEstRec=''" *ngIf="ddlEstRec" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                        <i class="material-icons">clear</i>
-                                    </button>
                                 </div>
                                 <div class="col-md-6">
                                     <label>PRIORIDAD</label>
@@ -104,9 +89,6 @@
                                             {{ item.pri_nombre }}
                                         </mat-option>
                                     </mat-select>
-                                    <button mat-button (click)="ddlPri=''" *ngIf="ddlPri" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                        <i class="material-icons">clear</i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -120,9 +102,6 @@
                                             {{ item.bar_nombre }}
                                         </mat-option>
                                     </mat-select>
-                                    <button mat-button (click)="ddlBar=''" *ngIf="ddlBar" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                        <i class="material-icons">clear</i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -139,8 +118,6 @@
         </div>
     </div>
 </div>
-
-<br>
 
 <div id="idTableConsulta" style="visibility: hidden;">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

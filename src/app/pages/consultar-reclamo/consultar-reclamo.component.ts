@@ -15,6 +15,7 @@ import { ReclamoService } from '../../services/reclamo.service';
 // ENTIDADES
 import { ReclamoC, ConsultarReclamo } from '../../_entities/reclamo.entities';
 import { Usuario } from '../../_entities/usuario.entities';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-consultar-reclamo',
@@ -62,7 +63,7 @@ export class ConsultarReclamoComponent implements OnInit {
   fechaHasta: any;
   boBand = false;
   stFiltro: any;
-  objFiltro: any;
+  objFiltro: any = null;
   ttpFiltro = 'Más filtros';
 
   // TABLA
@@ -103,7 +104,7 @@ export class ConsultarReclamoComponent implements OnInit {
           this.f.estado.patchValue(this.arrEstado[0].estRec_IDEstadoReclamo);
         });
 
-        this.listarReclamos();
+        this.listarReclamosPendientes();
         document.getElementById('idTableConsulta').style.visibility = 'visible';
       } else {
         this.frmControls();
@@ -136,7 +137,7 @@ export class ConsultarReclamoComponent implements OnInit {
       this.arrEstado = JSON.parse(data);
     });
 
-    this.ddlService.selectEntitie('TipoReclamoController', 'SelectPrioridad').subscribe(data => {
+    this.ddlService.selectEntitie('PrioridadController', 'SelectPrioridad').subscribe(data => {
       this.arrPrioridad = JSON.parse(data);
     });
 
@@ -145,21 +146,35 @@ export class ConsultarReclamoComponent implements OnInit {
     });
   }
 
-  listarReclamos() {
+  // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
+  get f() {
+    return this.frmConsultarReclamo.controls;
+  }
+
+  listarReclamosPendientes() {
     this.objIDUser = {
-      usu_IDUsuario: this.user.usu_IDUsuario
+      usu_IDUsuario: this.user.usu_IDUsuario,
+      rec_IDEstadoReclamo: 1
     };
 
+    this.selectServicio();
+  }
+
+  listarReclamosPorEstado() {
+    this.objIDUser = {
+      usu_IDUsuario: this.user.usu_IDUsuario,
+      rec_IDEstadoReclamo: this.f.estado.value
+    };
+
+    this.selectServicio();
+  }
+
+  selectServicio() {
     this.reclamoService.listarReclamos(this.objIDUser).subscribe(data => {
       this.lstReclamo = JSON.parse(data);
       this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
       this.dataSource.paginator = this.paginator;
     });
-  }
-
-  // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get f() {
-    return this.frmConsultarReclamo.controls;
   }
 
   cargarDDLTipoReclamo() {
@@ -177,14 +192,172 @@ export class ConsultarReclamoComponent implements OnInit {
     }
   }
 
-  selectTipoReclamo() {
-    this.tipoReclamo = this.arrTipRec.filter(x => x.tipRec_IDTipoReclamo === +this.TipoReclamoID)[0];
-  }
-
   selectReclamo() {
     try {
       // VALIDAR QUE SE HAYA IMPLEMENTADO POR LO MENOS 1 CONTROL PARA FILTAR
       document.getElementById('idTableConsulta').style.visibility = 'visible';
+
+      // if (this.f.fechaDesde.value !== '' && this.f.fechaHasta.value !== '') {
+      //   if (this.f.fechaDesde.value < this.f.fechaHasta.value) {
+      //     this.objFiltro = {
+      //       // tslint:disable-next-line:quotemark
+      //       stFiltro: "rec_fechaAlta between '" + this.f.fechaDesde.value + "' and '" + this.f.fechaHasta.value + "'"
+      //     };
+      //   } else {
+      //     // Mensaje error validacion fechas
+      //   }
+      // } else if (this.f.fechaDesde.value !== '') {
+      //   this.objFiltro = {
+      //     // tslint:disable-next-line:quotemark
+      //     stFiltro: "rec_fechaAlta between '" + this.f.fechaDesde.value + "'"
+      //   };
+      // } else if (this.f.fechaHasta.value !== '') {
+      //   this.objFiltro = {
+      //     // tslint:disable-next-line:quotemark
+      //     stFiltro: "rec_fechaAlta between '" + this.f.fechaHasta.value + "'"
+      //   };
+      // }
+
+      // CODIGO RECLAMO
+      if (this.f.codRec.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "rec_codigo = " + this.f.codRec.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and rec_codigo = " + this.f.codRec.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // DNI USUARIO
+      if (this.f.dni.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "usu_DNI = " + this.f.dni.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and usu_DNI = " + this.f.dni.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // AREA DE SERVICIO
+      if (this.f.areaServicio.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "arServ_ID = " + this.f.areaServicio.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and arServ_ID = " + this.f.areaServicio.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // TIPO DE RECLAMO
+      if (this.f.tipoReclamo.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "tipRec_ID = " + this.f.tipoReclamo.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and tipRec_ID = " + this.f.tipoReclamo.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // ESTADO
+      if (this.f.estado.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "rec_IDEstado = " + this.f.estado.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and rec_IDEstado = " + this.f.estado.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // PRIORIDAD
+      if (this.f.prioridad.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "pri_ID = " + this.f.prioridad.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and pri_ID = " + this.f.prioridad.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      // BARRIO
+      if (this.f.barrio.value !== '') {
+        if (this.objFiltro === null) {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro = "bar_ID = " + this.f.barrio.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        } else {
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and bar_ID = " + this.f.barrio.value;
+          this.objFiltro = {
+            stFiltro: this.stFiltro
+          };
+        }
+      }
+
+      console.log(this.objFiltro);
+
+      this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
+        if (data) {
+          this.lstReclamo = JSON.parse(data);
+          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
+          this.dataSource.paginator = this.paginator;
+        } else {
+          Swal.fire({
+            allowOutsideClick: false,
+            type: 'warning',
+            title: 'Consultar reclamo',
+            text: 'No se encontraron reclamos con el filtro aplicado'
+          });
+          this.frmConsultarReclamo.reset();
+        }
+      });
+
+      this.objFiltro = null;
+      this.stFiltro = '';
+
     } catch (error) {
       console.log(error);
     }
@@ -229,6 +402,9 @@ export class ConsultarReclamoComponent implements OnInit {
   // MODAL DETALLE RECLAMO
   verEstados(element: ReclamoC) {
     try {
+      // Guardo el IDReclamo en el localStorage para despues poder hacer el rating del reclamo
+      localStorage.setItem('rec_IDReclamo', JSON.stringify(element.rec_IDReclamo));
+
       if (element) {
         this.dialog.open(ModalEstadoreclamoComponent, {
           width: '50%',
@@ -240,5 +416,9 @@ export class ConsultarReclamoComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  selectTipoReclamo() {
+    this.tipoReclamo = this.arrTipRec.filter(x => x.tipRec_IDTipoReclamo === +this.TipoReclamoID)[0];
   }
 }
