@@ -55,6 +55,17 @@
                             <a [routerLink]="'/canal'" routerLinkActive="active">Canal</a>
                         </li>
                         <li>
+                            <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><span class="hide-menu">Estado</span></a>
+                            <ul>
+                                <li>
+                                    <a [routerLink]="'/estado-ordenServicio'" routerLinkActive="active">Orden Servicio</a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="'/estado-reclamo'" routerLinkActive="active">Reclamo</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a [routerLink]="'/rol'" routerLinkActive="active">Rol</a>
                         </li>
                         <li>
@@ -84,10 +95,16 @@
                             <span class="hide-menu">Dominio</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li>
+                            <a [routerLink]="'/personal'" routerLinkActive="active">Personal</a>
+                        </li>
+                        <li>
                             <a [routerLink]="'/prioridad'" routerLinkActive="active">Prioridad</a>
                         </li>
                         <li>
                             <a [routerLink]="'/reclamo'" routerLinkActive="active">Reclamo</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/tipo-personal'" routerLinkActive="active">Tipo Personal</a>
                         </li>
                         <li>
                             <a [routerLink]="'/usuario'" routerLinkActive="active">Usuario</a>

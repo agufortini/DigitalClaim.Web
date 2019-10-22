@@ -61,7 +61,6 @@ export class RegistrarOrdenServicioComponent implements OnInit {
   }
 
   ngOnInit() {
-    // CONTROLES
     this.frmRegistrarOrden = this.formBuilder.group({
       fechaDesde: [null, Validators.required],
       fechaHasta: [null, Validators.required],

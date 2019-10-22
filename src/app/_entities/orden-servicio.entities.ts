@@ -15,3 +15,15 @@ export class DetalleOrdServ {
     ordServ_IDUsuario: number;
     constructor() { }
 }
+
+export class EstadoOrdenServicio {
+    estOrd_IDEstadoOrdenServicio: number;
+    estOrd_nombre: string;
+    constructor() {}
+}
+
+export interface IEstadoOrdenServicio {
+    estOrd_IDEstadoOrdenServicio: number;
+    estOrd_nombre: string;
+}
+

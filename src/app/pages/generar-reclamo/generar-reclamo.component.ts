@@ -206,7 +206,7 @@ export class GenerarReclamoComponent implements OnInit {
 
             this.reclamoService.selectCalle(this.objCalle).subscribe(dataCalle => {
               this.arrCalle = JSON.parse(dataCalle);
-              this.f.calle.patchValue(this.arrCalle[0].cal_IDCalle);
+              // this.f.calle.patchValue(this.arrCalle[0].cal_IDCalle);
               this.altura = results[0].address_components[0].long_name;
             });
 

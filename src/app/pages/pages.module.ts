@@ -37,8 +37,10 @@ import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.compo
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
 import { RatingReclamoComponent } from './rating/rating-reclamo/rating-reclamo.component';
 import { StarRatingComponent } from './rating/star-rating/star-rating.component';
-import { MatPaginatorIntl } from '@angular/material';
 import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
+import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
+import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
+import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -68,7 +70,10 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
         CanalComponent,
         StarRatingComponent,
         PrioridadComponent,
-        RolComponent
+        RolComponent,
+        EstadoOrdenServicioComponent,
+        EstadoReclamoComponent,
+        PersonalComponent
     ],
     exports: [
         HomeComponent,

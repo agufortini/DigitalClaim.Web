@@ -7,7 +7,6 @@ import { MatPaginator } from '@angular/material/paginator';
 
 // SERVICIOS
 import { SelectService } from 'src/app/services/select-service.service';
-import { OrdenServicioService } from '../../services/orden-servicio.service';
 
 // CONTROLES
 import { MatTableDataSource } from '@angular/material/table';
@@ -35,7 +34,7 @@ export class CrearOrdenServicioComponent implements OnInit {
   frmCrearOrden: FormGroup;
   user: Usuario;
 
-  displayedColumns: string[] = ['select', 'rec_IDReclamo', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre'];
+  displayedColumns: string[] = ['select', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre'];
   dataSource: MatTableDataSource<ReclamoPendiente>;
   selection = new SelectionModel<ReclamoPendiente>(true, []);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

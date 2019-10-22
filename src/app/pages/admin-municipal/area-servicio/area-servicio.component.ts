@@ -155,14 +155,7 @@ export class AreaServicioComponent implements OnInit {
   }
 
   resetForm() {
-    this.frmAreaServicio.reset({
-      cuit: '',
-      nombre: '',
-      domicilio: '',
-      telefono: '',
-      email: ''
-    });
-
+    this.frmAreaServicio.reset();
     this.boBand = true;
     document.getElementById('inputCUIT').focus();
   }

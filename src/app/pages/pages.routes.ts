@@ -20,6 +20,9 @@ import { ReclamoComponent } from '../pages/admin-operativo/reclamo/reclamo.compo
 import { PrioridadComponent } from '../pages/admin-operativo/prioridad/prioridad.component';
 import { RolComponent } from './admin-municipal/rol/rol.component';
 import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.component';
+import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
+import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
+import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
 
 // LOGIN GUARD
 import { LoginGuard } from '../_guards/login.guard';
@@ -48,6 +51,9 @@ const pagesRoutes: Routes = [
             { path: 'prioridad', component: PrioridadComponent, data: { titulo: 'Dominio', subtitulo: 'Prioridad'}, canActivate: [LoginGuard]},
             { path: 'rol', component: RolComponent, data: { titulo: 'Dominio', subtitulo: 'Rol'}, canActivate: [LoginGuard]},
             { path: 'usuario', component: UsuarioComponent, data: { titulo: 'Dominio', subtitulo: 'Usuario' }, canActivate: [LoginGuard]},
+            { path: 'estado-ordenServicio', component: EstadoOrdenServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Orden Servicio' }, canActivate: [LoginGuard]},
+            { path: 'estado-reclamo', component: EstadoReclamoComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'personal', component: PersonalComponent, data: { titulo: 'Dominio', subtitulo: 'Personal' }, canActivate: [LoginGuard]},
             { path: '**', redirectTo: '/login'}
         ]
     },

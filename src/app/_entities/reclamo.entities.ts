@@ -51,16 +51,25 @@ export class ReclamoPendiente {
     constructor() {}
 }
 
+export class EstadoReclamo {
+    estRec_IDEstadoReclamo: number;
+    estRec_nombre: string;
+    constructor() {}
+}
+
 /* -------------------- INTERFACES -------------------- */
 
 export interface ConsultarReclamo {
     rec_IDReclamo: number;
     rec_codigo: number;
     rec_fechaAlta: string;
+    arServ_ID: number;
     arServ_nombre: string;
     tipRec_nombre: string;
     rec_direccion: string;
+    bar_ID: number;
     bar_nombre: string;
+    usu_DNI: number;
 }
 
 export interface ReclamoPendiente {
@@ -77,4 +86,9 @@ export interface ReclamoPendiente {
 export interface ITipoReclamo {
     tipRec_IDTipoReclamo: number;
     tipRec_nombre: string;
+}
+
+export interface IEstadoReclamo {
+    estRec_IDEstadoReclamo: number;
+    estRec_nombre: string;
 }

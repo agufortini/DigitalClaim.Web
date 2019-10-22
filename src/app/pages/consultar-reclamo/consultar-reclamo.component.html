@@ -4,16 +4,6 @@
         <div class="card-body">
             <form [formGroup]="frmConsultarReclamo">
                 <div *ngIf="user.usu_IDRol === 1" class="form-group">
-                    <div class="form-row">
-                        <label>Reclamos:</label>
-                        <div class="ml-1"></div>
-                        <mat-select (selectionChange)="listarReclamosPorEstado()" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
-                            <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
-                                {{ item.estRec_nombre }}
-                            </mat-option>
-                        </mat-select>
-                    </div>
-                    <br>
                     <mat-form-field>
                         <input matInput (keyup)="applyFilter($event.target.value)">
                     </mat-form-field>
@@ -37,80 +27,42 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label>CODIGO DE RECLAMO</label>
-                                <input matInput (keypress)="validarIngreso($event)" formControlName="codRec" [(ngModel)]="inputCodRec" class="form-control" type="text" placeholder="Código de reclamo">
-                            </div>
-                            <div class="col-md-6">
                                 <label>DNI</label><br>
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
                             </div>
-                        </div>
-                    </div>
-
-                    <button (click)="masFiltros()" mat-mini-fab class="btnFiltro" matTooltip="{{ ttpFiltro }}" matTooltipPosition="right"><i id="btnIcon" class="material-icons">add</i></button>
-                    <br><br>
-
-                    <div *ngIf="moreFilter">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <label>AREA DE SERVICIO</label>
-                                    <mat-select (selectionChange)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
-                                        <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
-                                            {{ item.arServ_nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>RECLAMO</label>
-                                    <mat-select (selectionChange)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control" placeholder="Seleccione Reclamo">
-                                        <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
-                                            {{ item.tipRec_nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <label>ESTADO</label>
-                                    <mat-select formControlName="estado" class="form-control" [(ngModel)]="ddlEstRec" placeholder="Seleccione Estado">
-                                        <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstadoReclamo">
-                                            {{ item.estRec_nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>PRIORIDAD</label>
-                                    <mat-select formControlName="prioridad" class="form-control" [(ngModel)]="ddlPri" placeholder="Seleccione Prioridad">
-                                        <mat-option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
-                                            {{ item.pri_nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-12">
-                                    <label for="ddlBarrio">BARRIO</label><br>
-                                    <mat-select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
-                                        <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
-                                            {{ item.bar_nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                </div>
+                            <div class="col-md-6">
+                                <label>AREA DE SERVICIO</label>
+                                <mat-select (selectionChange)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
+                                    <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                        {{ item.arServ_nombre }}
+                                    </mat-option>
+                                </mat-select>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="ddlBarrio">BARRIO</label><br>
+                                <mat-select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
+                                    <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                                        {{ item.bar_nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-8">
                             <button mat-stroked-button (click)="selectReclamo()" class="btn btn-block btnPrimario myBtnCard">
                                 Consultar <i class="fa fa-fw fa-search"></i>
                             </button>
+                        </div>
+
+                        <div class="col-md-4" style="float: left;">
+                            <button (click)="resetForm()" mat-mini-fab class="btnFiltro" class="btnLimpiar" matTooltip="Limpiar campos" matTooltipPosition="left"><i class="material-icons">clear</i></button>
                         </div>
                     </div>
                 </div>
@@ -120,6 +72,12 @@
 </div>
 
 <div id="idTableConsulta" style="visibility: hidden;">
+    <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+        <p>Para consultar un reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
+    </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="rec_codigo">
             <th mat-header-cell *matHeaderCellDef>Código</th>

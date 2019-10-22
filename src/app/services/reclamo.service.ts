@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 import { Ticket } from '../_entities/ticket.entities';
 import { Historial } from '../_entities/historial.entities';
 import { Contacto } from '../_entities/contacto.entities';
-import { ReclamoPendiente } from '../_entities/reclamo.entities';
+import { ReclamoPendiente, EstadoReclamo } from '../_entities/reclamo.entities';
 
 @Injectable({
   providedIn: 'root'
@@ -122,5 +122,15 @@ export class ReclamoService {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ValidarRating`, {
       params: new HttpParams().set('stObj', JSON.stringify(objIDRec))
     });
+  }
+
+  /* -------------------------------------------- ESTADO RECLAMO -------------------------------------------- */
+
+  registrarEstadoReclamo(objEstRec: EstadoReclamo): Observable<EstadoReclamo> {
+    return this.httpClient.post<EstadoReclamo>(`${environment.apiUrl}api/ReclamoController/RegistrarEstadoReclamo`, objEstRec);
+  }
+
+  actualizarEstadoReclamo(objEstRec: EstadoReclamo): Observable<EstadoReclamo> {
+    return this.httpClient.post<EstadoReclamo>(`${environment.apiUrl}api/ReclamoController/ActualizarEstadoReclamo`, objEstRec);
   }
 }

@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 // ENTIDADES
 import { OrdenServicio, DetalleOrdServ } from '../_entities/orden-servicio.entities';
 import { PersonalOrdServ } from '../_entities/personal-por-orden-servicio.entities';
+import { EstadoOrdenServicio } from '../_entities/orden-servicio.entities';
 
 @Injectable({
     providedIn: 'root'
@@ -29,5 +30,14 @@ export class OrdenServicioService {
 
     registrarPersonalPorOrden(arrPersonal: PersonalOrdServ[]): Observable<PersonalOrdServ[]> {
         return this.httpClient.post<PersonalOrdServ[]>(`${environment.apiUrl}api/OrdenServicioController/RegistrarPersonalOrdenServicio`, arrPersonal);
+    }
+
+    /* -------------------------------------------- ESTADO ORDEN SERVICIO -------------------------------------------- */
+    registrarEstadoOrdenServicio(objEstadoOrdenServicio: EstadoOrdenServicio): Observable<EstadoOrdenServicio> {
+        return this.httpClient.post<EstadoOrdenServicio>(`${environment.apiUrl}api/OrdenServicioController/RegistrarEstadoOrdenServicio`, objEstadoOrdenServicio);
+    }
+
+    actualizarEstadoOrdenServicio(objEstadoOrdenServicio: EstadoOrdenServicio): Observable<EstadoOrdenServicio> {
+        return this.httpClient.post<EstadoOrdenServicio>(`${environment.apiUrl}api/OrdenServicioController/ActualizarEstadoOrdenServicio`, objEstadoOrdenServicio);
     }
 }
