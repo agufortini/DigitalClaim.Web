@@ -35,9 +35,10 @@ export class AreaServicioService {
     }
 
     /* -------------------------------------------- PERSONAL -------------------------------------------- */
-    selectDataPersonal(objIDPersonal: any): Observable<any> {
-        return this.httpClient.get<any>(`${ environment.apiUrl }api/AreaServicioController/SelectPersonal`, {
-            params: new HttpParams().set('stObj', JSON.stringify(objIDPersonal))
+
+    selectPersonal(objIDArServ: any): Observable<any> {
+        return this.httpClient.get<any>(`${environment.apiUrl}api/AreaServicioController/SelectPersonal`, {
+            params: new HttpParams().set('stObj', JSON.stringify(objIDArServ))
         });
     }
 
@@ -49,4 +50,9 @@ export class AreaServicioService {
         return this.httpClient.post<Personal>(`${ environment.apiUrl }api/AreaServicioController/ActualizarPersonal`, objPer);
     }
 
+    selectDataPersonal(objIDPersonal: any): Observable<any> {
+        return this.httpClient.get<any>(`${environment.apiUrl}api/AreaServicioController/SelectDataPersonal`, {
+            params: new HttpParams().set('stObj', JSON.stringify(objIDPersonal))
+        });
+    }
 }

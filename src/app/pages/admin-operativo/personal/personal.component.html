@@ -4,15 +4,20 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Personal">
         </mat-form-field>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="per_nombre">
-                <th mat-header-cell *matHeaderCellDef style="width: 250px;">Personal</th>
-                <td mat-cell *matCellDef="let element">{{ element.per_nombre }}</td>
+            <ng-container matColumnDef="per_dni">
+                <th mat-header-cell *matHeaderCellDef style="width: 250px;">DNI</th>
+                <td mat-cell *matCellDef="let element">{{ element.per_dni }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="per_nombreCompleto">
+                <th mat-header-cell *matHeaderCellDef style="width: 450px;">Empleado</th>
+                <td mat-cell *matCellDef="let element">{{ element.per_nombreCompleto }}</td>
             </ng-container>
 
             <ng-container matColumnDef="Editar">
                 <th mat-header-cell *matHeaderCellDef>Editar</th>
                 <td mat-cell *matCellDef="let element">
-                    <button (click)="selectDataPersonal(element.per_IDPersonal, element.per_nombre)" mat-flat-button color="primary">
+                    <button (click)="selectDataPersonal(element.per_IDPersonal)" mat-flat-button color="primary">
                             <i class="material-icons">create</i>
                         </button>
                 </td>
