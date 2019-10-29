@@ -1,4 +1,4 @@
-/* -------------------- CLASES -------------------- */
+/* -------------------- VALIDAR RECLAMO -------------------- */
 
 export class ValidarReclamo {
     rec_IDReclamo: number;
@@ -10,6 +10,8 @@ export class ValidarReclamo {
     constructor() { }
 }
 
+/* -------------------- GUARDAR RECLAMO -------------------- */
+
 export class Reclamo {
     rec_fechaAlta: string;
     rec_altura: number;
@@ -18,8 +20,6 @@ export class Reclamo {
     rec_IDOrdenServicio: number;
     rec_IDTipoReclamo: number;
     rec_IDCallePorBarrio: number;
-    rec_IDEstadoReclamo: number;
-    rec_IDRating: number;
 }
 
 export class ReclamoC {
@@ -51,8 +51,10 @@ export class ReclamoPendiente {
     constructor() {}
 }
 
+/* -------------------- ESTADO RECLAMO -------------------- */
+
 export class EstadoReclamo {
-    estRec_IDEstadoReclamo: number;
+    estRec_IDEstado: number;
     estRec_nombre: string;
     constructor() {}
 }
@@ -83,12 +85,14 @@ export interface ReclamoPendiente {
     bar_nombre: string;
 }
 
+/* -------------------- ABMS -------------------- */
+
 export interface ITipoReclamo {
     tipRec_IDTipoReclamo: number;
     tipRec_nombre: string;
 }
 
 export interface IEstadoReclamo {
-    estRec_IDEstadoReclamo: number;
+    estRec_IDEstado: number;
     estRec_nombre: string;
 }

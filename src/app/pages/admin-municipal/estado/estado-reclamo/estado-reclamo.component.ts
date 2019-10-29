@@ -73,7 +73,7 @@ export class EstadoReclamoComponent implements OnInit {
       Swal.showLoading();
 
       this.objEstRec = new EstadoReclamo();
-      this.objEstRec.estRec_IDEstadoReclamo = (boBand) ? 0 : this.IDEstadoReclamo;
+      this.objEstRec.estRec_IDEstado = (boBand) ? 0 : this.IDEstadoReclamo;
       this.objEstRec.estRec_nombre = this.inputNombre;
 
       if (boBand) {

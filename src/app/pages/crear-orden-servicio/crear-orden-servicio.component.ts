@@ -85,7 +85,7 @@ export class CrearOrdenServicioComponent implements OnInit {
     });
 
     this.cargaDDL();
-    this.selectReclamosPendientes();
+    this.selectReclamosSinAsignar();
   }
 
   cargaDDL() {
@@ -110,13 +110,13 @@ export class CrearOrdenServicioComponent implements OnInit {
     }
   }
 
-  selectReclamosPendientes() {
+  selectReclamosSinAsignar() {
     try {
       this.objIDArServ = {
         usu_IDAreaServicio: this.user.usu_IDAreaServicio
       };
 
-      this.reclamoService.selectReclamosPendientes(this.objIDArServ).subscribe(data => {
+      this.reclamoService.selectReclamosSinAsignar(this.objIDArServ).subscribe(data => {
           this.lstReclamo = JSON.parse(data);
           this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);
         }

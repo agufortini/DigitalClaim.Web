@@ -65,15 +65,64 @@
     </div>
 </div>
 
-<!-- <br>
+<br>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-8">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">{{ lstReclamo.arServ_nombre }}</h4>
                 <app-grafico [chartLabels]="lstReclamo.arServ_nombre" [chartData]="" [chartType]="">
                 </app-grafico>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div>
+                        <div class="chart">
+                            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div>
+                        <div style="display: block">
+                            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [chartType]="barChartType">
+                                </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div>
+                        <div style="display: block">
+                            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
+                                </canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

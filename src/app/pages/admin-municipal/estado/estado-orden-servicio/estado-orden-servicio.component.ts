@@ -74,7 +74,7 @@ export class EstadoOrdenServicioComponent implements OnInit {
       Swal.showLoading();
 
       this.objEstOrd = new EstadoOrdenServicio();
-      this.objEstOrd.estOrd_IDEstadoOrdenServicio = (boBand) ? 0 : this.IDEstadoOrden;
+      this.objEstOrd.estOrd_IDEstado = (boBand) ? 0 : this.IDEstadoOrden;
       this.objEstOrd.estOrd_nombre = this.inputNombre;
 
       if (boBand) {

@@ -4,7 +4,7 @@ export class OrdenServicio {
     orServ_fechaVencimiento: string;
     orServ_observaciones: string;
     orServ_IDAreaServicio: number;
-    orServ_IDEstadoOrdenServicio: number;
+    orServ_IDEstado: number;
     constructor() {}
 }
 
@@ -17,13 +17,13 @@ export class DetalleOrdServ {
 }
 
 export class EstadoOrdenServicio {
-    estOrd_IDEstadoOrdenServicio: number;
+    estOrd_IDEstado: number;
     estOrd_nombre: string;
     constructor() {}
 }
 
 export interface IEstadoOrdenServicio {
-    estOrd_IDEstadoOrdenServicio: number;
+    estOrd_IDEstado: number;
     estOrd_nombre: string;
 }
 

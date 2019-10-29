@@ -18,11 +18,11 @@ export class ReclamoService {
 
   // GENERAR Y REGISTRAR RECLAMO
 
-  // validarRealizacionReclamo(objIDUser: any): Observable<any> {
-  //   return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ValidarRealizacionReclamo`, {
-  //     params: new HttpParams().set('stObj', JSON.stringify(objIDUser))
-  //   });
-  // }
+  validarRealizacionReclamo(objIDUser: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ValidarRealizacionReclamo`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objIDUser))
+    });
+  }
 
   validarReclamo(objValidarReclamo: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ValidarReclamo`, {
@@ -90,8 +90,8 @@ export class ReclamoService {
     });
   }
 
-  selectReclamosPendientes(objIDArServ: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectReclamosPendientes`, {
+  selectReclamosSinAsignar(objIDArServ: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectReclamosSinAsignar`, {
         params: new HttpParams().set('stObj', JSON.stringify(objIDArServ))
     });
   }

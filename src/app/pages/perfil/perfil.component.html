@@ -8,27 +8,18 @@
                 <div class="form-group">
                     <label>DNI</label>
                     <br>
-                    <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control inputAbm" type="text" placeholder="DNI" maxlength="8">
-                    <button mat-button (click)="inputDNI=''" *ngIf="inputDNI" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                        <i class="material-icons">clear</i>
-                    </button>
+                    <input id="txtDNI" matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
                 </div>
 
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>USUARIO</label>
-                            <input matInput formControlName="usuario" [(ngModel)]="inputUser" class="form-control inputAbm" type="text" placeholder="Nombre de Usuario">
-                            <button mat-button (click)="inputUser=''" *ngIf="inputUser" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
+                            <input matInput formControlName="usuario" [(ngModel)]="inputUser" class="form-control" type="text" placeholder="Nombre de Usuario">
                         </div>
                         <div class="col-md-6">
                             <label>CONTRASEÑA</label>
-                            <input matInput formControlName="password" [(ngModel)]="inputPass" class="form-control inputAbm" type="password" placeholder="Contraseña">
-                            <button mat-button (click)="inputPass=''" *ngIf="inputPass" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
+                            <input matInput formControlName="password" [(ngModel)]="inputPass" class="form-control" type="password" placeholder="Contraseña">
                         </div>
                     </div>
                 </div>
@@ -37,17 +28,11 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>NOMBRE</label>
-                            <input matInput formControlName="nombre" [(ngModel)]="inputNombre" class="form-control inputAbm" type="text" placeholder="Ingrese nombre">
-                            <button mat-button (click)="inputNombre=''" *ngIf="inputNombre" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
+                            <input matInput formControlName="nombre" [(ngModel)]="inputNombre" class="form-control" type="text" placeholder="Ingrese nombre">
                         </div>
                         <div class="col-md-6">
                             <label>APELLIDO</label>
-                            <input matInput formControlName="apellido" [(ngModel)]="inputApellido" class="form-control inputAbm" type="text" placeholder="Ingrese apellido">
-                            <button mat-button (click)="inputApellido=''" *ngIf="inputApellido" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
+                            <input matInput formControlName="apellido" [(ngModel)]="inputApellido" class="form-control" type="text" placeholder="Ingrese apellido">
                         </div>
                     </div>
                 </div>
@@ -56,17 +41,11 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>TELEFONO</label>
-                            <input matInput (keypress)="validarIngreso($event)" formControlName="telefono" [(ngModel)]="inputTel" class="form-control inputAbm" type="text" placeholder="Ingrese n° de teléfono">
-                            <button mat-button (click)="inputTel=''" *ngIf="inputTel" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                        <i class="material-icons">clear</i>
-                    </button>
+                            <input matInput (keypress)="validarIngreso($event)" formControlName="telefono" [(ngModel)]="inputTel" class="form-control" type="text" placeholder="Ingrese n° de teléfono">
                         </div>
                         <div class="col-md-6">
                             <label>EMAIL</label>
-                            <input matInput formControlName="email" [(ngModel)]="inputEmail" class="form-control inputAbm" type="text" placeholder="Ingrese email">
-                            <button mat-button (click)="inputEmail=''" *ngIf="inputEmail" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
+                            <input matInput formControlName="email" [(ngModel)]="inputEmail" class="form-control" type="text" placeholder="Ingrese email">
                         </div>
                     </div>
                 </div>
@@ -76,6 +55,9 @@
                         <button (click)="guardarDatos()" type="button" class="btn btn-block btnPrimario myBtnCard">
                             Guardar <i class="fa fa-fw fa-save"></i>
                         </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button (click)="resetForm()" mat-mini-fab class="btnFiltro" class="btnLimpiar" matTooltip="Limpiar campos" matTooltipPosition="left"><i class="material-icons">clear</i></button>
                     </div>
                 </div>
             </form>

@@ -14,6 +14,7 @@ import { ReclamoService } from '../../services/reclamo.service';
 // ENTIDADES
 import { ValidarReclamo } from '../../_entities/reclamo.entities';
 import { Usuario } from '../../_entities/usuario.entities';
+import { Canal } from '../../_entities/canal.entities';
 
 @Component({
   selector: 'app-generar-reclamo',
@@ -39,6 +40,7 @@ export class GenerarReclamoComponent implements OnInit {
   arrBarrio: any;
   arrCalle: any;
   arrCanal: any;
+  lstCanal: any[] = [];
   arrOpcion = [
     { stOpcion: 'visible', opcion: 'Si' },
     { stOpcion: 'hidden', opcion: 'No' },
@@ -96,7 +98,7 @@ export class GenerarReclamoComponent implements OnInit {
           observaciones: ['']
         });
 
-        this.cargaDDL();
+        // this.validarRealizacionReclamo();
       } else if (this.user.usu_IDRol === 2 || this.user.usu_IDRol === 5) {
         this.frmGenerarReclamo = this.formBuilder.group({
           areaServicio: ['', Validators.required],
@@ -110,9 +112,7 @@ export class GenerarReclamoComponent implements OnInit {
         });
       }
 
-      this.ddlService.selectEntitie('AreaServicioController', 'SelectAreaServicio').subscribe(data => {
-        this.arrArServ = JSON.parse(data);
-      });
+      this.cargaDDL();
     } catch (error) {
       console.log(error);
     }
@@ -132,9 +132,20 @@ export class GenerarReclamoComponent implements OnInit {
       this.arrBarrio = JSON.parse(data);
     });
 
-    if (this.user.usu_IDRol === 2) {
-      this.ddlService.selectEntitie('ReclamoController', 'SelectCanal').subscribe(data => {
+    if (this.user.usu_IDRol === 2 || this.user.usu_IDRol === 5) {
+      this.ddlService.selectEntitie('CanalController', 'SelectCanal').subscribe(data => {
         this.arrCanal = JSON.parse(data);
+
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.arrCanal.length; i++) {
+          const IDCanal: number = this.arrCanal[i].can_IDCanal;
+
+          if (IDCanal <= 2) {
+            this.lstCanal.push(this.arrCanal[i]);
+          } else {
+            return;
+          }
+        }
       });
     }
   }
@@ -166,7 +177,7 @@ export class GenerarReclamoComponent implements OnInit {
         // set latitude, longitude and zoom
         this.lat = place.geometry.location.lat();
         this.lng = place.geometry.location.lng();
-        this.zoom = 12;
+        // this.zoom = 12;
       });
      });
     });
@@ -196,6 +207,7 @@ export class GenerarReclamoComponent implements OnInit {
     this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
       if (status === 'OK') {
         if (results[0]) {
+
           // Con el nombre de la calle, se buscan todos los barrios de esa calle
           this.objCalle = {
             cal_nombre: results[0].address_components[1].long_name
@@ -206,7 +218,6 @@ export class GenerarReclamoComponent implements OnInit {
 
             this.reclamoService.selectCalle(this.objCalle).subscribe(dataCalle => {
               this.arrCalle = JSON.parse(dataCalle);
-              // this.f.calle.patchValue(this.arrCalle[0].cal_IDCalle);
               this.altura = results[0].address_components[0].long_name;
             });
 
@@ -221,38 +232,33 @@ export class GenerarReclamoComponent implements OnInit {
   }
   //#endregion
 
-  // validarReclamoDiario() {
-    //   // FECHA UTILIZADA PARA CORROBORAR QUE EL USUARIO NO REGISTRE MAS DE 1 RECLAMO POR DIA
-    //   if (this.user.usu_IDRol === 1) {
-      //     this.fechaRealizacion = new Date();
-      //     this.fechaRealizacion = this.datePipe.transform(this.fechaRealizacion, 'dd/MM/yyyy');
-      
-  //     this.objIDUser = {
-  //       usu_IDUsuario: this.user.usu_IDUsuario
-  //     };
+  validarRealizacionReclamo() {
+      if (this.user.usu_IDRol === 1) {
+        this.objIDUser = {
+          usu_IDUsuario: this.user.usu_IDUsuario
+        };
 
-  //     this.reclamoService.validarRealizacionReclamo(this.objIDUser).subscribe(
-  //       (data) => {
-  //         const ultimaFecha = JSON.parse(data);
-  //         this.fechaHoy = new Date();
-  //         this.fechaHoy = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
+        this.reclamoService.validarRealizacionReclamo(this.objIDUser).subscribe(data => {
+          const rtdo = JSON.parse(data);
+          this.fechaHoy = new Date();
+          this.fechaHoy = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
 
-  //         if (ultimaFecha.rec_fechaAlta === this.fechaHoy) {
-  //           Swal.fire({
-  //             allowOutsideClick: false,
-  //             type: 'warning',
-  //             title: 'Registrar reclamo',
-  //             text: 'No puede registrar un reclamo debido a que ya ha registrado uno en el día de hoy, espere 24hs para poder llevar a cabo la operación nuevamente.'
-  //           }).then(result => {
-  //             if (result.value) {
-  //               this.router.navigateByUrl('/home');
-  //             }
-  //           });
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
+          if (rtdo.rec_fechaAlta === this.fechaHoy) {
+            Swal.fire({
+              allowOutsideClick: false,
+              type: 'warning',
+              title: 'Registrar reclamo',
+              text: 'No puede realizar la operación nuevamente ya que sólo se puede enviar un reclamo por día.'
+            }).then(result => {
+              if (result.value) {
+                this.router.navigateByUrl('/home');
+              }
+            });
+          }
+        }
+      );
+    }
+  }
 
   validarReclamo() {
     try {
@@ -286,7 +292,6 @@ export class GenerarReclamoComponent implements OnInit {
                 canal: this.Canal,
                 observaciones: this.observacion
               };
-              console.log(this.objRec);
               localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
               this.router.navigateByUrl('/registrar-reclamo');
           }
@@ -333,7 +338,7 @@ export class GenerarReclamoComponent implements OnInit {
 
   cargaSelectCalle() {
     try {
-      if (document.getElementById('googleMap').style.visibility === 'hidden') {
+      if (this.mapVisibility === 'hidden') {
         this.objIDBarrio = {
           bar_IDBarrio: this.f.barrio.value
         };

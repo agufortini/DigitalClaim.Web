@@ -66,12 +66,12 @@
                     </div>
                 </div>
 
-                <div *ngIf="user.usu_IDRol === 2">
+                <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
                     <div class="form-group">
                         <div class="form-row">
                             <label>CANAL*</label>
                             <mat-select (selectionChange)="selectCanal()" formControlName="canal" [(ngModel)]="CanalID" class="form-control" placeholder="Seleccione Canal de Comunicación">
-                                <mat-option *ngFor="let item of arrCanal" [value]="item.can_IDCanal">
+                                <mat-option *ngFor="let item of lstCanal" [value]="item.can_IDCanal">
                                     {{ item.can_nombre }}
                                 </mat-option>
                             </mat-select>

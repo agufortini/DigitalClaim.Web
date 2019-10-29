@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
 
 // ENTITIES
 import { Usuario } from '../../_entities/usuario.entities';
@@ -13,18 +14,21 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-contacto',
   templateUrl: './contacto.component.html',
-  styleUrls: ['./contacto.component.css']
+  styleUrls: ['./contacto.component.css'],
+  providers: [DatePipe]
 })
 export class ContactoComponent implements OnInit {
 
   frmContacto: FormGroup;
   user: Usuario;
   objContacto: Contacto;
+  fechaHoy = new Date();
 
 
   constructor(private formBuilder: FormBuilder,
               private reclamoService: ReclamoService,
-              private router: Router) {
+              private router: Router,
+              private datePipe: DatePipe) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -52,6 +56,7 @@ export class ContactoComponent implements OnInit {
       this.objContacto = new Contacto();
       this.objContacto.con_IDUsuario = this.user.usu_IDUsuario;
       this.objContacto.con_mensaje = this.f.mensaje.value;
+      this.objContacto.con_fechaAlta = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
 
       this.reclamoService.registrarConsulta(this.objContacto).subscribe((data) => {
         if (data) {

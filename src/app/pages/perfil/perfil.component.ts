@@ -7,6 +7,7 @@ import { Usuario } from '../../_entities/usuario.entities';
 
 // SERVICIOS
 import { UsuarioService } from '../../services/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -18,6 +19,7 @@ export class PerfilComponent implements OnInit {
   frmPerfil: FormGroup;
   user: Usuario;
   objUser: Usuario;
+  objIDUser: any;
 
   // NG MODEL
   inputDNI = '';
@@ -29,6 +31,7 @@ export class PerfilComponent implements OnInit {
   inputEmail = '';
 
   constructor(private formBuilder: FormBuilder,
+              private router: Router,
               private usuarioService: UsuarioService) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
@@ -44,17 +47,27 @@ export class PerfilComponent implements OnInit {
       email: [null, Validators.required]
     });
 
-    this.inicializarFormulario();
+    this.selectDatosPersonales();
   }
 
-  inicializarFormulario() {
-    this.inputDNI = this.user.usu_dni.toString();
-    this.inputUser = this.user.usu_username;
-    this.inputPass = this.user.usu_password;
-    this.inputNombre = this.user.usu_nombre;
-    this.inputApellido = this.user.usu_apellido;
-    this.inputTel = this.user.usu_telefono.toString();
-    this.inputEmail = this.user.usu_email;
+  selectDatosPersonales() {
+    this.objIDUser = {
+      usu_IDUsuario: this.user.usu_IDUsuario
+    };
+
+    this.usuarioService.selectDataUsuario(this.objIDUser).subscribe(data => {
+      const dataUser: Usuario = JSON.parse(data);
+
+      if (dataUser) {
+        this.inputDNI = dataUser.usu_dni.toString();
+        this.inputUser = dataUser.usu_username;
+        this.inputPass = dataUser.usu_password;
+        this.inputNombre = dataUser.usu_nombre;
+        this.inputApellido = dataUser.usu_apellido;
+        this.inputTel = dataUser.usu_telefono.toString();
+        this.inputEmail = dataUser.usu_email;
+      }
+    });
   }
 
   guardarDatos() {
@@ -75,6 +88,7 @@ export class PerfilComponent implements OnInit {
       this.objUser.usu_apellido = this.inputApellido;
       this.objUser.usu_telefono = +this.inputTel;
       this.objUser.usu_email = this.inputEmail;
+      this.objUser.usu_IDRol = 1;
 
       this.usuarioService.actualizarUsuario(this.objUser).subscribe(data => {
         if (+data === 1) {
@@ -83,13 +97,22 @@ export class PerfilComponent implements OnInit {
             'Usuario',
             'Sus datos personales han sido actualizados.',
             'success'
-          );
+          ).then(result => {
+            this.router.navigateByUrl('home');
+          });
         }
       });
 
     } catch (error) {
       console.log(error);
     }
+  }
+
+
+
+  resetForm() {
+    this.frmPerfil.reset();
+    document.getElementById('txtDNI').focus();
   }
 
   // VALIDACION INGRESO NUMEROS

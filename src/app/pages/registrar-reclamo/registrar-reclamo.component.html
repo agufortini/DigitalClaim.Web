@@ -8,10 +8,12 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-row">
-                                <label><strong>Reclamante:</strong></label>
-                                <div class="ml-1"></div>
-                                <label>{{ user.usu_nombre + ' ' + user.usu_apellido }}</label>
+                            <div *ngIf="user.usu_IDRol === 1">
+                                <div class="form-row">
+                                    <label><strong>Reclamante:</strong></label>
+                                    <div class="ml-1"></div>
+                                    <label>{{ user.usu_nombre + ' ' + user.usu_apellido }}</label>
+                                </div>
                             </div>
 
                             <div id="divFecha" class="form-row">

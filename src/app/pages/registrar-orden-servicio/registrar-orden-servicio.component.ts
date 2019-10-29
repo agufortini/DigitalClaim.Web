@@ -116,7 +116,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
       this.objOrdServ.orServ_fechaVencimiento = this.datePipe.transform(this.f.fechaHasta.value, 'dd/MM/yyyy');
       this.objOrdServ.orServ_observaciones = this.observaciones;
       this.objOrdServ.orServ_IDAreaServicio = this.user.usu_IDAreaServicio;
-      this.objOrdServ.orServ_IDEstadoOrdenServicio = 1;
+      this.objOrdServ.orServ_IDEstado = 1;
 
       // ACTUALIZACION DE RECLAMO ASIGNANDO LA ORDEN DE SERVICIO CORRESPONDIENTE
       this.ordServService.registrarOrdenServicio(this.objOrdServ).subscribe(dataOrdServ => {

@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   ayudaUsuario() {
     this.result =  this.snackBar.open(this.mensaje, 'OK', {
-      duration: 10000,
+      duration: 5000,
     });
     localStorage.setItem('ayuda', JSON.stringify(false));
   }

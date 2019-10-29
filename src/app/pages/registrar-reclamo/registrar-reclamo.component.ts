@@ -53,7 +53,7 @@ export class RegistrarReclamoComponent implements OnInit {
 
   ngOnInit() {
     this.fechaRec = new Date();
-    this.fechaRec = this.datePipe.transform(this.fechaRec, 'dd/MM/yyyy');
+    console.log(this.fechaRec = this.datePipe.transform(this.fechaRec, 'dd/MM/yyyy'));
   }
 
   registrarReclamo() {
@@ -73,8 +73,6 @@ export class RegistrarReclamoComponent implements OnInit {
       this.objReclamo.rec_observaciones = (this.objRec.observaciones) ? this.objRec.observaciones : null;
       this.objReclamo.rec_IDOrdenServicio = null;
       this.objReclamo.rec_IDTipoReclamo = +this.objRec.tipoReclamo.tipRec_IDTipoReclamo;
-      this.objReclamo.rec_IDEstadoReclamo = 1;
-      this.objReclamo.rec_IDRating = null;
 
       // CREACION DE OBJETO TICKET
       this.objTicket = new Ticket();
@@ -123,7 +121,7 @@ export class RegistrarReclamoComponent implements OnInit {
 
                   this.objHistorial.his_horaIngreso = hour + ':' + min;
                   this.objHistorial.his_observaciones = 'Notificado en Area de Servicio';
-                  this.objHistorial.his_IDOrdenServicio = 0;
+                  this.objHistorial.his_IDEstado = 1;
                   this.objHistorial.his_IDReclamo = this.splitted[0];
 
                   // REGISTRO DE HISTORIAL

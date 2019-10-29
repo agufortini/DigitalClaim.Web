@@ -95,7 +95,7 @@ export class ConsultarReclamoComponent implements OnInit {
       // CONTROLES
       if (this.user.usu_IDRol === 1) {
         this.frmControls();
-        this.listarReclamosPendientes();
+        this.listarReclamos();
         document.getElementById('idTableConsulta').style.visibility = 'visible';
       } else {
         this.frmControls();
@@ -135,10 +135,9 @@ export class ConsultarReclamoComponent implements OnInit {
     return this.frmConsultarReclamo.controls;
   }
 
-  listarReclamosPendientes() {
+  listarReclamos() {
     this.objIDUser = {
-      usu_IDUsuario: this.user.usu_IDUsuario,
-      rec_IDEstadoReclamo: 1
+      usu_IDUsuario: this.user.usu_IDUsuario
     };
 
     this.selectServicio();
@@ -197,13 +196,9 @@ export class ConsultarReclamoComponent implements OnInit {
         if (this.objFiltro === null) {
           // tslint:disable-next-line:quotemark
           this.stFiltro = "usu_DNI = " + this.f.dni.value;
-          this.objFiltro = {
-            stFiltro: this.stFiltro
-          };
         } else {
-          this.lstReclamo.push(this.lstReclamo.find(x => x.usu_DNI === this.f.dni.value));
-          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-          this.dataSource.paginator = this.paginator;
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and usu_DNI = " + this.f.dni.value;
         }
       }
 
@@ -212,13 +207,9 @@ export class ConsultarReclamoComponent implements OnInit {
         if (this.objFiltro === null) {
           // tslint:disable-next-line:quotemark
           this.stFiltro = "arServ_ID = " + this.f.areaServicio.value;
-          this.objFiltro = {
-            stFiltro: this.stFiltro
-          };
         } else {
-          this.lstReclamo.push(this.lstReclamo.find(x => x.arServ_ID === this.f.areaServicio.value));
-          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-          this.dataSource.paginator = this.paginator;
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and arServ_ID = " + this.f.areaServicio.value;
         }
       }
 
@@ -227,35 +218,36 @@ export class ConsultarReclamoComponent implements OnInit {
         if (this.objFiltro === null) {
           // tslint:disable-next-line:quotemark
           this.stFiltro = "bar_ID = " + this.f.barrio.value;
-          this.objFiltro = {
-            stFiltro: this.stFiltro
-          };
         } else {
-          this.lstReclamo.push(this.lstReclamo.find(x => x.bar_ID === this.f.barrio.value));
-          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-          this.dataSource.paginator = this.paginator;
+          // tslint:disable-next-line:quotemark
+          this.stFiltro += " and bar_ID = " + this.f.barrio.value;
         }
       }
 
-      this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
-        if (data) {
-          this.lstReclamo = JSON.parse(data);
-          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-          this.dataSource.paginator = this.paginator;
-          document.getElementById('idTableConsulta').style.visibility = 'visible';
-        } else {
-          Swal.fire({
-            allowOutsideClick: false,
-            type: 'warning',
-            title: 'Consultar reclamo',
-            text: 'No se encontraron reclamos con el filtro aplicado'
-          });
-          this.frmConsultarReclamo.reset();
-        }
-      });
+      this.objFiltro = {
+        stFiltro: this.stFiltro
+      };
 
-      this.stFiltro = '';
-      this.objFiltro = null;
+      console.log(this.objFiltro);
+
+      // this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
+      //   if (data) {
+      //     this.lstReclamo = JSON.parse(data);
+      //     this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
+      //     this.dataSource.paginator = this.paginator;
+      //     document.getElementById('idTableConsulta').style.visibility = 'visible';
+      //   } else {
+      //     Swal.fire({
+      //       allowOutsideClick: false,
+      //       type: 'warning',
+      //       title: 'Consultar reclamo',
+      //       text: 'No se encontraron reclamos con el filtro aplicado'
+      //     });
+      //     this.frmConsultarReclamo.reset();
+      //   }
+      // });
+
+      this.resetForm();
 
     } catch (error) {
       console.log(error);
@@ -301,6 +293,8 @@ export class ConsultarReclamoComponent implements OnInit {
 
   resetForm() {
     this.frmConsultarReclamo.reset();
+    this.stFiltro = '';
+    this.objFiltro = null;
   }
 
   selectTipoReclamo() {
