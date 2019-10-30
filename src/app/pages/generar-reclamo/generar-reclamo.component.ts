@@ -305,10 +305,11 @@ export class GenerarReclamoComponent implements OnInit {
     if (this.mapVisibility === 'hidden') {
       this.cargaDDL();
       this.resetSelects();
-
+      this.f.altura.enable();
     } else {
       this.getPlacesAutocomplete();
       this.resetSelects();
+      this.f.altura.disable();
     }
   }
 
