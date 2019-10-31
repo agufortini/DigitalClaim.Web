@@ -33,17 +33,11 @@
                         <div class="form-group">
                             <label>NOMBRE*</label>
                             <input matInput id="txtCalle" formControlName="nombre" [(ngModel)]="inputCalle" type="text" class="form-control inputAbm" placeholder="Ingrese nombre de Calle">
-                            <button *ngIf="inputCalle !== ''" mat-button (click)="resetForm('calle')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
                             <br><br>
                             <label>BARRIO</label><br>
                             <mat-select formControlName="barrio" class="form-control inputAbm" [(ngModel)]="selectBar" placeholder="Seleccione Barrio" multiple>
                                 <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">{{ item.bar_nombre }}</mat-option>
                             </mat-select>
-                            <button *ngIf="selectBar !== ''" mat-button (click)="resetForm('barrio')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                <i class="material-icons">clear</i>
-                            </button>
                         </div>
                         <div class="form-group">
                             <div class="form-row">

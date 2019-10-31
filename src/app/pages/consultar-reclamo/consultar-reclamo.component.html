@@ -5,7 +5,7 @@
             <form [formGroup]="frmConsultarReclamo">
                 <div *ngIf="user.usu_IDRol === 1" class="form-group">
                     <mat-form-field>
-                        <input matInput (keyup)="applyFilter($event.target.value)">
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese dato">
                     </mat-form-field>
                     <p>Para realizar la consulta de su reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
                 </div>

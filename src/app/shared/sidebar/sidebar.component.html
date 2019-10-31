@@ -29,8 +29,19 @@
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 1">
-                    <a [routerLink]="'/ayuda'" routerLinkActive="active">
-                        <i class="material-icons">help</i>Ayuda</a>
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="material-icons">help</i><span class="hide-menu">Ayuda</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/ayuda-registrar-reclamo'" routerLinkActive="active">¿Cómo registrar un Reclamo?</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-consultar-reclamo'" routerLinkActive="active">¿Cómo consultar un Reclamo?</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-calificar-reclamo'" routerLinkActive="active">¿Cómo calificar un Reclamo?</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">

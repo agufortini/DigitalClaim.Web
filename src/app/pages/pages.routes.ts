@@ -23,6 +23,9 @@ import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.compo
 import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
 import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
 import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
+import { AyudaRegistrarReclamoComponent } from '../pages/ayuda/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
+import { AyudaConsultarReclamoComponent } from '../pages/ayuda/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
+import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
 
 // LOGIN GUARD
 import { LoginGuard } from '../_guards/login.guard';
@@ -42,7 +45,6 @@ const pagesRoutes: Routes = [
             { path: 'gestionar-ordenServicio', component: GestionarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Gestionar Orden de Servicio' }, canActivate: [LoginGuard]},
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' }, canActivate: [LoginGuard]},
             { path: 'reporte', component: ReporteComponent, data: { titulo: 'Reportes' }, canActivate: [LoginGuard]},
-            { path: 'ayuda', component: AyudaComponent, data: { titulo: 'Ayuda' }, canActivate: [LoginGuard]},
             { path: 'area-servicio', component: AreaServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Area de Servicio'}, canActivate: [LoginGuard]},
             { path: 'barrio', component: BarrioComponent, data: { titulo: 'Dominio', subtitulo: 'Barrio'}, canActivate: [LoginGuard]},
             { path: 'calle', component: CalleComponent, data: { titulo: 'Dominio', subtitulo: 'Calle'}, canActivate: [LoginGuard]},
@@ -54,6 +56,9 @@ const pagesRoutes: Routes = [
             { path: 'estado-ordenServicio', component: EstadoOrdenServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Orden Servicio' }, canActivate: [LoginGuard]},
             { path: 'estado-reclamo', component: EstadoReclamoComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Reclamo' }, canActivate: [LoginGuard]},
             { path: 'personal', component: PersonalComponent, data: { titulo: 'Dominio', subtitulo: 'Personal' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-registrar-reclamo', component: AyudaRegistrarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-consultar-reclamo', component: AyudaConsultarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-calificar-reclamo', component: AyudaCalificarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Calificar Reclamo' }, canActivate: [LoginGuard]},
             { path: '**', redirectTo: '/login'}
         ]
     },

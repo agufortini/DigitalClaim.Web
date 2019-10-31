@@ -26,7 +26,6 @@ import { ReporteComponent } from './reporte/reporte.component';
 import { GestionarOrdenServicioComponent } from './gestionar-orden-servicio/gestionar-orden-servicio.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ModalEstadoreclamoComponent } from './modal-estadoreclamo/modal-estadoreclamo.component';
-import { AyudaComponent } from './ayuda/ayuda.component';
 import { GraficoComponent } from '../components/grafico/grafico.component';
 import { AreaServicioComponent } from '../pages/admin-municipal/area-servicio/area-servicio.component';
 import { BarrioComponent } from '../pages/admin-municipal/barrio/barrio.component';
@@ -41,6 +40,9 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
 import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
 import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
 import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
+import { AyudaRegistrarReclamoComponent } from '../pages/ayuda/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
+import { AyudaConsultarReclamoComponent } from '../pages/ayuda/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
+import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -59,7 +61,6 @@ import { PersonalComponent } from '../pages/admin-operativo/personal/personal.co
         ReporteComponent,
         GestionarOrdenServicioComponent,
         ModalEstadoreclamoComponent,
-        AyudaComponent,
         GraficoComponent,
         RatingReclamoComponent,
         AreaServicioComponent,
@@ -73,7 +74,10 @@ import { PersonalComponent } from '../pages/admin-operativo/personal/personal.co
         RolComponent,
         EstadoOrdenServicioComponent,
         EstadoReclamoComponent,
-        PersonalComponent
+        PersonalComponent,
+        AyudaRegistrarReclamoComponent,
+        AyudaConsultarReclamoComponent,
+        AyudaCalificarReclamoComponent
     ],
     exports: [
         HomeComponent,
