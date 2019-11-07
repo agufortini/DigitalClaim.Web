@@ -8,9 +8,8 @@ import { DatePipe } from '@angular/common';
 import { Usuario } from 'src/app/_entities/usuario.entities';
 import { Ticket } from '../../_entities/ticket.entities';
 import { CallePorBarrio } from 'src/app/_entities/calle-por-barrio.entities';
-import { Reclamo } from '../../_entities/reclamo.entities';
+import { Reclamo, EnviarEmail } from '../../_entities/reclamo.entities';
 import { Historial } from '../../_entities/historial.entities';
-import { EnviarEmailCodigo } from '../../_entities/enviar-email-codigo.entities';
 
 // SERVICIOS
 import { ReclamoService } from '../../services/reclamo.service';
@@ -36,7 +35,7 @@ export class RegistrarReclamoComponent implements OnInit {
   objCalBar: CallePorBarrio;
   objReclamo: Reclamo;
   objHistorial: Historial;
-  objEnviarEmail: EnviarEmailCodigo;
+  objEnviarEmail: EnviarEmail;
 
   estado = false;
 
@@ -128,30 +127,27 @@ export class RegistrarReclamoComponent implements OnInit {
                   this.reclamoService.registrarHistorial(this.objHistorial).subscribe((dataHis) => {
                     if (this.user.usu_IDRol === 1) {
                       // ENVIAR EMAIL CODIGO DE REGISTRO DE RECLAMO
-                      this.objEnviarEmail = new EnviarEmailCodigo();
-                      this.objEnviarEmail.usu_nombreCompleto = this.user.usu_nombre + ' ' + this.user.usu_apellido;
-                      this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
-                      this.objEnviarEmail.usu_email = this.user.usu_email;
+                      this.objEnviarEmail = new EnviarEmail();
                       this.objEnviarEmail.rec_codigo = this.splitted[1];
                       this.objEnviarEmail.rec_fechaAlta = this.fechaRec;
+                      this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
+                      this.objEnviarEmail.usu_nombreCompleto = this.user.usu_nombre + ' ' + this.user.usu_apellido;
+                      this.objEnviarEmail.usu_email = this.user.usu_email;
 
-                      this.reclamoService.enviarEmailCodigo(this.objEnviarEmail).subscribe(
-                        (data) => {
+                      this.reclamoService.enviarEmailReclamo(this.objEnviarEmail).subscribe(data => {
                           if (data) {
                             Swal.close();
                             Swal.fire({
                               allowOutsideClick: false,
                               type: 'success',
-                              title: 'Reclamo registrado',
-                              text: 'El reclamo ha sido registrado correctamente. Le hemos enviado un email con el código del mismo: '
-                                + this.objEnviarEmail.rec_codigo + '. Consérvelo para poder llevar a cabo el seguimiento de su reclamo.'
+                              title: 'Reclamo registrado' + '<br>' + this.objEnviarEmail.rec_codigo,
+                              text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
+                              'a su casilla de correo para que pueda consultarlo posteriormente.'
                             }).then(result => {
                               if (result.value) {
                                 this.router.navigateByUrl('/home');
                               }
                             });
-                          } else {
-                            console.log('El email no se envió');
                           }
                         }
                       );

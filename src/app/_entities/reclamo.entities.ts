@@ -1,4 +1,6 @@
-/* -------------------- VALIDAR RECLAMO -------------------- */
+/* -------------------------------------------------- CLASES -------------------------------------------------- */
+
+// Validar Reclamo
 
 export class ValidarReclamo {
     rec_IDReclamo: number;
@@ -10,7 +12,7 @@ export class ValidarReclamo {
     constructor() { }
 }
 
-/* -------------------- GUARDAR RECLAMO -------------------- */
+// Registrar Reclamo
 
 export class Reclamo {
     rec_fechaAlta: string;
@@ -20,7 +22,33 @@ export class Reclamo {
     rec_IDOrdenServicio: number;
     rec_IDTipoReclamo: number;
     rec_IDCallePorBarrio: number;
+    constructor() {}
 }
+
+// Consultar Reclamo (Usuario Municipal)
+
+export class ConsultarReclamo {
+    rec_fechaDesde: string;
+    rec_fechaHasta: string;
+    usu_DNI: number;
+    rec_codigo: number;
+    arServ_ID: number;
+    bar_ID: number;
+    constructor() {}
+}
+
+export class EnviarEmail {
+    usu_nombreCompleto: string;
+    tipRec_nombre: string;
+    usu_email: string;
+    rec_codigo: number;
+    rec_fechaAlta: string;
+    estRec_nombre: string;
+    constructor() {}
+}
+
+
+// Modal Estado Reclamo
 
 export class ReclamoC {
     rec_IDReclamo: number;
@@ -37,21 +65,7 @@ export class ReclamoC {
     constructor() {}
 }
 
-export class ReclamoPendiente {
-    rec_IDReclamo: number;
-    rec_fechaAlta: string;
-    tipRec_IDTipoReclamo: number;
-    tipRec_nombre: string;
-    rec_altura: number;
-    cal_nombre: string;
-    rec_direccion: string;
-    pri_IDPrioridad: number;
-    bar_IDBarrio: number;
-    bar_nombre: string;
-    constructor() {}
-}
-
-/* -------------------- ESTADO RECLAMO -------------------- */
+// Estado Reclamo
 
 export class EstadoReclamo {
     estRec_IDEstado: number;
@@ -59,7 +73,7 @@ export class EstadoReclamo {
     constructor() {}
 }
 
-/* -------------------- INTERFACES -------------------- */
+/* -------------------------------------------------- INTERFACES -------------------------------------------------- */
 
 export interface ConsultarReclamo {
     rec_IDReclamo: number;
@@ -85,7 +99,7 @@ export interface ReclamoPendiente {
     bar_nombre: string;
 }
 
-/* -------------------- ABMS -------------------- */
+// ABMS
 
 export interface ITipoReclamo {
     tipRec_IDTipoReclamo: number;

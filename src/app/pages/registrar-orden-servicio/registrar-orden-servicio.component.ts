@@ -14,7 +14,7 @@ import { Historial } from '../../_entities/historial.entities';
 import { OrdenServicio, DetalleOrdServ } from '../../_entities/orden-servicio.entities';
 import { PersonalPorOrdenServicio, PersonalOrdServ } from '../../_entities/personal-por-orden-servicio.entities';
 import { Usuario } from '../../_entities/usuario.entities';
-import { ReclamoPendiente } from 'src/app/_entities/reclamo.entities';
+import { ReclamoPendiente, EnviarEmail } from 'src/app/_entities/reclamo.entities';
 
 @Component({
   selector: 'app-registrar-orden-servicio',
@@ -46,6 +46,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
   fecha = new Date();
   fechaHoy: any;
   objPerOrd: PersonalPorOrdenServicio;
+  objEnviarEmail: EnviarEmail;
   observaciones: string;
   minDate = new Date();
 
@@ -150,6 +151,35 @@ export class RegistrarOrdenServicioComponent implements OnInit {
 
               this.ordServService.registrarPersonalPorOrden(this.arrPerOrdServ).subscribe(dataPer => {
                 if (+dataPer === 1) {
+
+                  // ENVIAR EMAIL CAMBIO ESTADO DE RECLAMO
+                  this.objEnviarEmail = new EnviarEmail();
+                  this.objEnviarEmail.rec_codigo = this.splitted[1];
+                  this.objEnviarEmail.rec_fechaAlta = this.fechaHoy;
+                  this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
+                  this.objEnviarEmail.usu_nombreCompleto = this.user.usu_nombre + ' ' + this.user.usu_apellido;
+                  this.objEnviarEmail.usu_email = this.user.usu_email;
+                  // this.objEnviarEmail.estRec_nombre =
+
+                  this.reclamoService.enviarEmailReclamo(this.objEnviarEmail).subscribe(
+                    (data) => {
+                      if (data) {
+                        Swal.close();
+                        Swal.fire({
+                          allowOutsideClick: false,
+                          type: 'success',
+                          title: 'Reclamo registrado',
+                          text: 'El reclamo ha sido registrado correctamente. Le hemos enviado un email con el código del mismo: '
+                            + this.objEnviarEmail.rec_codigo + '. Consérvelo para poder llevar a cabo el seguimiento de su reclamo.'
+                        }).then(result => {
+                          if (result.value) {
+                            this.router.navigateByUrl('/home');
+                          }
+                        });
+                      }
+                    }
+                  );
+
                   Swal.close();
                   Swal.fire({
                     allowOutsideClick: false,

@@ -11,7 +11,6 @@ import { RegistrarOrdenServicioComponent } from './registrar-orden-servicio/regi
 import { PerfilComponent } from './perfil/perfil.component';
 import { ReporteComponent } from './reporte/reporte.component';
 import { GestionarOrdenServicioComponent } from './gestionar-orden-servicio/gestionar-orden-servicio.component';
-import { AyudaComponent } from './ayuda/ayuda.component';
 import { AreaServicioComponent } from '../pages/admin-municipal/area-servicio/area-servicio.component';
 import { BarrioComponent } from '../pages/admin-municipal/barrio/barrio.component';
 import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';

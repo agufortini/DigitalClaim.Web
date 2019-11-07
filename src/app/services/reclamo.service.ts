@@ -70,18 +70,22 @@ export class ReclamoService {
   }
 
   // POST
-  enviarEmailCodigo(objEnviarEmail: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailCodigo`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objEnviarEmail))
+  enviarEmailReclamo(objEmail: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailReclamo`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objEmail))
     });
   }
 
+  // enviarEmailEstado(objEmail: any): Observable<any> {
+  //   return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailCodigo`, {
+  //     params: new HttpParams().set('stObj', JSON.stringify(objEmail))
+  //   });
+  // }
+
   // CONSULTAR RECLAMO
 
-  listarReclamos(stIDUser: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ListarReclamos`, {
-      params: new HttpParams().set('stObj', JSON.stringify(stIDUser))
-    });
+  consultarReclamo(objSelect: any): Observable<any> {
+    return this.httpClient.post<any>(`${environment.apiUrl}api/ReclamoController/ConsultarReclamo`, objSelect);
   }
 
   selectReclamo(objFiltro: any): Observable<any> {

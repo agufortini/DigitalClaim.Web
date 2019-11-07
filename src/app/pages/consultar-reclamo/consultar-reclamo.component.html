@@ -4,6 +4,16 @@
         <div class="card-body">
             <form [formGroup]="frmConsultarReclamo">
                 <div *ngIf="user.usu_IDRol === 1" class="form-group">
+                    <div class="form-row">
+                        <mat-label>Reclamos:</mat-label>
+                        <div class="ml-1"></div>
+                        <mat-select (selectionChange)="listarReclamoPorEstado(this.f.estado.value)" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
+                            <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstado">
+                                {{ item.estRec_nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <br>
                     <mat-form-field>
                         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese dato">
                     </mat-form-field>
@@ -31,6 +41,15 @@
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
                             </div>
                             <div class="col-md-6">
+                                <label>CODIGO</label><br>
+                                <input matInput (keypress)="validarIngreso($event)" formControlName="codigo" [(ngModel)]="inputCodigo" class="form-control" type="text" placeholder="Código reclamo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
                                 <label>AREA DE SERVICIO</label>
                                 <mat-select (selectionChange)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
                                     <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
@@ -38,12 +57,7 @@
                                     </mat-option>
                                 </mat-select>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="ddlBarrio">BARRIO</label><br>
                                 <mat-select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
                                     <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
