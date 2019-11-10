@@ -9,10 +9,11 @@ export class OrdenServicio {
 }
 
 export class DetalleOrdServ {
-    ordServ_IDOrdenServicio: number;
     ordServ_numero: number;
-    ordServ_IDReclamo: number;
+    ordServ_IDOrdenServicio: number;
+    ordServ_IDPersonal: number;
     ordServ_IDUsuario: number;
+    ordServ_IDReclamo: number;
     constructor() { }
 }
 

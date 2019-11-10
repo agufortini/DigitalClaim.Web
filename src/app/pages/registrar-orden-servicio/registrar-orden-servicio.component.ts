@@ -37,7 +37,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
   IDOrdServYNum: any;
   splitted: any;
   objDetalle: DetalleOrdServ;
-  arrDetalleOrdServ: DetalleOrdServ[] = [];
+  lstDetalleOrdServ: DetalleOrdServ[] = [];
   arrPerOrdServ: PersonalOrdServ[] = [];
 
   objIDRec: any;
@@ -49,6 +49,8 @@ export class RegistrarOrdenServicioComponent implements OnInit {
   objEnviarEmail: EnviarEmail;
   observaciones: string;
   minDate = new Date();
+  lstReclamo: any;
+  arrEmail: any[] = [];
 
   constructor(private ddlService: SelectService,
               private formBuilder: FormBuilder,
@@ -123,76 +125,61 @@ export class RegistrarOrdenServicioComponent implements OnInit {
       this.ordServService.registrarOrdenServicio(this.objOrdServ).subscribe(dataOrdServ => {
           if (dataOrdServ) {
             this.IDOrdServYNum = dataOrdServ;
-          }
-          this.splitted = this.IDOrdServYNum.split(';', 2);
+            this.splitted = this.IDOrdServYNum.split(';', 2);
 
-          this.arrReclamosPendientes.forEach(element => {
-            this.objDetalle = new DetalleOrdServ();
-            this.objDetalle.ordServ_IDOrdenServicio = +this.splitted[0];
-            this.objDetalle.ordServ_numero = +this.splitted[1];
-            this.objDetalle.ordServ_IDReclamo = element.rec_IDReclamo;
-            this.objDetalle.ordServ_IDUsuario = this.f.responsable.value;
-            this.arrDetalleOrdServ.push(this.objDetalle);
-          });
-
-          this.ordServService.registrarDetalleOrdenServicio(this.arrDetalleOrdServ).subscribe(dataDetalle => {
-            if (+dataDetalle === 1) {
-              const arrPersonal: PersonalOrdServ[] = [];
-              arrPersonal.push(this.f.personal.value);
-
+            this.arrReclamosPendientes.forEach(element => {
               // tslint:disable-next-line:prefer-for-of
               for (let i = 0; i < this.f.personal.value.length; i++) {
-                const objPer: PersonalOrdServ = new PersonalOrdServ();
-                objPer.per_IDPersonal = this.f.personal.value[i];
-                objPer.per_IDOrdenServicio = +this.splitted[0];
-                objPer.per_numOrdServ = +this.splitted[1];
-                this.arrPerOrdServ.push(objPer);
+                const IDPersonal = this.f.personal.value[i];
+
+                this.objDetalle = new DetalleOrdServ();
+                this.objDetalle.ordServ_numero = +this.splitted[1];
+                this.objDetalle.ordServ_IDOrdenServicio = +this.splitted[0];
+                this.objDetalle.ordServ_IDPersonal = IDPersonal;
+                this.objDetalle.ordServ_IDUsuario = this.f.responsable.value;
+                this.objDetalle.ordServ_IDReclamo = element.rec_IDReclamo;
+                this.lstDetalleOrdServ.push(this.objDetalle);
+              }
+            });
+          }
+
+          this.ordServService.registrarDetalleOrdenServicio(this.lstDetalleOrdServ).subscribe(dataDetalle => {
+            if (dataDetalle) {
+              this.lstReclamo = dataDetalle;
+
+              // tslint:disable-next-line:prefer-for-of
+              for (let i = 0; i < this.lstReclamo.length; i++) {
+                const element: EnviarEmail = this.lstReclamo[i];
+
+                // ENVIAR EMAIL CAMBIO ESTADO DE RECLAMO
+                this.objEnviarEmail = new EnviarEmail();
+                this.objEnviarEmail.rec_codigo = element.rec_codigo;
+                this.objEnviarEmail.rec_fechaAlta = element.rec_fechaAlta;
+                this.objEnviarEmail.tipRec_nombre = element.tipRec_nombre;
+                this.objEnviarEmail.usu_nombre = element.usu_nombre;
+                this.objEnviarEmail.usu_apellido = element.usu_apellido;
+                this.objEnviarEmail.usu_email = element.usu_email;
+                this.objEnviarEmail.estRec_nombre = element.estRec_nombre;
+                this.arrEmail.push(this.objEnviarEmail);
               }
 
-              this.ordServService.registrarPersonalPorOrden(this.arrPerOrdServ).subscribe(dataPer => {
-                if (+dataPer === 1) {
-
-                  // ENVIAR EMAIL CAMBIO ESTADO DE RECLAMO
-                  this.objEnviarEmail = new EnviarEmail();
-                  this.objEnviarEmail.rec_codigo = this.splitted[1];
-                  this.objEnviarEmail.rec_fechaAlta = this.fechaHoy;
-                  this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
-                  this.objEnviarEmail.usu_nombreCompleto = this.user.usu_nombre + ' ' + this.user.usu_apellido;
-                  this.objEnviarEmail.usu_email = this.user.usu_email;
-                  // this.objEnviarEmail.estRec_nombre =
-
-                  this.reclamoService.enviarEmailReclamo(this.objEnviarEmail).subscribe(
+              this.reclamoService.enviarEmailEstado(this.arrEmail).subscribe(
                     (data) => {
                       if (data) {
                         Swal.close();
                         Swal.fire({
                           allowOutsideClick: false,
                           type: 'success',
-                          title: 'Reclamo registrado',
-                          text: 'El reclamo ha sido registrado correctamente. Le hemos enviado un email con el código del mismo: '
-                            + this.objEnviarEmail.rec_codigo + '. Consérvelo para poder llevar a cabo el seguimiento de su reclamo.'
+                          title: 'Orden de Servicio',
+                          text: 'La Orden de Servicio se registró correctamente. Número de Orden: ' + this.objDetalle.ordServ_numero
                         }).then(result => {
                           if (result.value) {
-                            this.router.navigateByUrl('/home');
+                            this.router.navigateByUrl('/crear-ordenServicio');
                           }
                         });
                       }
                     }
                   );
-
-                  Swal.close();
-                  Swal.fire({
-                    allowOutsideClick: false,
-                    type: 'success',
-                    title: 'Orden de Servicio',
-                    text: 'La Orden de Servicio se registró correctamente. Número de Orden: ' + this.objDetalle.ordServ_numero
-                  }).then(result => {
-                    if (result.value) {
-                      this.router.navigateByUrl('/crear-ordenServicio');
-                    }
-                  });
-                }
-              });
             }
           });
         });

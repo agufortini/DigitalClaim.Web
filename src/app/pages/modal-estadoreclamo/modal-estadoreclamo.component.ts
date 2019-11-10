@@ -64,6 +64,9 @@ export class ModalEstadoreclamoComponent implements OnInit {
         rec_IDReclamo: JSON.parse(localStorage.getItem('rec_IDReclamo'))
       };
 
+      console.log(JSON.parse(localStorage.getItem('rec_IDReclamo')));
+      console.log(objIDRec);
+
       this.reclamoService.validarRating(objIDRec).subscribe(data => {
         if (JSON.parse(data) === null) {
           this.dialog.open(RatingReclamoComponent, {

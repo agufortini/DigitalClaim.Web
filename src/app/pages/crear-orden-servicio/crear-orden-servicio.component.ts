@@ -116,9 +116,21 @@ export class CrearOrdenServicioComponent implements OnInit {
         usu_IDAreaServicio: this.user.usu_IDAreaServicio
       };
 
-      this.reclamoService.selectReclamosSinAsignar(this.objIDArServ).subscribe(data => {
-          this.lstReclamo = JSON.parse(data);
-          this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);
+      this.reclamoService.selectReclamoSinAsignar(this.objIDArServ).subscribe(data => {
+        if (data !== '[]') {
+            this.lstReclamo = JSON.parse(data);
+            this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);
+            this.dataSource.paginator = this.paginator;
+            document.getElementById('idTableConsulta').style.visibility = 'visible';
+            document.getElementById('mensajeOrdServ').style.visibility = 'visible';
+          } else {
+            Swal.fire({
+              allowOutsideClick: false,
+              type: 'warning',
+              title: 'Generar Orden Servicio',
+              text: 'No se puede realizar la operación ya que no existen reclamos disponibles para registrar una Orden de Servicio.'
+            });
+          }
         }
       );
     } catch (error) {

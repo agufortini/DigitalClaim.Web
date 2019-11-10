@@ -76,11 +76,11 @@ export class ReclamoService {
     });
   }
 
-  // enviarEmailEstado(objEmail: any): Observable<any> {
-  //   return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailCodigo`, {
-  //     params: new HttpParams().set('stObj', JSON.stringify(objEmail))
-  //   });
-  // }
+  enviarEmailEstado(arrEmail: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailEstado`, {
+      params: new HttpParams().set('stObj', JSON.stringify(arrEmail))
+    });
+  }
 
   // CONSULTAR RECLAMO
 
@@ -94,8 +94,8 @@ export class ReclamoService {
     });
   }
 
-  selectReclamosSinAsignar(objIDArServ: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectReclamosSinAsignar`, {
+  selectReclamoSinAsignar(objIDArServ: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectReclamoSinAsignar`, {
         params: new HttpParams().set('stObj', JSON.stringify(objIDArServ))
     });
   }

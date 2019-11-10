@@ -131,7 +131,8 @@ export class RegistrarReclamoComponent implements OnInit {
                       this.objEnviarEmail.rec_codigo = this.splitted[1];
                       this.objEnviarEmail.rec_fechaAlta = this.fechaRec;
                       this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
-                      this.objEnviarEmail.usu_nombreCompleto = this.user.usu_nombre + ' ' + this.user.usu_apellido;
+                      this.objEnviarEmail.usu_nombre = this.user.usu_nombre;
+                      this.objEnviarEmail.usu_apellido = this.user.usu_apellido;
                       this.objEnviarEmail.usu_email = this.user.usu_email;
 
                       this.reclamoService.enviarEmailReclamo(this.objEnviarEmail).subscribe(data => {

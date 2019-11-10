@@ -68,7 +68,7 @@
 
 <br />
 
-<div class="mat-elevation-z8">
+<div id="idTableConsulta" style="visibility: hidden;" class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="select">
@@ -112,12 +112,14 @@
 
 <br>
 
-<div class="form-group" style="float: left !important;">
-    <div class="text-center lblCampoObligatorio">
-        *Para generar una Orden de Servicio seleccione al menos 1 reclamo.
+<div id="mensajeOrdServ" style="visibility: hidden;">
+    <div class="form-group" style="float: left !important;">
+        <div class="text-center lblCampoObligatorio">
+            *Para generar una Orden de Servicio seleccione al menos 1 reclamo.
+        </div>
     </div>
-</div>
 
-<button mat-stroked-button (click)="registrarOrdenServicio()" [disabled]="selection.selected.length === 0" class="btn btn-block btnSiguiente" matTooltip="Registrar Orden de Servicio" matTooltipPosition="left">
-    Siguiente <i class="fa fa-fw fa-chevron-right"></i>
-</button>
+    <button mat-stroked-button (click)="registrarOrdenServicio()" [disabled]="selection.selected.length === 0" class="btn btn-block btnSiguiente" matTooltip="Registrar Orden de Servicio" matTooltipPosition="left">
+        Siguiente <i class="fa fa-fw fa-chevron-right"></i>
+    </button>
+</div>

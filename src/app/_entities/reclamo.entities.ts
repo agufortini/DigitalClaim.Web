@@ -38,11 +38,12 @@ export class ConsultarReclamo {
 }
 
 export class EnviarEmail {
-    usu_nombreCompleto: string;
-    tipRec_nombre: string;
-    usu_email: string;
     rec_codigo: number;
     rec_fechaAlta: string;
+    tipRec_nombre: string;
+    usu_nombre: string;
+    usu_apellido: string;
+    usu_email: string;
     estRec_nombre: string;
     constructor() {}
 }

@@ -104,7 +104,8 @@ export class ConsultarReclamoComponent implements OnInit {
           this.f.estado.patchValue(this.arrEstado[0].estRec_IDEstado);
         });
 
-        this.listarReclamos();
+        // SELECT DE RECLAMOS EN ESTADO SIN ASIGNAR
+        this.listarReclamoPorEstado(1);
         document.getElementById('idTableConsulta').style.visibility = 'visible';
       } else {
         this.frmControls();
@@ -134,21 +135,13 @@ export class ConsultarReclamoComponent implements OnInit {
     return this.frmConsultarReclamo.controls;
   }
 
-  // LISTADO DE RECLAMOS CUANDO INICIA EL FORMULARIO
-  listarReclamos() {
-    this.objIDUser = {
-      stFiltro: 'usu_ID = ' + this.user.usu_IDUsuario,
-    };
-    this.selectV_Reclamo(this.objIDUser);
-  }
-
   // tslint:disable-next-line:variable-name
   listarReclamoPorEstado(IDEstado: number) {
     // tslint:disable-next-line:variable-name
     const estRec_IDEstado: any = IDEstado;
 
     this.objIDRec = {
-      stFiltro: 'rec_IDEstado = ' + estRec_IDEstado,
+      stFiltro: 'usu_ID = ' + this.user.usu_IDUsuario + ' and rec_IDEstado = ' + estRec_IDEstado
     };
 
     this.selectV_Reclamo(this.objIDRec);
