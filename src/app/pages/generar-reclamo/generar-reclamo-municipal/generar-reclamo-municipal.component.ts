@@ -1,29 +1,30 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
+
+// ENTIDADES
+import { Usuario } from 'src/app/_entities/usuario.entities';
+import { ValidarReclamo } from 'src/app/_entities/reclamo.entities';
+
+// SERVICIOS
+import { SelectService } from 'src/app/services/select-service.service';
+import { ReclamoService } from 'src/app/services/reclamo.service';
 
 // GOOGLE MAPS
 import { MapsAPILoader } from '@agm/core';
 
-// SERVICIOS
-import { SelectService } from '../../services/select-service.service';
-import { ReclamoService } from '../../services/reclamo.service';
-
-// ENTIDADES
-import { ValidarReclamo } from '../../_entities/reclamo.entities';
-import { Usuario } from '../../_entities/usuario.entities';
-import { Canal } from '../../_entities/canal.entities';
-
 @Component({
-  selector: 'app-generar-reclamo',
-  templateUrl: './generar-reclamo.component.html',
-  styleUrls: ['./generar-reclamo.component.css'],
+  selector: 'app-generar-reclamo-municipal',
+  templateUrl: './generar-reclamo-municipal.component.html',
+  styleUrls: ['./generar-reclamo-municipal.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [DatePipe]
 })
-export class GenerarReclamoComponent implements OnInit {
+export class GenerarReclamoMunicipalComponent implements OnInit {
+  isLinear = false;
+
   frmGenerarReclamo: FormGroup;
   user: Usuario;
   objValidarRec: ValidarReclamo;
@@ -74,53 +75,39 @@ export class GenerarReclamoComponent implements OnInit {
   @ViewChild('agmSearch', {static: false}) public searchElementRef: ElementRef;
   objCalle: any;
 
+  // CONTROLES FORMULARIO CIUDADANO
+  dni = new FormControl('', Validators.required);
+  nombre = new FormControl('', Validators.required);
+  apellido = new FormControl('', Validators.required);
+  telefono = new FormControl('', Validators.required);
+  email = new FormControl('', [Validators.required, Validators.email]);
+
   constructor(private ddlService: SelectService,
               private reclamoService: ReclamoService,
               private router: Router,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone) {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
-  }
+              private ngZone: NgZone) { }
 
   ngOnInit() {
     try {
-      if (this.user.usu_IDRol === 1) {
-        this.frmGenerarReclamo = this.formBuilder.group({
-          areaServicio: ['', Validators.required],
-          tipoReclamo: ['', Validators.required],
-          ubicacion: ['', Validators.required],
-          barrio: ['', Validators.required],
-          calle: ['', Validators.required],
-          altura: ['', Validators.required],
-          canal: [''],
-          observaciones: ['']
-        });
-
-        // this.validarRealizacionReclamo();
-      } else if (this.user.usu_IDRol === 2 || this.user.usu_IDRol === 5) {
-        this.frmGenerarReclamo = this.formBuilder.group({
-          areaServicio: ['', Validators.required],
-          tipoReclamo: ['', Validators.required],
-          ubicacion: ['', Validators.required],
-          barrio: ['', Validators.required],
-          calle: ['', Validators.required],
-          altura: ['', Validators.required],
-          canal: ['', Validators.required],
-          observaciones: ['']
-        });
-      }
+      this.frmGenerarReclamo = this.formBuilder.group({
+        areaServicio: ['', Validators.required],
+        tipoReclamo: ['', Validators.required],
+        ubicacion: ['', Validators.required],
+        barrio: ['', Validators.required],
+        calle: ['', Validators.required],
+        altura: ['', Validators.required],
+        canal: ['', Validators.required],
+        observaciones: ['']
+      });
 
       this.cargaDDL();
     } catch (error) {
       console.log(error);
     }
-  }
 
-  // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get f() {
-    return this.frmGenerarReclamo.controls;
   }
 
   cargaDDL() {
@@ -132,25 +119,67 @@ export class GenerarReclamoComponent implements OnInit {
       this.arrBarrio = JSON.parse(data);
     });
 
-    if (this.user.usu_IDRol === 2 || this.user.usu_IDRol === 5) {
-      this.ddlService.selectEntitie('CanalController', 'SelectCanal').subscribe(data => {
-        this.arrCanal = JSON.parse(data);
+    this.ddlService.selectEntitie('CanalController', 'SelectCanal').subscribe(data => {
+      this.arrCanal = JSON.parse(data);
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.arrCanal.length; i++) {
-          const IDCanal: number = this.arrCanal[i].can_IDCanal;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.arrCanal.length; i++) {
+        const IDCanal: number = this.arrCanal[i].can_IDCanal;
 
-          if (IDCanal <= 2) {
-            this.lstCanal.push(this.arrCanal[i]);
-          } else {
-            return;
-          }
+        if (IDCanal <= 2) {
+          this.lstCanal.push(this.arrCanal[i]);
+        } else {
+          return;
         }
-      });
-    }
+      }
+    });
   }
 
-  //#region GOOGLE MAPS
+  // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
+  get f() {
+    return this.frmGenerarReclamo.controls;
+  }
+
+  validarReclamo() {
+    try {
+      this.objValidarRec = new ValidarReclamo();
+      this.objValidarRec.rec_altura = this.f.altura.value;
+      this.objValidarRec.rec_IDCalle = this.f.calle.value;
+      this.objValidarRec.rec_IDBarrio = this.f.barrio.value;
+      this.objValidarRec.rec_IDTipoReclamo = this.f.tipoReclamo.value;
+
+      this.reclamoService.validarReclamo(this.objValidarRec).subscribe(data => {
+        const obj = JSON.parse(data);
+
+        if (obj !== null) {
+            Swal.fire({
+              allowOutsideClick: false,
+              type: 'warning',
+              title: 'Reclamo existente',
+              text: 'El reclamo que intenta ingresar, ya se encuentra registrado. El estado del mismo es: ' + obj.rec_estado.toUpperCase()
+            }).then(result => {
+                if (result.value) {
+                  this.frmGenerarReclamo.reset();
+                }
+              });
+          } else {
+              this.objRec = {
+                areaServicio: this.arServ,
+                tipoReclamo: this.tipoReclamo,
+                barrio: this.Barrio,
+                calle: this.Calle,
+                altura: this.f.altura.value,
+                canal: this.Canal,
+                observaciones: this.observacion
+              };
+              localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
+              this.router.navigateByUrl('/registrar-reclamo');
+          }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   getPlacesAutocomplete() {
     // load Places Autocomplete
@@ -230,76 +259,6 @@ export class GenerarReclamoComponent implements OnInit {
       }
     });
   }
-  //#endregion
-
-  validarRealizacionReclamo() {
-      if (this.user.usu_IDRol === 1) {
-        this.objIDUser = {
-          usu_IDUsuario: this.user.usu_IDUsuario
-        };
-
-        this.reclamoService.validarRealizacionReclamo(this.objIDUser).subscribe(data => {
-          const rtdo = JSON.parse(data);
-          this.fechaHoy = new Date();
-          this.fechaHoy = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
-
-          if (rtdo.rec_fechaAlta === this.fechaHoy) {
-            Swal.fire({
-              allowOutsideClick: false,
-              type: 'warning',
-              title: 'Registrar reclamo',
-              text: 'No puede realizar la operación nuevamente ya que sólo se puede enviar un reclamo por día.'
-            }).then(result => {
-              if (result.value) {
-                this.router.navigateByUrl('/home');
-              }
-            });
-          }
-        }
-      );
-    }
-  }
-
-  validarReclamo() {
-    try {
-      this.objValidarRec = new ValidarReclamo();
-      this.objValidarRec.rec_altura = this.f.altura.value;
-      this.objValidarRec.rec_IDCalle = this.f.calle.value;
-      this.objValidarRec.rec_IDBarrio = this.f.barrio.value;
-      this.objValidarRec.rec_IDTipoReclamo = this.f.tipoReclamo.value;
-
-      this.reclamoService.validarReclamo(this.objValidarRec).subscribe(data => {
-        const obj = JSON.parse(data);
-
-        if (obj !== null) {
-            Swal.fire({
-              allowOutsideClick: false,
-              type: 'warning',
-              title: 'Reclamo existente',
-              text: 'El reclamo que intenta ingresar, ya se encuentra registrado. El estado del mismo es: ' + obj.rec_estado.toUpperCase()
-            }).then(result => {
-                if (result.value) {
-                  this.frmGenerarReclamo.reset();
-                }
-              });
-          } else {
-              this.objRec = {
-                areaServicio: this.arServ,
-                tipoReclamo: this.tipoReclamo,
-                barrio: this.Barrio,
-                calle: this.Calle,
-                altura: this.f.altura.value,
-                canal: this.Canal,
-                observaciones: this.observacion
-              };
-              localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
-              this.router.navigateByUrl('/registrar-reclamo');
-          }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   ubicacionMapa() {
     if (this.mapVisibility === 'hidden') {
@@ -313,13 +272,6 @@ export class GenerarReclamoComponent implements OnInit {
     }
   }
 
-  resetSelects() {
-    this.f.barrio.setValue('');
-    this.f.calle.setValue('');
-    this.altura = null;
-  }
-
-  //#endregion FILTROS SELECTS
   cargaSelectTipoReclamo() {
     try {
       this.objIDArServ = {
@@ -357,7 +309,7 @@ export class GenerarReclamoComponent implements OnInit {
       console.log(error);
     }
   }
-
+  
   selectTipoReclamo() {
     this.tipoReclamo = this.arrTipRec.filter(x => x.tipRec_IDTipoReclamo === +this.TipoReclamoID)[0];
   }
@@ -373,9 +325,18 @@ export class GenerarReclamoComponent implements OnInit {
   selectCanal() {
     this.Canal = this.arrCanal.filter(x => x.can_IDCanal === +this.CanalID)[0];
   }
-  //#endregion
 
-  // VALIDACION CONTROL ALTURA
+  resetSelects() {
+    this.f.barrio.setValue('');
+    this.f.calle.setValue('');
+    this.altura = null;
+  }
+
+  mostrarErrorEmail() {
+    return this.email.hasError('required') ? 'Ingrese Email' : this.email.hasError('email') ? 'Formato de Email no válido' : '';
+  }
+
+  // VALIDACION CONTROL NUMEROS
   validarIngreso(event): boolean {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -383,4 +344,5 @@ export class GenerarReclamoComponent implements OnInit {
     }
     return true;
   }
+
 }

@@ -3,6 +3,7 @@
         <div class="card-header myCardHeader">Datos del Reclamo</div>
         <div class="card-body">
             <form [formGroup]="frmGenerarReclamo">
+
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
@@ -34,6 +35,7 @@
                     </mat-select>
                 </div>
 
+
                 <div [hidden]="mapVisibility === 'hidden'">
                     <agm-map id="googleMap" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
                         <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
@@ -62,19 +64,6 @@
                         <div class="col-md-6">
                             <label>ALTURA*</label>
                             <input (keypress)="validarIngreso($event)" formControlName="altura" [(ngModel)]="altura" class="form-control" type="text" placeholder="Ingrese altura" maxlength="4" />
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <label>CANAL*</label>
-                            <mat-select (selectionChange)="selectCanal()" formControlName="canal" [(ngModel)]="CanalID" class="form-control" placeholder="Seleccione Canal de Comunicación">
-                                <mat-option *ngFor="let item of lstCanal" [value]="item.can_IDCanal">
-                                    {{ item.can_nombre }}
-                                </mat-option>
-                            </mat-select>
                         </div>
                     </div>
                 </div>

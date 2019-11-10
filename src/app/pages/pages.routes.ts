@@ -2,7 +2,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
-import { GenerarReclamoComponent } from './generar-reclamo/generar-reclamo.component';
+import { GenerarReclamoCiudadanoComponent } from './generar-reclamo/generar-reclamo-ciudadano/generar-reclamo-ciudadano.component';
+import { GenerarReclamoMunicipalComponent } from './generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
 import { RegistrarReclamoComponent } from './registrar-reclamo/registrar-reclamo.component';
 import { ConsultarReclamoComponent } from './consultar-reclamo/consultar-reclamo.component';
 import { ContactoComponent } from './contacto/contacto.component';
@@ -35,13 +36,14 @@ const pagesRoutes: Routes = [
         component: PagesComponent,
         children: [
             { path: 'home', component: HomeComponent, data: { titulo: 'Inicio' }, canActivate: [LoginGuard] },
-            { path: 'generar-reclamo', component: GenerarReclamoComponent, data: { titulo: 'Reclamo', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'generar-reclamo-ciudadano', component: GenerarReclamoCiudadanoComponent, data: { titulo: 'Reclamo', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'generar-reclamo-municipal', component: GenerarReclamoMunicipalComponent, data: { titulo: 'Reclamo', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'registrar-reclamo', component: RegistrarReclamoComponent, data: { titulo: 'Reclamo', subtitulo: 'Enviar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'consultar-reclamo', component: ConsultarReclamoComponent, data: { titulo: 'Reclamo', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'contacto', component: ContactoComponent, data: { titulo: 'Contacto' }, canActivate: [LoginGuard]},
-            { path: 'crear-ordenServicio', component: CrearOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Generar Orden de Servicio' }, canActivate: [LoginGuard]},
-            { path: 'registrar-ordenServicio', component: RegistrarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Registrar Orden de Servicio' }, canActivate: [LoginGuard]},
-            { path: 'gestionar-ordenServicio', component: GestionarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Gestionar Orden de Servicio' }, canActivate: [LoginGuard]},
+            { path: 'crear-orden-servicio', component: CrearOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Generar Orden de Servicio' }, canActivate: [LoginGuard]},
+            { path: 'registrar-orden-servicio', component: RegistrarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Registrar Orden de Servicio' }, canActivate: [LoginGuard]},
+            { path: 'gestionar-orden-servicio', component: GestionarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Gestionar Orden de Servicio' }, canActivate: [LoginGuard]},
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' }, canActivate: [LoginGuard]},
             { path: 'reporte', component: ReporteComponent, data: { titulo: 'Reportes' }, canActivate: [LoginGuard]},
             { path: 'area-servicio', component: AreaServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Area de Servicio'}, canActivate: [LoginGuard]},
@@ -52,7 +54,7 @@ const pagesRoutes: Routes = [
             { path: 'prioridad', component: PrioridadComponent, data: { titulo: 'Dominio', subtitulo: 'Prioridad'}, canActivate: [LoginGuard]},
             { path: 'rol', component: RolComponent, data: { titulo: 'Dominio', subtitulo: 'Rol'}, canActivate: [LoginGuard]},
             { path: 'usuario', component: UsuarioComponent, data: { titulo: 'Dominio', subtitulo: 'Usuario' }, canActivate: [LoginGuard]},
-            { path: 'estado-ordenServicio', component: EstadoOrdenServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Orden Servicio' }, canActivate: [LoginGuard]},
+            { path: 'estado-orden-servicio', component: EstadoOrdenServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Orden Servicio' }, canActivate: [LoginGuard]},
             { path: 'estado-reclamo', component: EstadoReclamoComponent, data: { titulo: 'Dominio', subtitulo: 'Estado: Reclamo' }, canActivate: [LoginGuard]},
             { path: 'personal', component: PersonalComponent, data: { titulo: 'Dominio', subtitulo: 'Personal' }, canActivate: [LoginGuard]},
             { path: 'ayuda-registrar-reclamo', component: AyudaRegistrarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},

@@ -3,10 +3,6 @@
     background-color: #1e88e5 !important;
 }
 
-.inputDireccion {
-    width: 91% !important;
-}
-
 agm-map {
     height: 250px;
 }

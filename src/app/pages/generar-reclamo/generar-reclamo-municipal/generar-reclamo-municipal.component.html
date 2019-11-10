@@ -1,0 +1,169 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step>
+        <form>
+            <!-- DATOS CIUDADANO -->
+            <ng-template matStepLabel>DATOS DEL CIUDADANO</ng-template>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input (keypress)="validarIngreso($event)" matInput placeholder="DNI" [formControl]="dni" minlength="8" maxlength="8" required>
+                        <mat-error *ngIf="dni.invalid">El DNI debe contener 8 números</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput placeholder="Nombre" [formControl]="nombre" required>
+                        <mat-error *ngIf="nombre.invalid">Ingrese Nombre</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput placeholder="Apellido" [formControl]="apellido" required>
+                        <mat-error *ngIf="apellido.invalid">Ingrese Apellido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input (keypress)="validarIngreso($event)" matInput placeholder="Teléfono" [formControl]="telefono" minlength="7" maxlength="10" required>
+                        <mat-error *ngIf="telefono.invalid">Ingrese N° de teléfono</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput placeholder="Email" [formControl]="email" required>
+                        <mat-error *ngIf="email.invalid">{{mostrarErrorEmail()}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <button mat-raised-button color="primary" matStepperNext matTooltip="Datos del Reclamo" matTooltipPosition="below" style="float: right;">
+                        Siguiente <i class="fa fa-fw fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="text-center lblCampoObligatorio">
+                    *Campos obligatorios
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <!-- DATOS DEL RECLAMO -->
+    <mat-step>
+        <form [formGroup]="frmGenerarReclamo">
+            <ng-template matStepLabel>DATOS DEL RECLAMO</ng-template>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>AREA DE SERVICIO*</label>
+                        <mat-select (selectionChange)="cargaSelectTipoReclamo()" formControlName="areaServicio" class="form-control" placeholder="Seleccione Area de Servicio">
+                            <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                {{ item.arServ_nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>RECLAMO*</label>
+                        <mat-select id="ddlReclamo" (selectionChange)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control">
+                            <mat-option value="" disabled>Seleccione Reclamo</mat-option>
+                            <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                                {{ item.tipRec_nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>¿INGRESAR UBICACION MEDIANTE EL MAPA?*</label>
+                <mat-select (selectionChange)="ubicacionMapa()" formControlName="ubicacion" [(ngModel)]="mapVisibility" class="form-control" placeholder="Seleccione opción">
+                    <mat-option *ngFor="let item of arrOpcion" [value]="item.stOpcion">
+                        {{ item.opcion }}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div [hidden]="mapVisibility === 'hidden'">
+                <agm-map id="googleMap" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                </agm-map>
+            </div>
+
+            <div class="form-group">
+                <label>BARRIO*</label>
+                <mat-select (selectionChange)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
+                    <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                        {{ item.bar_nombre }}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>CALLE*</label>
+                        <mat-select #ddlCalle id="ddlCalle" (selectionChange)="selectCalle()" formControlName="calle" [(ngModel)]="CalleID" class="form-control" placeholder="Seleccione Calle">
+                            <mat-option *ngFor="let item of arrCalle" [value]="item.cal_IDCalle">
+                                {{ item.cal_nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>ALTURA*</label>
+                        <input (keypress)="validarIngreso($event)" formControlName="altura" [(ngModel)]="altura" class="form-control" type="text" placeholder="Ingrese altura" maxlength="4" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <label>CANAL*</label>
+                    <mat-select (selectionChange)="selectCanal()" formControlName="canal" [(ngModel)]="CanalID" class="form-control" placeholder="Seleccione Canal de Comunicación">
+                        <mat-option *ngFor="let item of lstCanal" [value]="item.can_IDCanal">
+                            {{ item.can_nombre }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <label>OBSERVACIONES</label>
+                    <textarea formControlName="observaciones" [(ngModel)]="observacion" class="form-control" placeholder="Detalle su reclamo. Puede especificar datos puntuales, referencias, etc" cols="100" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="text-center lblCampoObligatorio">
+                    *Campos obligatorios
+                </div>
+            </div>
+
+            <div style="float: right !important;">
+                <button mat-raised-button color="primary" matStepperPrevious matTooltip="Datos del Ciudadano" matTooltipPosition="below">
+                    <i class="fa fa-fw fa-chevron-left"></i> Anterior
+                </button>
+                <button mat-raised-button color="primary" matStepperNext matTooltip="Resumen del Reclamo" matTooltipPosition="below">
+                    Siguiente <i class="fa fa-fw fa-chevron-right"></i></button>
+            </div>
+
+        </form>
+    </mat-step>
+
+    <!-- DATOS CIUDADANO -->
+    <mat-step>
+        <ng-template matStepLabel>RESUMEN DEL RECLAMO</ng-template>
+        You are now done.
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

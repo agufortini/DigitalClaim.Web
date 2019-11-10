@@ -11,12 +11,25 @@
                     <a [routerLink]="'/home'" routerLinkActive="active"><i class="material-icons">home</i>Inicio</a>
                 </li>
 
-                <li *ngIf="user.usu_IDRol === 1 || user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                <li *ngIf="user.usu_IDRol === 1">
                     <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">assignment</i>
                         <span class="hide-menu">Reclamo</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li>
-                            <a [routerLink]="'/generar-reclamo'" routerLinkActive="active">Registrar</a>
+                            <a [routerLink]="'/generar-reclamo-ciudadano'" routerLinkActive="active">Registrar</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/consultar-reclamo'" routerLinkActive="active">Consultar</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">assignment</i>
+                        <span class="hide-menu">Reclamo</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/generar-reclamo-municipal'" routerLinkActive="active">Registrar</a>
                         </li>
                         <li>
                             <a [routerLink]="'/consultar-reclamo'" routerLinkActive="active">Consultar</a>
@@ -69,7 +82,7 @@
                             <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><span class="hide-menu">Estado</span></a>
                             <ul>
                                 <li>
-                                    <a [routerLink]="'/estado-ordenServicio'" routerLinkActive="active">Orden de Servicio</a>
+                                    <a [routerLink]="'/estado-orden-servicio'" routerLinkActive="active">Orden de Servicio</a>
                                 </li>
                                 <li>
                                     <a [routerLink]="'/estado-reclamo'" routerLinkActive="active">Reclamo</a>
@@ -93,7 +106,7 @@
                         <i class="material-icons">assignment</i><span class="hide-menu">Orden de Servicio</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li>
-                            <a [routerLink]="'/crear-ordenServicio'" routerLinkActive="active">Registrar</a>
+                            <a [routerLink]="'/crear-orden-servicio'" routerLinkActive="active">Registrar</a>
                         </li>
                     </ul>
                 </li>

@@ -16,7 +16,8 @@ import { ChartsModule } from 'ng2-charts';
 // COMPONENTES
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
-import { GenerarReclamoComponent } from './generar-reclamo/generar-reclamo.component';
+import { GenerarReclamoCiudadanoComponent } from '../pages/generar-reclamo/generar-reclamo-ciudadano/generar-reclamo-ciudadano.component';
+import { GenerarReclamoMunicipalComponent } from '../pages/generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
 import { RegistrarReclamoComponent } from './registrar-reclamo/registrar-reclamo.component';
 import { ConsultarReclamoComponent } from './consultar-reclamo/consultar-reclamo.component';
 import { ContactoComponent } from './contacto/contacto.component';
@@ -56,7 +57,7 @@ import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-r
         ContactoComponent,
         CrearOrdenServicioComponent,
         RegistrarOrdenServicioComponent,
-        GenerarReclamoComponent,
+        GenerarReclamoCiudadanoComponent,
         PerfilComponent,
         ReporteComponent,
         GestionarOrdenServicioComponent,
@@ -77,7 +78,8 @@ import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-r
         PersonalComponent,
         AyudaRegistrarReclamoComponent,
         AyudaConsultarReclamoComponent,
-        AyudaCalificarReclamoComponent
+        AyudaCalificarReclamoComponent,
+        GenerarReclamoMunicipalComponent
     ],
     exports: [
         HomeComponent,
