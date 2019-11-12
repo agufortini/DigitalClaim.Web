@@ -12,6 +12,12 @@ export class UsuarioService {
 
   constructor(private httpClient: HttpClient) { }
 
+  validarUsuario(objUser: any): Observable<any> {
+    return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/ValidarUsuario`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objUser))
+    });
+  }
+
   registrarUsuario(objUser: any): Observable<any> {
     return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/RegistrarUsuario`, {
       params: new HttpParams().set('stObj', JSON.stringify(objUser))
