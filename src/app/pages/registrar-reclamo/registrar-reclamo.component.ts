@@ -1,15 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 
 // ENTIDADES
 import { Usuario } from 'src/app/_entities/usuario.entities';
-import { Ticket } from '../../_entities/ticket.entities';
-import { CallePorBarrio } from 'src/app/_entities/calle-por-barrio.entities';
 import { Reclamo, EnviarEmail } from '../../_entities/reclamo.entities';
-import { Historial } from '../../_entities/historial.entities';
 
 // SERVICIOS
 import { ReclamoService } from '../../services/reclamo.service';
@@ -22,21 +18,21 @@ import { ReclamoService } from '../../services/reclamo.service';
 })
 export class RegistrarReclamoComponent implements OnInit {
   user: Usuario;
-  datosRec: any;
-  objRec: any = {};
   splitted: any;
   IDRecyCod: any;
   fechaHoy = new Date();
   fechaRec: any;
   boBand = false;
+  horas: string;
+  minutos: string;
+  IDUsuario: number;
+  IDCanal: number;
+  boExiste: boolean;
 
   // OBJETOS PARA REGISTRAR RECLAMO
-  objTicket: Ticket;
-  objCalBar: CallePorBarrio;
-  objReclamo: Reclamo;
-  objHistorial: Historial;
-  objEnviarEmail: EnviarEmail;
-
+  objRec: any = {};
+  objUser: any;
+  objReclamo: any;
   estado = false;
 
   // Variables para dar formato a horario para guardar historial
@@ -47,6 +43,7 @@ export class RegistrarReclamoComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    this.objUser = JSON.parse(localStorage.getItem('datosUsuario'));
     this.objRec = JSON.parse(localStorage.getItem('datosReclamo'));
   }
 
@@ -55,127 +52,69 @@ export class RegistrarReclamoComponent implements OnInit {
     this.fechaRec = this.datePipe.transform(this.fechaRec, 'dd/MM/yyyy');
   }
 
-  // registrarReclamo() {
-  //   try {
-  //     Swal.fire({
-  //       allowOutsideClick: false,
-  //       type: 'info',
-  //       text: 'Espere por favor...'
-  //     });
+  registrarReclamo() {
+    try {
+      if (this.user.usu_IDRol !== 1) {
+        // CREACION DE OBJETO USUARIO EN CASO QUE SEA RECLAMO MUNICIPAL
+        this.objReclamo = {
+          usu_username: this.objUser.dni,
+          usu_password: this.objUser.dni,
+          usu_dni: this.objUser.dni,
+          usu_nombre: this.objUser.ombre,
+          usu_apellido: this.objUser.apelido,
+          usu_telefono: this.objUser.telefono,
+          usu_email: this.objUser.email,
+          usu_IDRol: 1
+        };
+      }
 
-  //     Swal.showLoading();
+      // Formato a horario
+      this.horas = ((this.getHour.getHours() < 10 ? '0' : '') + this.getHour.getHours()).toString();
+      this.minutos = ((this.getMin.getMinutes() < 10 ? '0' : '') + this.getMin.getMinutes()).toString();
 
-  //     // CREACION DE OBJETO RECLAMO
-  //     this.objReclamo = new Reclamo();
-  //     this.objReclamo.rec_fechaAlta = this.fechaRec;
-  //     this.objReclamo.rec_altura = +this.objRec.altura;
-  //     this.objReclamo.rec_observaciones = (this.objRec.observaciones) ? this.objRec.observaciones : null;
-  //     this.objReclamo.rec_IDOrdenServicio = null;
-  //     this.objReclamo.rec_IDTipoReclamo = +this.objRec.tipoReclamo.tipRec_IDTipoReclamo;
+      this.objReclamo = {
+        // CREACION DE OBJETO RECLAMO
+        rec_fechaAlta: this.fechaRec,
+        rec_altura: +this.objRec.altura,
+        rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
+        rec_IDOrdenServicio: null,
+        rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
 
-  //     // CREACION DE OBJETO TICKET
-  //     this.objTicket = new Ticket();
-  //     this.objTicket.tic_IDUsuario = +this.user.usu_IDUsuario;
+        // CAMPOS RESTANTES
+        usu_IDUsuario: (this.user.usu_IDRol === 1) ? this.user.usu_IDUsuario : 0,
+        can_IDCanal: (this.user.usu_IDRol === 1) ? 3 : this.objRec.canal.can_IDCanal,
+        cal_IDCalle: +this.objRec.calle.cal_IDCalle,
+        bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
+        his_horaIngreso: this.horas + this.minutos,
+        tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
+        usu_boExiste: (this.user.usu_IDRol === 1) ? true : false
+      };
 
-  //     if (this.user.usu_IDRol === 1) {
-  //       this.objTicket.tic_IDCanal = 3;
-  //     } else {
-  //       this.objTicket.tic_IDCanal = +this.objRec.canal.can_IDCanal;
-  //     }
+      this.reclamoService.registrarReclamo(this.objReclamo).subscribe(data => {
+        if (data) {
+          this.IDRecyCod = JSON.parse(data);
+        }
+        this.splitted = this.IDRecyCod.split(';', 2);
 
-  //     // REGISTRO DE TICKET
-  //     this.reclamoService.registrarTicket(this.objTicket).subscribe(dataTicket => {
-  //         if (dataTicket) {
-  //           this.objReclamo.rec_IDTicket = +dataTicket;
-  //         }
+        Swal.close();
+        Swal.fire({
+          allowOutsideClick: false,
+          type: 'success',
+          title: 'Reclamo registrado' + '<br>' + this.splitted[1],
+          text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
+            'a su casilla de correo para que pueda consultarlo posteriormente.'
+          }).then(result => {
+          if (result.value) {
+            this.router.navigateByUrl('/home');
+            }
+          });
+      });
 
-  //         // CREACION DE OBJETO CALLE POR BARRIO
-  //         this.objCalBar = new CallePorBarrio();
-  //         this.objCalBar.calBar_IDCalle = +this.objRec.calle.cal_IDCalle;
-  //         this.objCalBar.calBar_IDBarrio = +this.objRec.barrio.bar_IDBarrio;
-
-  //         // SELECT ID CALLE POR BARRIO
-  //         this.reclamoService.selectCallePorBarrio(this.objCalBar).subscribe(dataCPB => {
-  //             const objIDCalBar = JSON.parse(dataCPB);
-  //             if (dataCPB) {
-  //               this.objReclamo.rec_IDCallePorBarrio = +objIDCalBar.calBar_IDCallePorBarrio;
-  //             }
-
-  //             // REGISTRO DE RECLAMO
-  //             this.reclamoService.registrarReclamo(this.objReclamo).subscribe(dataRec => {
-  //                 if (dataRec) {
-  //                   this.IDRecyCod = JSON.parse(dataRec);
-  //                 }
-  //                 this.splitted = this.IDRecyCod.split(';', 2);
-
-  //                 // CREACION DE OBJETO HISTORIAL
-  //                 this.objHistorial = new Historial();
-  //                 this.objHistorial.his_fechaIngreso = this.fechaRec;
-
-  //                 // Formato a horario
-  //                 let hour = '';
-  //                 let min = '';
-  //                 hour = ((this.getHour.getHours() < 10 ? '0' : '') + this.getHour.getHours()).toString();
-  //                 min = ((this.getMin.getMinutes() < 10 ? '0' : '') + this.getMin.getMinutes()).toString();
-
-  //                 this.objHistorial.his_horaIngreso = hour + ':' + min;
-  //                 this.objHistorial.his_observaciones = 'Notificado en Area de Servicio';
-  //                 this.objHistorial.his_IDEstado = 1;
-  //                 this.objHistorial.his_IDReclamo = this.splitted[0];
-
-  //                 // REGISTRO DE HISTORIAL
-  //                 this.reclamoService.registrarHistorial(this.objHistorial).subscribe((dataHis) => {
-  //                   if (this.user.usu_IDRol === 1) {
-  //                     // ENVIAR EMAIL CODIGO DE REGISTRO DE RECLAMO
-  //                     this.objEnviarEmail = new EnviarEmail();
-  //                     this.objEnviarEmail.rec_codigo = this.splitted[1];
-  //                     this.objEnviarEmail.rec_fechaAlta = this.fechaRec;
-  //                     this.objEnviarEmail.tipRec_nombre = this.objRec.tipoReclamo.tipRec_nombre;
-  //                     this.objEnviarEmail.usu_nombre = this.user.usu_nombre;
-  //                     this.objEnviarEmail.usu_apellido = this.user.usu_apellido;
-  //                     this.objEnviarEmail.usu_email = this.user.usu_email;
-
-  //                     this.reclamoService.enviarEmailReclamo(this.objEnviarEmail).subscribe(data => {
-  //                         if (data) {
-  //                           Swal.close();
-  //                           Swal.fire({
-  //                             allowOutsideClick: false,
-  //                             type: 'success',
-  //                             title: 'Reclamo registrado' + '<br>' + this.objEnviarEmail.rec_codigo,
-  //                             text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
-  //                             'a su casilla de correo para que pueda consultarlo posteriormente.'
-  //                           }).then(result => {
-  //                             if (result.value) {
-  //                               this.router.navigateByUrl('/home');
-  //                             }
-  //                           });
-  //                         }
-  //                       }
-  //                     );
-  //                   } else {
-  //                     Swal.close();
-  //                     Swal.fire({
-  //                       allowOutsideClick: false,
-  //                       type: 'success',
-  //                       title: 'Reclamo registrado',
-  //                       text: 'El reclamo ha sido registrado correctamente. El código del mismo es: ' + this.splitted[1]
-  //                     }).then(result => {
-  //                       if (result.value) {
-  //                         this.router.navigateByUrl('/generar-reclamo');
-  //                       }
-  //                     });
-  //                   }
-
-  //                   localStorage.removeItem('datosReclamo');
-  //                   }
-  //                 );
-  //               });
-  //           });
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+      localStorage.removeItem('datosReclamo');
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   cancelarEnvio() {
     localStorage.removeItem('datosReclamo');

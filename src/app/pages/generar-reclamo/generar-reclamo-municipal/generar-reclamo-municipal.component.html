@@ -7,7 +7,7 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <label>DNI*</label>
-                        <input (keypress)="validarIngreso($event)" formControlName="dni" class="form-control" minlength="8" maxlength="8" required>
+                        <input (keypress)="validarIngreso($event)" ng-blur="validarUsuario()" formControlName="dni" class="form-control" minlength="8" maxlength="8" required>
                         <!-- <mat-error *ngIf="!dni.invalid">El DNI debe contener 8 números</mat-error> -->
                     </div>
                     <div class="col-md-6">
@@ -65,7 +65,7 @@
 
     <!-- DATOS DEL RECLAMO -->
     <mat-step>
-        <form [formGroup]="frmGenerarReclamo">
+        <form [formGroup]="frmDatosReclamo">
             <ng-template matStepLabel>DATOS DEL RECLAMO</ng-template>
 
             <div class="form-group">
@@ -157,7 +157,7 @@
                                     </button>
                     </div>
                     <div class="col-md-6">
-                        <button (click)="validarReclamo()" [disabled]="!frmGenerarReclamo.valid" mat-raised-button color="primary" matStepperNext matTooltip="Resumen del Reclamo" matTooltipPosition="below" style="float: right;">
+                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="below" style="float: right;">
                                         Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                                     </button>
                     </div>
@@ -172,97 +172,5 @@
                 </div>
             </div>
         </form>
-    </mat-step>
-
-    <mat-step>
-        <ng-template matStepLabel>RESUMEN DEL RECLAMO</ng-template>
-
-        <div class="container myAnimated myFadeIn">
-            <div class="card card-register mx-auto mt-3">
-                <div class="card-header myCardHeader">Resumen</div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <!-- <div *ngIf="user.usu_IDRol === 1">
-                                        <div class="form-row">
-                                            <label><strong>Reclamante:</strong></label>
-                                            <div class="ml-1"></div>
-                                            <label>{{ user.usu_nombre + ' ' + user.usu_apellido }}</label>
-                                        </div>
-                                    </div>
-
-                                    <div id="divFecha" class="form-row">
-                                        <label><strong>Fecha:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ fechaHoy | date: 'dd/MM/yyyy' }}</label>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <label><strong>Area de Servicio:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ objRec.areaServicio.arServ_nombre }}</label>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <label><strong>Reclamo:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ objRec.tipoReclamo.tipRec_nombre }}</label>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <label><strong>Dirección:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ objRec.calle.cal_nombre + ' ' + objRec.altura}}</label>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <label><strong>Barrio:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ objRec.barrio.bar_nombre }}</label>
-                                    </div>
-
-                                    <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5" class="form-row">
-                                        <label><strong>Canal:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label>{{ objRec.canal.can_nombre }}</label>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <label><strong>Observaciones:</strong></label>
-                                        <div class="ml-1"></div>
-                                        <label *ngIf="objRec.Observacion !== ''"> {{ objRec.observaciones }} </label>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group lblMensajeEnvio">
-                            *Antes de enviar el reclamo verifique que los datos sean correctos. Una vez enviado, no pueden modificarse.
-                        </div>
-
-                        <div class="lblConfirmar">
-                            <mat-checkbox name="cbxConfirmar" [(ngModel)]="estado" class="example-margin" color="primary">Confirmo haber revisado los datos del reclamo</mat-checkbox>
-                        </div>
-
-                        <br /><br>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button mat-raised-button matStepperPrevious type="button">
-                                    Cancelar
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <button mat-raised-button (click)="registrarReclamo()" [disabled]="!estado">
-                                    Enviar <i class="mdi mdi-share"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </mat-step>
 </mat-horizontal-stepper>

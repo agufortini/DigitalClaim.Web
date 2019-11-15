@@ -31,25 +31,9 @@ export class ReclamoService {
   }
 
   // POST
-  registrarReclamo(objReclamo: any, objUsuario: any, objDataRec: any): Observable<any> {
-    const params = new HttpParams();
-    params.set('stObjRec', JSON.stringify(objReclamo));
-    params.set('stObjUsu', JSON.stringify(objUsuario));
-    params.set('stObjData', JSON.stringify(objDataRec));
-
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/RegistrarReclamo`, { params });
-  }
-
-  // POST
-  registrarTicket(objTicket: Ticket): Observable<Ticket> {
-    return this.httpClient.get<Ticket>(`${environment.apiUrl}api/ReclamoController/RegistrarTicket`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objTicket))
-    });
-  }
-
-  selectCallePorBarrio(objCalBar: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectCallePorBarrio`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objCalBar))
+  registrarReclamo(objReclamo: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/RegistrarReclamo`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objReclamo))
     });
   }
 
@@ -62,20 +46,6 @@ export class ReclamoService {
   selectCalle(objCalle: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectCalle`, {
       params: new HttpParams().set('stObj', JSON.stringify(objCalle))
-    });
-  }
-
-  // POST
-  registrarHistorial(objHistorial: Historial): Observable<Historial> {
-    return this.httpClient.get<Historial>(`${environment.apiUrl}api/ReclamoController/RegistrarHistorial`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objHistorial))
-    });
-  }
-
-  // POST
-  enviarEmailReclamo(objEmail: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/EnviarEmailReclamo`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objEmail))
     });
   }
 
