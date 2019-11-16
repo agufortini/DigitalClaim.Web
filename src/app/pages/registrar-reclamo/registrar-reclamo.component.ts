@@ -19,7 +19,6 @@ import { ReclamoService } from '../../services/reclamo.service';
 export class RegistrarReclamoComponent implements OnInit {
   user: Usuario;
   splitted: any;
-  IDRecyCod: any;
   fechaHoy = new Date();
   fechaRec: any;
   boBand = false;
@@ -28,6 +27,7 @@ export class RegistrarReclamoComponent implements OnInit {
   IDUsuario: number;
   IDCanal: number;
   boExiste: boolean;
+  codRec: number;
 
   // OBJETOS PARA REGISTRAR RECLAMO
   objRec: any = {};
@@ -68,49 +68,54 @@ export class RegistrarReclamoComponent implements OnInit {
         };
       }
 
-      // Formato a horario
-      this.horas = ((this.getHour.getHours() < 10 ? '0' : '') + this.getHour.getHours()).toString();
-      this.minutos = ((this.getMin.getMinutes() < 10 ? '0' : '') + this.getMin.getMinutes()).toString();
+      console.log(this.objReclamo);
 
-      this.objReclamo = {
-        // CREACION DE OBJETO RECLAMO
-        rec_fechaAlta: this.fechaRec,
-        rec_altura: +this.objRec.altura,
-        rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
-        rec_IDOrdenServicio: null,
-        rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
+      // // Formato a horario
+      // this.horas = ((this.getHour.getHours() < 10 ? '0' : '') + this.getHour.getHours()).toString();
+      // this.minutos = ((this.getMin.getMinutes() < 10 ? '0' : '') + this.getMin.getMinutes()).toString();
 
-        // CAMPOS RESTANTES
-        usu_IDUsuario: (this.user.usu_IDRol === 1) ? this.user.usu_IDUsuario : 0,
-        can_IDCanal: (this.user.usu_IDRol === 1) ? 3 : this.objRec.canal.can_IDCanal,
-        cal_IDCalle: +this.objRec.calle.cal_IDCalle,
-        bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
-        his_horaIngreso: this.horas + this.minutos,
-        tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
-        usu_boExiste: (this.user.usu_IDRol === 1) ? true : false
-      };
+      // this.objReclamo += {
+      //   // CREACION DE OBJETO RECLAMO
+      //   rec_fechaAlta: this.fechaRec,
+      //   rec_altura: +this.objRec.altura,
+      //   rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
+      //   rec_IDOrdenServicio: null,
+      //   rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
 
-      this.reclamoService.registrarReclamo(this.objReclamo).subscribe(data => {
-        if (data) {
-          this.IDRecyCod = JSON.parse(data);
-        }
-        this.splitted = this.IDRecyCod.split(';', 2);
+      //   // CAMPOS RESTANTES
+      //   usu_IDUsuario: (this.user.usu_IDRol === 1) ? this.user.usu_IDUsuario : 0,
+      //   can_IDCanal: (this.user.usu_IDRol === 1) ? 3 : this.objRec.canal.can_IDCanal,
+      //   cal_IDCalle: +this.objRec.calle.cal_IDCalle,
+      //   bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
+      //   his_horaIngreso: this.horas + this.minutos,
+      //   tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
+      //   usu_boExiste: (this.user.usu_IDRol === 1) ? true : false,
+      //   usu_nombre: this.user.usu_nombre,
+      //   usu_email: this.user.usu_email,
+      //   estRec_nombre: this.objRec.tipoReclamo.tipRec_nombre
+      // };
 
-        Swal.close();
-        Swal.fire({
-          allowOutsideClick: false,
-          type: 'success',
-          title: 'Reclamo registrado' + '<br>' + this.splitted[1],
-          text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
-            'a su casilla de correo para que pueda consultarlo posteriormente.'
-          }).then(result => {
-          if (result.value) {
-            this.router.navigateByUrl('/home');
-            }
-          });
-      });
+      // this.reclamoService.registrarReclamo(this.objReclamo).subscribe(data => {
+      //   if (data) {
+      //     this.codRec = +JSON.parse(data);
+      //   }
 
-      localStorage.removeItem('datosReclamo');
+      //   Swal.close();
+      //   Swal.fire({
+      //     allowOutsideClick: false,
+      //     type: 'success',
+      //     title: 'Reclamo registrado' + '<br>' + this.codRec,
+      //     text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
+      //       'a su casilla de correo para que pueda consultarlo posteriormente.'
+      //     }).then(result => {
+      //     if (result.value) {
+      //       this.router.navigateByUrl('/home');
+      //       }
+      //     });
+      // });
+
+      // localStorage.removeItem('datosReclamo');
+      
     } catch (error) {
       console.log(error);
     }

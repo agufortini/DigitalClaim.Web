@@ -82,7 +82,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
 
   ngOnInit() {
     try {
-      this.validarRealizacionReclamo();
+      // this.validarRealizacionReclamo();
 
       this.frmGenerarReclamo = this.formBuilder.group({
         areaServicio: ['', Validators.required],

@@ -79,11 +79,11 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
   objCalle: any;
 
   // CONTROLES FORMULARIO CIUDADANO
-  dni = new FormControl('', Validators.required);
-  nombre = new FormControl('', Validators.required);
-  apellido = new FormControl('', Validators.required);
-  telefono = new FormControl('', Validators.required);
-  email = new FormControl('', [Validators.required, Validators.email]);
+  // dni = new FormControl('', Validators.required);
+  // nombre = new FormControl('', Validators.required);
+  // apellido = new FormControl('', Validators.required);
+  // telefono = new FormControl('', Validators.required);
+  // email = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(private ddlService: SelectService,
               private reclamoService: ReclamoService,
@@ -245,7 +245,7 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
       this.objUsuario.usu_dni = this.frmReclamante.dni.value;
 
       this.usuarioService.validarUsuario(this.objUsuario).subscribe(data => {
-        if (data !== null) {
+        if (JSON.parse(data)) {
           Swal.fire({
             allowOutsideClick: false,
             type: 'warning',
@@ -289,8 +289,8 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
           } else {
             this.objUser = {
               dni: this.frmReclamante.dni.value,
-              nombre: this.frmReclamante.nombre.value,
-              apellido: this.frmReclamante.apellido.value,
+              nombre: this.frmReclamante.nombre,
+              apellido: this.frmReclamante.apellido,
               telefono: this.frmReclamante.telefono.value,
               email: this.frmReclamante.email.value,
             };
@@ -304,7 +304,7 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
               observaciones: this.observacion
             };
 
-            localStorage.setItem('datosUsuario', JSON.stringify(this.objRec));
+            localStorage.setItem('datosUsuario', JSON.stringify(this.objUser));
             localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
             this.router.navigateByUrl('/registrar-reclamo');
           }
