@@ -95,8 +95,8 @@ export class ReclamoService {
     return this.httpClient.post<Contacto>(`${environment.apiUrl}api/ReclamoController/RegistrarConsulta`, objCon);
   }
 
-  validarRating(objIDRec: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ValidarRating`, {
+  selectRating(objIDRec: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectRating`, {
       params: new HttpParams().set('stObj', JSON.stringify(objIDRec))
     });
   }

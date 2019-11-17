@@ -52,7 +52,7 @@ export class EnviarEmail {
 // Modal Estado Reclamo
 
 export class ReclamoC {
-    rec_IDReclamo: number;
+    rec_ID: number;
     rec_codigo: number;
     rec_fechaAlta: string;
     arServ_nombre: string;
@@ -72,6 +72,13 @@ export class EstadoReclamo {
     estRec_IDEstado: number;
     estRec_nombre: string;
     constructor() {}
+}
+
+export class SelectRating {
+    rec_IDReclamo: number;
+    rat_rating: number;
+    rat_comentario: string;
+    rat_fechaAlta: string;
 }
 
 /* -------------------------------------------------- INTERFACES -------------------------------------------------- */

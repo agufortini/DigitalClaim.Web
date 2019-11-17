@@ -101,10 +101,10 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
     try {
         this.frmDatosReclamante = this.formBuilder.group({
           dni: ['', Validators.required],
-          nombre: ['', Validators.required],
-          apellido: ['', Validators.required],
-          telefono: ['', Validators.required],
-          email: ['', Validators.required]
+          nombre: ['Martin', Validators.required],
+          apellido: ['Bono', Validators.required],
+          telefono: ['353429658', Validators.required],
+          email: ['agufortini@gmail.com', Validators.required]
         });
 
         this.frmDatosReclamo = this.formBuilder.group({
@@ -289,8 +289,8 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
           } else {
             this.objUser = {
               dni: this.frmReclamante.dni.value,
-              nombre: this.frmReclamante.nombre,
-              apellido: this.frmReclamante.apellido,
+              nombre: this.frmReclamante.nombre.value,
+              apellido: this.frmReclamante.apellido.value,
               telefono: this.frmReclamante.telefono.value,
               email: this.frmReclamante.email.value,
             };

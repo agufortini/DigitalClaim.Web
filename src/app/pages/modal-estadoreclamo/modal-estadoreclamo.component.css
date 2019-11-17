@@ -1,3 +1,11 @@
 .btnRating {
     float: right !important;
 }
+
+button:disabled {
+    cursor: not-allowed !important;
+}
+
+.divCalificar {
+    background-color: lightblue;
+}

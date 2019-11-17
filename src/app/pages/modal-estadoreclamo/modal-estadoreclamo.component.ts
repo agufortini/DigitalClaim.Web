@@ -7,6 +7,7 @@ import { RatingReclamoComponent } from '../rating/rating-reclamo/rating-reclamo.
 
 // ENTIDADES
 import { Usuario } from '../../_entities/usuario.entities';
+import { SelectRating } from '../../_entities/reclamo.entities';
 
 // SERIVICIOS
 import { ReclamoService } from '../../services/reclamo.service';
@@ -17,6 +18,15 @@ import { ReclamoService } from '../../services/reclamo.service';
   styleUrls: ['./modal-estadoreclamo.component.css']
 })
 export class ModalEstadoreclamoComponent implements OnInit {
+  user: Usuario;
+  IDReclamo: number;
+  lstDatos: any;
+  dataSource: MatTableDataSource<any>;
+  objIDRec: any;
+  rating = false;
+  objRating: SelectRating;
+  ratingArr = [];
+
   displayedColumns: string[] = [
     'his_fechaIngreso',
     'his_horaIngreso',
@@ -24,11 +34,6 @@ export class ModalEstadoreclamoComponent implements OnInit {
     'estRec_nombre'
   ];
 
-  user: Usuario;
-  codRec: number;
-  lstDatos: any;
-  dataSource: MatTableDataSource<any>;
-  objCodRec: any;
 
   constructor(private dialogRef: MatDialogRef<ModalEstadoreclamoComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,25 +41,45 @@ export class ModalEstadoreclamoComponent implements OnInit {
               private dialog: MatDialog,
               private router: Router) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    this.codRec = this.data.obj.rec_codigo;
+    this.IDReclamo = this.data.obj.rec_ID;
   }
 
   ngOnInit() {
     try {
+      this.objIDRec = {
+        rec_IDReclamo: this.IDReclamo
+      };
+
       this.selectHistorial();
+      this.selectRating();
     } catch (error) {
       console.log(error);
     }
   }
 
   selectHistorial() {
-    this.objCodRec = {
-      stCodRec: this.codRec
-    };
-
-    this.reclamoService.selectHistorial(this.objCodRec).subscribe(data => {
+    this.reclamoService.selectHistorial(this.objIDRec).subscribe(data => {
       this.lstDatos = JSON.parse(data);
       this.dataSource = new MatTableDataSource<any>(this.lstDatos);
+    });
+  }
+
+  selectRating() {
+    this.reclamoService.selectRating(this.objIDRec).subscribe(data => {
+      const dataRat: SelectRating = JSON.parse(data);
+
+      if (dataRat === null) {
+        this.rating = true;
+      } else {
+        this.objRating = new SelectRating();
+        this.objRating.rat_fechaAlta = dataRat.rat_fechaAlta;
+        this.objRating.rat_rating = dataRat.rat_rating;
+        this.objRating.rat_comentario = dataRat.rat_comentario;
+
+        for (let index = 0; index < this.objRating.rat_rating; index++) {
+          this.ratingArr.push(index);
+        }
+      }
     });
   }
 
@@ -64,24 +89,10 @@ export class ModalEstadoreclamoComponent implements OnInit {
         rec_IDReclamo: JSON.parse(localStorage.getItem('rec_IDReclamo'))
       };
 
-      console.log(JSON.parse(localStorage.getItem('rec_IDReclamo')));
-      console.log(objIDRec);
-
-      this.reclamoService.validarRating(objIDRec).subscribe(data => {
-        if (JSON.parse(data) === null) {
-          this.dialog.open(RatingReclamoComponent, {
-            width: '50%'
-          });
-          this.dialogRef.close();
-        } else {
-          Swal.fire({
-            allowOutsideClick: false,
-            type: 'warning',
-            title: 'Calificar Reclamo',
-            text: 'No puede calificar el reclamo ya que ya ha sido calificado con anterioridad'
-          });
-        }
+      this.dialog.open(RatingReclamoComponent, {
+        width: '50%'
       });
+      this.dialogRef.close();
     } catch (error) {
       console.log(error);
     }

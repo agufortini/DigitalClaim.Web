@@ -290,7 +290,7 @@ export class ConsultarReclamoComponent implements OnInit {
   verEstados(element: ReclamoC) {
     try {
       // Guardo el IDReclamo en el localStorage para despues poder hacer el rating del reclamo
-      localStorage.setItem('rec_IDReclamo', JSON.stringify(element.rec_IDReclamo));
+      localStorage.setItem('rec_IDReclamo', JSON.stringify(element.rec_ID));
 
       if (element) {
         this.dialog.open(ModalEstadoreclamoComponent, {
