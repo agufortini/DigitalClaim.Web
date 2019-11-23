@@ -122,7 +122,7 @@ export class CrearOrdenServicioComponent implements OnInit {
             this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);
             this.dataSource.paginator = this.paginator;
             document.getElementById('idTableConsulta').style.visibility = 'visible';
-            document.getElementById('mensajeOrdServ').style.visibility = 'visible';
+            document.getElementById('seccionSiguiente').style.visibility = 'visible';
           } else {
             Swal.fire({
               allowOutsideClick: false,
@@ -143,31 +143,6 @@ export class CrearOrdenServicioComponent implements OnInit {
     return this.frmCrearOrden.controls;
   }
 
-  filtroGeneral(ctrl: string) {
-    try {
-      switch (ctrl) {
-        case 'tipoReclamo':
-          const tipRec: TipoReclamo = this.lstReclamo.find(x => x.tipRec_IDTipoReclamo === this.f.tipoReclamo.value);
-          this.applyFilter(tipRec.tipRec_nombre);
-          break;
-        case 'prioridad':
-          const pri: Prioridad = this.lstReclamo.find(x => x.pri_IDPrioridad === this.f.prioridad.value);
-          this.applyFilter(pri.pri_nombre);
-          break;
-        case 'barrio':
-          const bar: Barrio = this.lstReclamo.find(x => x.bar_IDBarrio === this.f.barrio.value);
-          this.applyFilter(bar.bar_nombre);
-          break;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
   cancelarSeleccion(value: string) {
     switch (value) {
       case 'ddlTipRec':
@@ -186,7 +161,7 @@ export class CrearOrdenServicioComponent implements OnInit {
     try {
       const arrReclamosPendientes: ReclamoPendiente[] = this.selection.selected;
       localStorage.setItem('reclamosPendientes', JSON.stringify(arrReclamosPendientes));
-      this.router.navigateByUrl('/registrar-ordenServicio');
+      this.router.navigateByUrl('/registrar-orden-servicio');
     } catch (error) {
       console.log(error);
     }

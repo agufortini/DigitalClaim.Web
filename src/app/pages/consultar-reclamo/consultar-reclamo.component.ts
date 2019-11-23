@@ -180,61 +180,55 @@ export class ConsultarReclamoComponent implements OnInit {
       //   };
       // }
 
-      // // DNI
-      // if (this.f.dni.value !== '') {
-      //   if (this.objFiltro === null) {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro = "usu_DNI = " + this.f.dni.value;
-      //   } else {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro += " and usu_DNI = " + this.f.dni.value;
-      //   }
-      // }
-
-      // // AREA DE SERVICIO
-      // if (this.f.areaServicio.value !== '') {
-      //   if (this.objFiltro === null) {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro = "arServ_ID = " + this.f.areaServicio.value;
-      //   } else {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro += " and arServ_ID = " + this.f.areaServicio.value;
-      //   }
-      // }
-
-      // // BARRIO
-      // if (this.f.barrio.value !== '') {
-      //   if (this.objFiltro === null) {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro = "bar_ID = " + this.f.barrio.value;
-      //   } else {
-      //     // tslint:disable-next-line:quotemark
-      //     this.stFiltro += " and bar_ID = " + this.f.barrio.value;
-      //   }
-      // }
-
-      // this.objFiltro = {
-      //   stFiltro: this.stFiltro
-      // };
-
-      // console.log(this.objFiltro);
-
-      this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
-        if (data) {
-          this.lstReclamo = JSON.parse(data);
-          this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-          this.dataSource.paginator = this.paginator;
-          document.getElementById('idTableConsulta').style.visibility = 'visible';
+      // DNI
+      if (this.f.dni.value !== '') {
+        if (this.objFiltro === null) {
+          this.stFiltro = 'usu_DNI = ' + this.f.dni.value;
         } else {
-          Swal.fire({
-            allowOutsideClick: false,
-            type: 'warning',
-            title: 'Consultar reclamo',
-            text: 'No se encontraron reclamos con el filtro aplicado'
-          });
-          this.frmConsultarReclamo.reset();
+          this.stFiltro += ' and usu_DNI = ' + this.f.dni.value;
         }
-      });
+      }
+
+      // AREA DE SERVICIO
+      if (this.f.areaServicio.value !== '') {
+        if (this.objFiltro === null) {
+          this.stFiltro = 'arServ_ID = ' + this.f.areaServicio.value;
+        } else {
+          this.stFiltro += ' and arServ_ID = ' + this.f.areaServicio.value;
+        }
+      }
+
+      // BARRIO
+      if (this.f.barrio.value !== '') {
+        if (this.objFiltro === null) {
+          this.stFiltro = 'bar_ID = ' + this.f.barrio.value;
+        } else {
+          this.stFiltro += ' and bar_ID = ' + this.f.barrio.value;
+        }
+      }
+
+      this.objFiltro = {
+        stFiltro: this.stFiltro
+      };
+
+      console.log(this.objFiltro);
+
+      // this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
+      //   if (data) {
+      //     this.lstReclamo = JSON.parse(data);
+      //     this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
+      //     this.dataSource.paginator = this.paginator;
+      //     document.getElementById('idTableConsulta').style.visibility = 'visible';
+      //   } else {
+      //     Swal.fire({
+      //       allowOutsideClick: false,
+      //       type: 'warning',
+      //       title: 'Consultar reclamo',
+      //       text: 'No se encontraron reclamos con el filtro aplicado'
+      //     });
+      //     this.frmConsultarReclamo.reset();
+      //   }
+      // });
 
       this.resetForm();
 
@@ -308,7 +302,6 @@ export class ConsultarReclamoComponent implements OnInit {
   resetForm() {
     this.frmConsultarReclamo.reset();
     this.stFiltro = '';
-    this.objFiltro = null;
   }
 
   selectTipoReclamo() {

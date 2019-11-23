@@ -9,7 +9,7 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>FECHA ALTA*</label>
-                            <input formControlName="fechaDesde" class="form-control" type="date" [min]="minDate" matTooltip="Seleccionar fecha desde" matTooltipPosition="above">
+                            <input [value]="fechaHoy" formControlName="fechaDesde" class="form-control" type="date">
                         </div>
                         <div class="col-md-6">
                             <label>FECHA VENCIMIENTO*</label>

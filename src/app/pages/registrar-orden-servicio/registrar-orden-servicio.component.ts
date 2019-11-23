@@ -107,7 +107,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
       Swal.fire({
         allowOutsideClick: false,
         type: 'info',
-        text: 'Espere por favor...'
+        text: 'Espere por favor, este proceso puede tardar unos segundos...'
       });
 
       Swal.showLoading();
@@ -190,6 +190,6 @@ export class RegistrarOrdenServicioComponent implements OnInit {
 
   cancelarRegistro() {
     localStorage.removeItem('reclamosPendientes');
-    this.router.navigateByUrl('crear-ordenServicio');
+    this.router.navigateByUrl('crear-orden-servicio');
   }
 }

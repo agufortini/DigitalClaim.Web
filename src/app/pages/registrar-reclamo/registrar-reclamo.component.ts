@@ -82,7 +82,7 @@ export class RegistrarReclamoComponent implements OnInit {
           can_IDCanal: 3,
           cal_IDCalle: +this.objRec.calle.cal_IDCalle,
           bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
-          his_horaIngreso: this.horas + this.minutos,
+          his_horaIngreso: this.horas + ':' + this.minutos,
           tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
           usu_boExiste: true,
           usu_nombre: this.user.usu_nombre,

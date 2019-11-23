@@ -60,7 +60,7 @@ const pagesRoutes: Routes = [
             { path: 'ayuda-registrar-reclamo', component: AyudaRegistrarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'ayuda-consultar-reclamo', component: AyudaConsultarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'ayuda-calificar-reclamo', component: AyudaCalificarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Calificar Reclamo' }, canActivate: [LoginGuard]},
-            { path: '**', redirectTo: '/login'}
+            // { path: '**', redirectTo: '/login'}
         ]
     },
 ];
