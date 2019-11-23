@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>FECHA HASTA</label>
-                                <input formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
+                                <input id="hasta" formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
                             </div>
                         </div>
                     </div>
@@ -37,11 +37,11 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label>DNI</label><br>
+                                <label>DNI</label>
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
                             </div>
                             <div class="col-md-6">
-                                <label>CODIGO</label><br>
+                                <label>CODIGO</label>
                                 <input matInput (keypress)="validarIngreso($event)" formControlName="codigo" [(ngModel)]="inputCodigo" class="form-control" type="text" placeholder="Código reclamo">
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <button mat-stroked-button (click)="selectReclamo()" class="btn btn-block btnPrimario myBtnCard">
+                        <button (click)="selectReclamo()" class="btn btn-block btnPrimario myBtnCard">
                             Consultar <i class="fa fa-fw fa-search"></i>
                         </button>
                     </div>
