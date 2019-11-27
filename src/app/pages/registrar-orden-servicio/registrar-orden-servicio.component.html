@@ -22,12 +22,12 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>RESPONSABLE*</label>
-                            <mat-select class="form-control" formControlName="responsable">
-                                <mat-option value="" disabled>Seleccione Responsable...</mat-option>
-                                <mat-option *ngFor="let item of arrResp" [value]="item.usu_IDUsuario">
+                            <select class="form-control" formControlName="responsable">
+                                <option value="" disabled>Seleccione Responsable...</option>
+                                <option *ngFor="let item of arrResp" [value]="item.usu_IDUsuario">
                                     {{ item.usu_nombreCompleto }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">

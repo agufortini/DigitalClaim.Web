@@ -4,12 +4,9 @@
 
 export const environment = {
 	production: false,
-	// apiUrl: 'http://localhost:4210/',
-	apiUrl: 'http://DCWebApi.somee.com/'
+	apiUrl: 'http://localhost:4210/',
+	// apiUrl: 'http://DCWebApi.somee.com/'
 };
-
-// http://DCWebApi.somee.com/
-// http://localhost:4210/
 
 /*
  * For easier debugging in development mode, you can import the following file

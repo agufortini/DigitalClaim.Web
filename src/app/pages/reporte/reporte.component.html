@@ -23,33 +23,33 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>AREA DE SERVICIO</label>
-                            <mat-select (selectionChange)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
-                                <mat-option value="" disabled>Seleccione Área de Servicio...</mat-option>
-                                <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                            <select (change)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
+                                <option value="" disabled>Seleccione Área de Servicio...</option>
+                                <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
                                     {{ item.arServ_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label>TIPO DE RECLAMO</label>
-                            <mat-select (selectionChange)="selectTipoReclamo()" [(ngModel)]="TipoReclamoID" formControlName="tipoReclamo" class="form-control">
-                                <mat-option value="" disabled>Seleccione Tipo de Reclamo...</mat-option>
-                                <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                            <select (change)="selectTipoReclamo()" [(ngModel)]="TipoReclamoID" formControlName="tipoReclamo" class="form-control">
+                                <option value="" disabled>Seleccione Tipo de Reclamo...</option>
+                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
                                     {{ item.tipRec_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="barrio">BARRIO</label>
-                    <mat-select formControlName="barrio" class="form-control">
-                        <mat-option value="" disabled>Seleccione Barrio...</mat-option>
-                        <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                    <select formControlName="barrio" class="form-control">
+                        <option value="" disabled>Seleccione Barrio...</option>
+                        <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
                             {{ item.bar_nombre }}
-                        </mat-option>
-                    </mat-select>
+                        </option>
+                    </select>
                 </div>
 
                 <div class="row">

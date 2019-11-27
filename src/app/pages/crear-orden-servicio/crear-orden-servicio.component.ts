@@ -31,7 +31,7 @@ import { Barrio } from '../../_entities/barrio.entities';
 })
 export class CrearOrdenServicioComponent implements OnInit {
 
-  frmCrearOrden: FormGroup;
+  frmCrearOrdenServicio: FormGroup;
   user: Usuario;
 
   displayedColumns: string[] = ['select', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre'];
@@ -76,7 +76,7 @@ export class CrearOrdenServicioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.frmCrearOrden = this.formBuilder.group({
+    this.frmCrearOrdenServicio = this.formBuilder.group({
       fechaDesde: null,
       fechaHasta: null,
       tipoReclamo: [''],
@@ -84,7 +84,9 @@ export class CrearOrdenServicioComponent implements OnInit {
       barrio: ['']
     });
 
+    // Carga de selects de formulario
     this.cargaDDL();
+    // Select de Reclamos en estado "Sin Asignar", para añadir a la Orden de Servicio.
     this.selectReclamosSinAsignar();
   }
 
@@ -98,7 +100,7 @@ export class CrearOrdenServicioComponent implements OnInit {
         this.arrTipRec = JSON.parse(data);
       });
 
-      this.ddlService.selectEntitie('TipoReclamoController', 'SelectPrioridad').subscribe(data => {
+      this.ddlService.selectEntitie('PrioridadController', 'SelectPrioridad').subscribe(data => {
         this.arrPrioridad = JSON.parse(data);
       });
 
@@ -139,7 +141,7 @@ export class CrearOrdenServicioComponent implements OnInit {
   }
 
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get f() {
+  get frmCrearOrden() {
     return this.frmCrearOrden.controls;
   }
 

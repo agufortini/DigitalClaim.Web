@@ -8,7 +8,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <div *ngIf="user.usu_IDRol === 1">
+                            <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
                                 <div class="form-row">
                                     <label><strong>Reclamante:</strong></label>
                                     <div class="ml-1"></div>
@@ -78,7 +78,7 @@
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <button mat-stroked-button [disabled]="!estado" (click)="registrarReclamo()" class="btn btn-block btnPrimario">
+                        <button [disabled]="!estado" (click)="registrarReclamo()" class="btn btn-block btnPrimario">
                             Enviar <i class="mdi mdi-share"></i>
                         </button>
                     </div>

@@ -27,11 +27,6 @@ export class ConsultarReclamoComponent implements OnInit {
 	frmConsultarReclamo: FormGroup;
 	user: Usuario;
 
-	filtroFecha: string;
-	filtroDNI: string;
-	filtroCodigo: string;
-	filtroAreaServicio: string;
-
 	// VARIABLES NGMODEL PARA CONTROLES ANGULAR MATERIAL
 	inputCodRec = '';
 	inputDNI = '';
@@ -63,13 +58,18 @@ export class ConsultarReclamoComponent implements OnInit {
 	Prioridad: any;
 	Barrio: any;
 
-	// VISTA
-	fechaDesde: any;
-	fechaHasta: any;
-	fechaHoy: any;
-	boBand = false;
-	stFiltro: string;
-	objFiltro: any = null;
+	// Filtros Vista
+	FechaDesde: any;
+	FechaHasta: any;
+	filtroFecha: string;
+	filtroDNI: string;
+	filtroCodigo: string;
+	filtroAreaServicio: string;
+	filtroBarrio: string;
+
+	fechaHoy: Date;
+	objFiltro: any;
+
 	ttpFiltro = 'Más filtros';
 
 	// TABLA
@@ -100,23 +100,28 @@ export class ConsultarReclamoComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.setFechaHasta();
 		try {
-			// CONTROLES
-			// tslint:disable-next-line:indent
 			if (this.user.usu_IDRol === 1) {
+				// Controles de Formulario
 				this.frmControls();
 
+				// this.setFechaHasta();
+
+				// Carga de select Estado de Reclamo
 				this.ddlService.selectEntitie('ReclamoController', 'SelectEstadoReclamo').subscribe((data) => {
 					this.arrEstado = JSON.parse(data);
-					this.f.estado.patchValue(this.arrEstado[0].estRec_IDEstado);
+					this.frmConsultar.estado.patchValue(this.arrEstado[0].estRec_IDEstado);
 				});
 
-				// SELECT DE RECLAMOS EN ESTADO SIN ASIGNAR
-				this.listarReclamoPorEstado(1);
+				// Se asigna valor predeterminado a select, estado "Sin Asignar"
+				this.frmConsultar.estado.patchValue(1);
+				// Se listan los reclamos en estado "Sin Asignar"				
+				this.listarReclamoPorEstado();
 				document.getElementById('idTableConsulta').style.visibility = 'visible';
 			} else {
+				// Controles de Formulario
 				this.frmControls();
+				// Carga de selects del formulario
 				this.cargarDDL();
 			}
 		} catch (error) {
@@ -126,32 +131,30 @@ export class ConsultarReclamoComponent implements OnInit {
 
 	frmControls() {
 		this.frmConsultarReclamo = this.formBuilder.group({
-			fechaDesde: [ '' ],
-			fechaHasta: [ this.setFechaHasta() ],
-			codigo: [ '' ],
-			dni: [ '' ],
-			areaServicio: [ '' ],
-			tipoReclamo: [ '' ],
-			estado: [ '' ],
-			prioridad: [ '' ],
-			barrio: [ '' ]
+			fechaDesde: [''],
+			fechaHasta: [''],
+			codigo: [ ''],
+			dni: [''],
+			areaServicio: [''],
+			tipoReclamo: [''],
+			estado: [''],
+			barrio: ['']
 		});
 	}
 
-	setFechaHasta() {
-		this.fechaHoy = new Date();
-		return (this.fechaHoy = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy'));
-	}
+	// setFechaHasta() {
+	// 	this.fechaHoy = new Date();
+	// 	this.fechaHoy = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
+	// 	return this.frmConsultar.fechaHasta.patchValue(this.fechaHoy);
+	// }
 
 	// OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-	get f() {
+	get frmConsultar() {
 		return this.frmConsultarReclamo.controls;
 	}
 
-	// tslint:disable-next-line:variable-name
-	listarReclamoPorEstado(IDEstado: number) {
-		// tslint:disable-next-line:variable-name
-		const estRec_IDEstado: any = IDEstado;
+	listarReclamoPorEstado() {
+		const estRec_IDEstado: any = this.frmConsultar.estado.value;
 
 		this.objIDRec = {
 			stFiltro: 'usu_ID = ' + this.user.usu_IDUsuario + ' and rec_IDEstado = ' + estRec_IDEstado
@@ -163,87 +166,114 @@ export class ConsultarReclamoComponent implements OnInit {
 	selectV_Reclamo(objIDUser: any) {
 		this.reclamoService.selectReclamo(objIDUser).subscribe((data) => {
 			this.lstReclamo = JSON.parse(data);
-			this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-			this.dataSource.paginator = this.paginator;
+
+			if (this.lstReclamo.length > 0) {
+				this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
+				this.dataSource.paginator = this.paginator;
+			} else {
+				Swal.fire({
+					allowOutsideClick: false,
+					type: 'warning',
+					title: 'Consultar Reclamo',
+					text: 'Actualmente, no hay reclamos en Estado ' + this.arrEstado[this.frmConsultar.estado.value].estRec_nombre
+				});
+			}
 		});
 	}
 
 	selectReclamo() {
 		try {
-			// Si la fecha es distinta a "" & la fecha es distindo de ""
+			const fechaDesde = this.frmConsultar.fechaDesde.value;
+			const fechaHasta = this.frmConsultar.fechaHasta.value;
+			const dni = this.frmConsultar.dni.value;
+			const codigo = this.frmConsultar.codigo.value;
+			const areaServicio = this.frmConsultar.areaServicio.value;
+			const barrio = this.frmConsultar.barrio.value;
 
-			if (this.f.fechaDesde.value !== '' && this.f.fechaHasta.value !== '') {
-				// Si la fecha desde es declarada y hasta es null
-				if (this.f.fechaDesde !== null && this.f.fechaHasta.value === null) {
-					// formatear fecha YYYY/MM/DD
-					const fechaActual = new Date().toISOString().split('T')[0];
-					// Setea fecha actual en Fecha hasta.
-					this.f.fechaHasta.setValue(fechaActual);
-					console.log(fechaActual);
+			// Validación si se ingresó por algún campo de fecha
+			if (fechaDesde !== '' || fechaHasta !== '') {
+				// Validación por ingreso de ambas fechas
+				if (fechaDesde !== '' && fechaHasta !== '') {
+	
+					// Valida si Fecha Desde es menor a Fecha Hasta
+					if (fechaDesde <= fechaHasta) {
+						this.filtroFecha = `rec_fechaAlta >= ${fechaDesde} and rec_fechaAlta <= ${fechaHasta}`;						
+					} else {
+						// Muestra error en rango de Fechas
+						Swal.fire({
+							allowOutsideClick: false,
+							type: 'error',
+							title: 'Consultar Reclamo',
+							text: 'La fecha Desde debe ser menor a la fecha Hasta'
+						});
+					}
+				// Validación por ingreso de fechas individuales
+				} else if (fechaDesde !== '') {
+					this.filtroFecha = `rec_fechaAlta >= ${fechaDesde}`;
+				} else if (fechaHasta !== '') {
+					this.filtroFecha = `rec_fechaAlta <= ${fechaHasta}`;
 				}
-				// si la fecha desde menor a hasta.
-				if (this.f.fechaDesde.value <= this.f.fechaHasta.value) {
-					//construye filtro fecha desde & Hasta:
-					this.filtroFecha = `rec_fechaAlta >= ${this.f.fechaDesde.value} and rec_fechaAlta <= ${this.f
-						.fechaHasta.value}`;
 
-					this.stFiltro = this.filtroFecha;
-					console.log(this.stFiltro);
-				} else {
-					console.log(this.f.fechaDesde.value, this.f.fechaHasta.value);
-					Swal.fire({
-						allowOutsideClick: false,
-						type: 'error',
-						title: 'Consultar Reclamo',
-						text: 'La fecha Desde debe ser menor a la fecha Hasta'
-					});
+				this.objFiltro = {
+					stFiltro: this.filtroFecha
+				};
+			}
+
+			// Si control DNI es distinto de "" asigno valor a filtroDNI
+			if (dni !== '') {
+				if (this.objFiltro !== '') {
+					this.objFiltro = {
+						
+					};
 				}
-			} else if (this.f.fechaDesde.value !== '') {
+				this.filtroDNI = `usu_DNI = ${dni}`;
+
 				// this.objFiltro = {
-				// 	// tslint:disable-next-line:quotemark
-				//   // stFiltro: "rec_fechaAlta >= '" + this.f.fechaDesde.value + "'"
-
+				// 	stFiltro: this.stFiltro
 				// };
-				this.filtroFecha = `rec_fechaAlta >= ${this.f.fechaDesde.value}`;
-				this.stFiltro = this.filtroFecha;
-			} else if (this.f.fechaHasta.value !== '') {
-				// this.objFiltro = {
-				// 	// tslint:disable-next-line:quotemark
-				// 	stFiltro: "rec_fechaAlta <= '" + this.f.fechaHasta.value + "'"
-				// };
-				this.filtroFecha = `rec_fechaAlta <= ${this.f.fechaHasta.value}`;
 			}
 
-			// DNI
-			if (this.f.dni.value !== '') {
-				if (this.objFiltro === null) {
-					this.stFiltro = 'usu_DNI = ' + this.f.dni.value;
-				} else {
-					this.stFiltro += ' and usu_DNI = ' + this.f.dni.value;
-				}
-			}
+			// // Si control codigo es distinto de "" asigno valor a filtroCodigo
+			// if (codigo !== '') {
+			// 	this.filtroCodigo = `rec_codigo = ${codigo}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroCodigo;
+			// 	} else {
+			// 		this.stFiltro = this.filtroCodigo;
+			// 	}
 
-			// AREA DE SERVICIO
-			if (this.f.areaServicio.value !== '') {
-				if (this.objFiltro === null) {
-					this.stFiltro = 'arServ_ID = ' + this.f.areaServicio.value;
-				} else {
-					this.stFiltro += ' and arServ_ID = ' + this.f.areaServicio.value;
-				}
-			}
+			// 	// this.objFiltro = {
+			// 	// 	stFiltro: this.stFiltro
+			// 	// };
+			// }
 
-			// BARRIO
-			if (this.f.barrio.value !== '') {
-				if (this.objFiltro === null) {
-					this.stFiltro = 'bar_ID = ' + this.f.barrio.value;
-				} else {
-					this.stFiltro += ' and bar_ID = ' + this.f.barrio.value;
-				}
-			}
+			// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
+			// if (areaServicio !== '') {
+			// 	this.filtroAreaServicio = `arServ_ID = ${areaServicio}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroAreaServicio;
+			// 	} else {
+			// 		this.stFiltro = this.filtroAreaServicio;
+			// 	}
 
-			this.objFiltro = {
-				stFiltro: this.stFiltro
-			};
+			// 	// this.objFiltro = {
+			// 	// 	stFiltro: this.stFiltro
+			// 	// };
+			// }
+
+			// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
+			// if (barrio !== '') {
+			// 	this.filtroBarrio = `bar_ID = ${barrio}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroBarrio;
+			// 	} else {
+			// 		this.stFiltro = this.filtroBarrio;
+			// 	}		
+			// }
+
+			// this.objFiltro = {
+			// 	stFiltro: this.stFiltro
+			// };
 
 			console.log(this.objFiltro);
 
@@ -264,7 +294,8 @@ export class ConsultarReclamoComponent implements OnInit {
 			//   }
 			// });
 
-			this.resetForm();
+			this.objFiltro = '';
+
 		} catch (error) {
 			console.log(error);
 		}
@@ -283,12 +314,12 @@ export class ConsultarReclamoComponent implements OnInit {
 	cargarDDLTipoReclamo() {
 		try {
 			this.objIDArServ = {
-				tipRec_IDArServ: this.f.areaServicio.value
+				tipRec_IDArServ: this.frmConsultar.areaServicio.value
 			};
 
 			this.ddlService.selectTipoReclamo(this.objIDArServ).subscribe((data) => {
 				this.arrTipRec = JSON.parse(data);
-				this.arServ = this.arrArServ.filter((x) => x.arServ_IDAreaServicio === +this.f.areaServicio.value)[0];
+				this.arServ = this.arrArServ.filter((x) => x.arServ_IDAreaServicio === +this.frmConsultar.areaServicio.value)[0];
 			});
 		} catch (error) {
 			console.log(error);
@@ -332,10 +363,6 @@ export class ConsultarReclamoComponent implements OnInit {
 		}
 	}
 
-	resetForm() {
-		this.frmConsultarReclamo.reset();
-		this.stFiltro = '';
-	}
 
 	selectTipoReclamo() {
 		this.tipoReclamo = this.arrTipRec.filter((x) => x.tipRec_IDTipoReclamo === +this.TipoReclamoID)[0];

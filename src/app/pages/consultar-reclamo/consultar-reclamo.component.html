@@ -3,21 +3,27 @@
         <div class="card-header myCardHeader">Consultar Reclamo</div>
         <div class="card-body">
             <form [formGroup]="frmConsultarReclamo">
-                <div *ngIf="user.usu_IDRol === 1" class="form-group">
-                    <div class="form-row">
-                        <mat-label>Reclamos:</mat-label>
-                        <div class="ml-1"></div>
-                        <mat-select (selectionChange)="listarReclamoPorEstado(this.f.estado.value)" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione estado de reclamo">
-                            <mat-option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstado">
-                                {{ item.estRec_nombre }}
-                            </mat-option>
-                        </mat-select>
+                <div *ngIf="user.usu_IDRol === 1">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <label>Estado</label>
+                                <select (change)="listarReclamoPorEstado()" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione Estado de Reclamo">
+                                    <option value="" disabled>Seleccione Estado de Reclamo...</option>
+                                    <option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstado">
+                                        {{ item.estRec_nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-7">
+                                <label>Dato</label>
+                                <input (keyup)="applyFilter($event.target.value)" class="form-control" placeholder="Ingrese algún dato del Reclamo">
+                            </div>
+                        </div>
                     </div>
-                    <br>
-                    <mat-form-field>
-                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese dato">
-                    </mat-form-field>
-                    <p>Para realizar la consulta de su reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
+                    <div class="form-group lblCampoObligatorio">
+                        <p>*Para realizar la consulta de su reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
+                    </div>
                 </div>
 
                 <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
@@ -29,7 +35,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label>FECHA HASTA</label>
-                                <input id="hasta" formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
+                                <input formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
                             </div>
                         </div>
                     </div>
@@ -38,11 +44,11 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label>DNI</label>
-                                <input matInput (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
+                                <input (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
                             </div>
                             <div class="col-md-6">
                                 <label>CODIGO</label>
-                                <input matInput (keypress)="validarIngreso($event)" formControlName="codigo" [(ngModel)]="inputCodigo" class="form-control" type="text" placeholder="Código reclamo">
+                                <input (keypress)="validarIngreso($event)" formControlName="codigo" [(ngModel)]="inputCodigo" class="form-control" type="text" placeholder="Código reclamo">
                             </div>
                         </div>
                     </div>
@@ -51,19 +57,21 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label>AREA DE SERVICIO</label>
-                                <mat-select (selectionChange)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
-                                    <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                <select (change)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
+                                    <option disabled value="">Seleccione Área de Servicio...</option>
+                                    <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
                                         {{ item.arServ_nombre }}
-                                    </mat-option>
-                                </mat-select>
+                                    </option>
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="ddlBarrio">BARRIO</label><br>
-                                <mat-select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
-                                    <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                                <select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
+                                    <option disabled value="">Seleccione Barrio...</option>
+                                    <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
                                         {{ item.bar_nombre }}
-                                    </mat-option>
-                                </mat-select>
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>

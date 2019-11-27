@@ -2,7 +2,7 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header myCardHeader">Búsqueda de Reclamos</div>
         <div class="card-body">
-            <form [formGroup]="frmCrearOrden">
+            <form [formGroup]="frmCrearOrdenServicio">
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
@@ -19,23 +19,23 @@
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="tipoReclamo">RECLAMO</label>
-                            <mat-select (selectionChange)="filtroGeneral('tipoReclamo')" formControlName="tipoReclamo" [(ngModel)]="ddlTipRec" class="form-control" placeholder="Seleccione Reclamo...">
-                                <mat-option disabled>Seleccione Reclamo...</mat-option>
-                                <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                            <label>RECLAMO</label>
+                            <select (change)="filtroGeneral('tipoReclamo')" formControlName="tipoReclamo" [(ngModel)]="ddlTipRec" class="form-control" placeholder="Seleccione Reclamo...">
+                                <option disabled>Seleccione Reclamo...</option>
+                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
                                     {{ item.tipRec_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="prioridad">PRIORIDAD</label>
-                            <mat-select (selectionChange)="filtroGeneral('prioridad')" formControlName="prioridad" [(ngModel)]="ddlPri" class="form-control" placeholder="Seleccione Prioridad...">
-                                <mat-option disabled>Seleccione Prioridad...</mat-option>
-                                <mat-option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
+                            <label>PRIORIDAD</label>
+                            <select (change)="filtroGeneral('prioridad')" formControlName="prioridad" [(ngModel)]="ddlPri" class="form-control" placeholder="Seleccione Prioridad...">
+                                <option disabled>Seleccione Prioridad...</option>
+                                <option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
                                     {{ item.pri_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -44,19 +44,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="barrio">BARRIO</label><br>
-                            <mat-select (selectionChange)="filtroGeneral('barrio')" formControlName="barrio" [(ngModel)]="ddlBar" class="form-control" placeholder="Seleccione Barrio...">
-                                <mat-option disabled>Seleccione Barrio...</mat-option>
-                                <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                            <select (change)="filtroGeneral('barrio')" formControlName="barrio" [(ngModel)]="ddlBar" class="form-control" placeholder="Seleccione Barrio...">
+                                <option disabled>Seleccione Barrio...</option>
+                                <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
                                     {{ item.bar_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-8">
-                        <button mat-stroked-button class="btn btn-block btnPrimario myBtnCard">
+                        <button class="btn btn-block btnPrimario myBtnCard">
                             Buscar <i class="fa fa-fw fa-search"></i>
                         </button>
                     </div>
@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <button mat-stroked-button (click)="registrarOrdenServicio()" [disabled]="selection.selected.length === 0" class="btn btn-block btnSiguiente" matTooltip="Registrar Orden de Servicio" matTooltipPosition="left">
+    <button (click)="registrarOrdenServicio()" [disabled]="selection.selected.length === 0" class="btn btn-block btnSiguiente" matTooltip="Registrar Orden de Servicio" matTooltipPosition="left">
         Siguiente <i class="fa fa-fw fa-chevron-right"></i>
     </button>
 </div>

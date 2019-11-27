@@ -82,7 +82,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
 
   ngOnInit() {
     try {
-      // this.validarRealizacionReclamo();
+      this.validarRealizacionReclamo();
 
       this.frmGenerarReclamo = this.formBuilder.group({
         areaServicio: ['', Validators.required],
@@ -102,7 +102,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
   }
 
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get f() {
+  get frmGenerar() {
     return this.frmGenerarReclamo.controls;
   }
 
@@ -213,7 +213,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
             Swal.fire({
               allowOutsideClick: false,
               type: 'warning',
-              title: 'Registrar reclamo',
+              title: 'Registrar Reclamo',
               text: 'No puede realizar la operación nuevamente ya que sólo se puede enviar un reclamo por día.'
             }).then(result => {
               if (result.value) {
@@ -229,10 +229,10 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
   validarReclamo() {
     try {
       this.objValidarRec = new ValidarReclamo();
-      this.objValidarRec.rec_altura = this.f.altura.value;
-      this.objValidarRec.rec_IDCalle = this.f.calle.value;
-      this.objValidarRec.rec_IDBarrio = this.f.barrio.value;
-      this.objValidarRec.rec_IDTipoReclamo = this.f.tipoReclamo.value;
+      this.objValidarRec.rec_altura = this.frmGenerar.altura.value;
+      this.objValidarRec.rec_IDCalle = this.frmGenerar.calle.value;
+      this.objValidarRec.rec_IDBarrio = this.frmGenerar.barrio.value;
+      this.objValidarRec.rec_IDTipoReclamo = this.frmGenerar.tipoReclamo.value;
 
       this.reclamoService.validarReclamo(this.objValidarRec).subscribe(data => {
         const obj = JSON.parse(data);
@@ -254,7 +254,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
                 tipoReclamo: this.tipoReclamo,
                 barrio: this.Barrio,
                 calle: this.Calle,
-                altura: this.f.altura.value,
+                altura: this.frmGenerar.altura.value,
                 observaciones: this.observacion
               };
               localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
@@ -270,17 +270,17 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     if (this.mapVisibility === 'hidden') {
       this.cargaDDL();
       this.resetSelects();
-      this.f.altura.enable();
+      this.frmGenerar.altura.enable();
     } else {
       this.getPlacesAutocomplete();
       this.resetSelects();
-      this.f.altura.disable();
+      this.frmGenerar.altura.disable();
     }
   }
 
   resetSelects() {
-    this.f.barrio.setValue('');
-    this.f.calle.setValue('');
+    this.frmGenerar.barrio.setValue('');
+    this.frmGenerar.calle.setValue('');
     this.altura = null;
   }
 
@@ -288,15 +288,15 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
   cargaSelectTipoReclamo() {
     try {
       this.objIDArServ = {
-        tipRec_IDArServ: this.f.areaServicio.value
+        tipRec_IDArServ: this.frmGenerar.areaServicio.value
       };
 
       this.ddlService.selectTipoReclamo(this.objIDArServ).subscribe(data => {
         this.arrTipRec = JSON.parse(data);
-        this.arServ = this.arrArServ.filter(x => x.arServ_IDAreaServicio === +this.f.areaServicio.value)[0];
+        this.arServ = this.arrArServ.filter(x => x.arServ_IDAreaServicio === +this.frmGenerar.areaServicio.value)[0];
       });
 
-      this.f.tipoReclamo.setValue('');
+      this.frmGenerar.tipoReclamo.setValue('');
     } catch (error) {
       console.log(error);
     }
@@ -306,17 +306,17 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     try {
       if (this.mapVisibility === 'hidden') {
         this.objIDBarrio = {
-          bar_IDBarrio: this.f.barrio.value
+          bar_IDBarrio: this.frmGenerar.barrio.value
         };
 
         this.ddlService.selectCalle(this.objIDBarrio).subscribe(data => {
           this.arrCalle = JSON.parse(data);
-          this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.f.barrio.value)[0];
+          this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.frmGenerar.barrio.value)[0];
         });
 
-        this.f.calle.setValue('');
+        this.frmGenerar.calle.setValue('');
       } else {
-        this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.f.barrio.value)[0];
+        this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.frmGenerar.barrio.value)[0];
       }
     } catch (error) {
       console.log(error);
@@ -331,7 +331,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     if (document.getElementById('googleMap').style.visibility === 'hidden') {
       this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.CalleID)[0];
     } else {
-      this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.f.calle.value)[0];
+      this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.frmGenerar.calle.value)[0];
     }
   }
   //#endregion

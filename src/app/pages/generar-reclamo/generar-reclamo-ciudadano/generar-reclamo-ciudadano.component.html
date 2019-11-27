@@ -8,31 +8,32 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>AREA DE SERVICIO*</label>
-                            <mat-select (selectionChange)="cargaSelectTipoReclamo()" formControlName="areaServicio" class="form-control" placeholder="Seleccione Area de Servicio">
-                                <mat-option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                            <select (change)="cargaSelectTipoReclamo()" formControlName="areaServicio" class="form-control" placeholder="Seleccione Area de Servicio">
+                                <option value="" disabled>Seleccione Área de Servicio...</option>
+                                <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
                                     {{ item.arServ_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label>RECLAMO*</label>
-                            <mat-select id="ddlReclamo" (selectionChange)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control">
-                                <mat-option value="" disabled>Seleccione Reclamo</mat-option>
-                                <mat-option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                            <select id="ddlReclamo" (change)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control">
+                                <option value="" disabled>Seleccione Reclamo</option>
+                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
                                     {{ item.tipRec_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>¿INGRESAR UBICACION MEDIANTE EL MAPA?*</label>
-                    <mat-select (selectionChange)="ubicacionMapa()" formControlName="ubicacion" [(ngModel)]="mapVisibility" class="form-control" placeholder="Seleccione opción">
-                        <mat-option *ngFor="let item of arrOpcion" [value]="item.stOpcion">
+                    <select (selectionChange)="ubicacionMapa()" formControlName="ubicacion" [(ngModel)]="mapVisibility" class="form-control" placeholder="Seleccione opción">
+                        <option *ngFor="let item of arrOpcion" [value]="item.stOpcion">
                             {{ item.opcion }}
-                        </mat-option>
-                    </mat-select>
+                        </option>
+                    </select>
                 </div>
 
 
@@ -44,22 +45,24 @@
 
                 <div class="form-group">
                     <label>BARRIO*</label>
-                    <mat-select (selectionChange)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
-                        <mat-option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                    <select (change)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
+                        <option value="" disabled>Seleccione Barrio...</option>
+                        <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
                             {{ item.bar_nombre }}
-                        </mat-option>
-                    </mat-select>
+                        </option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>CALLE*</label>
-                            <mat-select #ddlCalle id="ddlCalle" (selectionChange)="selectCalle()" formControlName="calle" [(ngModel)]="CalleID" class="form-control" placeholder="Seleccione Calle">
-                                <mat-option *ngFor="let item of arrCalle" [value]="item.cal_IDCalle">
+                            <select #ddlCalle id="ddlCalle" (change)="selectCalle()" formControlName="calle" [(ngModel)]="CalleID" class="form-control" placeholder="Seleccione Calle">
+                                <option value="" disabled>Seleccione Calle</option>
+                                <option *ngFor="let item of arrCalle" [value]="item.cal_IDCalle">
                                     {{ item.cal_nombre }}
-                                </mat-option>
-                            </mat-select>
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label>ALTURA*</label>
@@ -81,7 +84,7 @@
                     </div>
                 </div>
 
-                <button mat-stroked-button [disabled]="!frmGenerarReclamo.valid" (click)="validarReclamo()" matTooltip="Resumen del Reclamo" matTooltipPosition="left" class="btn btn-primary btn-block btnSiguiente">
+                <button [disabled]="!frmGenerarReclamo.valid" (click)="validarReclamo()" matTooltip="Resumen del Reclamo" matTooltipPosition="left" class="btn btn-primary btn-block btnSiguiente">
                     Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                 </button>
             </form>
