@@ -6,14 +6,13 @@
         <div class="card-body bgLogin verticalScroll">
 
             <a href="javascript:void(0)" class="text-center db"><img src="assets/images/logo-light-icon.png" /><br/><img src="assets/images/myImages/logo_DigitalClaim.png" /></a>
-            <h3 class="box-title m-t-40 m-b-0 text-center">Regístrate</h3>
+            <h3 class="box-title m-t-40 m-b-0 text-center text-white">Regístrate</h3>
 
             <form [formGroup]="frmRegistro" (ngSubmit)="onSubmit()" class="form-horizontal form-material">
 
                 <div class="form-group m-t-20">
                     <div class="col-xs-12">
-                        <input class="form-control" type="text" formControlName="username" placeholder="Nombre de usuario" [ngClass]="{'is-invalid': !frmRegistro.controls['username'].valid}">
-
+                        <input class="form-control" type="text" formControlName="username" placeholder="Nombre de Usuario" [ngClass]="{'is-invalid': !frmRegistro.controls['username'].valid}">
                         <div *ngIf="frmRegistro.controls['username'].errors?.required && !frmRegistro.controls['username'].pristine" class="invalid-feedback divValid">
                             *Ingrese nombre de usuario
                         </div>
@@ -23,12 +22,9 @@
                 <div class=" form-group ">
                     <div class="col-xs-12 ">
                         <input class="form-control " type="password" formControlName="password" placeholder="Contraseña " [ngClass]="{'is-invalid': !frmRegistro.controls['password'].valid}">
-
-
                         <div *ngIf="frmRegistro.controls[ 'password'].errors?.required && !frmRegistro.controls[ 'password'].pristine" class="invalid-feedback divValid">
                             *Ingrese contraseña
                         </div>
-
                         <div *ngIf="frmRegistro.controls[ 'password'].errors?.minlength " class="invalid-feedback divValid">
                             *La contraseña debe poseer al menos 6 caracteres
                         </div>
@@ -38,7 +34,6 @@
                 <div class="form-group ">
                     <div class="col-xs-12 ">
                         <input class="form-control " type="password" formControlName="repetirPassword" placeholder="Repetir contraseña " [ngClass]="{'is-invalid': !frmRegistro.controls['repetirPassword'].valid}">
-
                         <div *ngIf="frmRegistro.controls[ 'repetirPassword'].errors?.required && !frmRegistro.controls[ 'repetirPassword'].pristine" class="invalid-feedback divValid ">
                             *Repita la contraseña
                         </div>
@@ -51,10 +46,9 @@
 
                 <div class="form-group ">
                     <div class="col-xs-12 ">
-                        <input class="form-control " type="number" formControlName="dni" placeholder="DNI" [ngClass]="{'is-invalid': !frmRegistro.controls['dni'].valid}">
-
+                        <input (keypress)="validarIngreso($event)" formControlName="dni" class="form-control " type="text" placeholder="DNI" [ngClass]="{'is-invalid': !frmRegistro.controls['dni'].valid}" minlength="8" maxlength="8">
                         <div *ngIf="frmRegistro.controls[ 'dni'].errors?.required && !frmRegistro.controls[ 'dni'].pristine" class="invalid-feedback divValid ">
-                            *Ingrese su DNI
+                            *Ingrese su DNI. Sólo números.
                         </div>
                     </div>
                 </div>
@@ -62,7 +56,6 @@
                 <div class="form-group ">
                     <div class="col-xs-12 ">
                         <input class="form-control " type="text" formControlName="nombre" placeholder="Nombre " [ngClass]="{'is-invalid': !frmRegistro.controls['nombre'].valid}">
-
                         <div *ngIf="frmRegistro.controls[ 'nombre'].errors?.required && !frmRegistro.controls[ 'nombre'].pristine" class="invalid-feedback divValid ">
                             *Ingrese su nombre
                         </div>
@@ -72,7 +65,6 @@
                 <div class="form-group ">
                     <div class="col-xs-12 ">
                         <input class="form-control " type="text" formControlName="apellido" placeholder="Apellido " [ngClass]="{'is-invalid': !frmRegistro.controls['apellido'].valid}">
-
                         <div *ngIf="frmRegistro.controls[ 'apellido'].errors?.required && !frmRegistro.controls[ 'apellido'].pristine" class="invalid-feedback divValid ">
                             *Ingrese su apellido
                         </div>
@@ -81,14 +73,13 @@
 
                 <div class="form-group ">
                     <div class="col-xs-12 ">
-                        <input class="form-control " type="text" formControlName="telefono" placeholder="Telefono ">
+                        <input (keypress)="validarIngreso($event)" class="form-control " type="text" formControlName="telefono" placeholder="Telefono " minlength="7" maxlength="11">
                     </div>
                 </div>
 
                 <div class="form-group ">
                     <div class="col-xs-12 ">
                         <input class="form-control " type="email " formControlName="email" placeholder="Email " [ngClass]="{'is-invalid': !frmRegistro.controls['email'].valid}">
-
                         <div *ngIf="frmRegistro.controls[ 'email'].errors?.required && !frmRegistro.controls[ 'email'].pristine" class="invalid-feedback divValid ">
                             *Ingrese email
                         </div>

@@ -1,38 +1,13 @@
-.example-form-field {
-    width: 100%;
-    color: white;
-}
-
-
-/* Cambio de color a label de control */
-
-::ng-deep.mat-focused .mat-form-field-label {
-    color: white !important;
-}
-
-
-/* Cambio de color a linea por debajo */
-
- ::ng-deep.mat-form-field-underline {
-    background-color: white !important;
-}
-
-
-/* Cambio de color a linea por debajo cuando se hace foco*/
-
-::ng-deep.mat-form-field-ripple {
-    background-color: white !important;
-}
-
-h3 {
-    color: white;
-}
+/* Propiedades validación ingreso controles */
 
 .divValid {
     font-size: 12px !important;
-    color: white !important;
+    color: #F19E8D !important;
     font-weight: 500 !important;
 }
+
+
+/* Propiedades hyperlinks */
 
 .linkRedirect {
     color: lightblue !important;
@@ -42,8 +17,22 @@ h3 {
     color: cyan !important;
 }
 
+
+/* Formato cursor en campos deshabilitados */
+
 :disabled {
     cursor: not-allowed;
+}
+
+
+/* Propiedades input */
+
+input {
+    color: whitesmoke !important;
+}
+
+::placeholder {
+    color: lightblue;
 }
 
 
@@ -63,7 +52,6 @@ h3 {
 .btnIngresar:hover {
     background-color: rgb(33, 37, 41) !important;
     color: #3FBCEF !important;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 

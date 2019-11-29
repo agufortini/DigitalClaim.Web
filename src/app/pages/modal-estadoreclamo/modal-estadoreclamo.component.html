@@ -58,4 +58,17 @@
 </div>
 
 <br>
-<button *ngIf="user.usu_IDRol === 1 && rating" (click)="ratingReclamo()" mat-stroked-button color="primary" class="btnRating">Calificar reclamo</button>
+<div *ngIf="user.usu_IDRol === 1 && rating" class="form-group">
+    <div class="form-row">
+        <div class="col-md-7">
+            <div class="divAyuda">
+                <div class="mt-2"></div>
+                <label>¿No sabés como calificar tu Reclamo?</label>
+                <a [routerLink]="'/ayuda-consultar-reclamo'" (click)="cerrarModal()"> Haz click aquí</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <button (click)="ratingReclamo()" class="form-control btnRating">Calificar Reclamo</button>
+        </div>
+    </div>
+</div>

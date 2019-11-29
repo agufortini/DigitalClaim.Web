@@ -8,6 +8,10 @@ import {
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+// ENTIDADES
+import { RecuperarPassword } from '../_entities/usuario.entities';
+
+// SERVICIOS
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -18,35 +22,28 @@ import { LoginService } from '../services/login.service';
 export class RecuperarPasswordComponent implements OnInit {
   frmRecuPass: FormGroup;
   submitted = false;
+  objEmail: RecuperarPassword;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService
-  ) {
-    // this.frmRecuPass = new FormGroup({
-    //   usu_email: new FormControl(null, [
-    //     Validators.required,
-    //     Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]
-    //     ),
-    // });
-  }
+  ) {  }
 
   ngOnInit() {
     this.frmRecuPass = this.formBuilder.group({
-      email: ['', Validators.required]
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
   }
 
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get f() {
+  get frmRecuperar() {
     return this.frmRecuPass.controls;
   }
 
   onSubmit() {
     try {
       this.submitted = true;
-
       // VALIDACIÓN DE FORMULARIO
       if (this.frmRecuPass.invalid) {
         return;
@@ -57,38 +54,35 @@ export class RecuperarPasswordComponent implements OnInit {
         type: 'info',
         text: 'Espere por favor...'
       });
-
       Swal.showLoading();
 
-      this.loginService.emailRecupPass(this.f.email.value).subscribe(
-        data => {
-          if (!data) {
-            Swal.fire({
-              allowOutsideClick: false,
-              type: 'warning',
-              title: 'Recuperar Contraseña',
-              text: 'El email ingresado no corresponde a un usuario registrado'
-            });
-          } else {
+      // Creación de objeto RecuperarPassword
+      this.objEmail = new RecuperarPassword();
+      this.objEmail.usu_email = this.frmRecuperar.email.value;
+
+      this.loginService.recuperarPassword(this.objEmail).subscribe(data => {
+       
+        if (data === 'Mensaje enviado') {
+            // Si existe usuario correspondiente a email ingresado
             Swal.fire({
               allowOutsideClick: false,
               type: 'success',
               title: 'Recuperar Contraseña',
               text:
-                'Le hemos enviado un email para que pueda cambiar su contraseña'
+                'Le hemos enviado un email con las instrucciones para que pueda recuperar su contraseña.'
             });
-
-            this.router.navigateByUrl('/login');
+          } else {
+            // Si no existe usuario correspondiente a email ingresado
+            Swal.fire({
+              allowOutsideClick: false,
+              type: 'warning',
+              title: 'Recuperar Contraseña',
+              text: 'El email ingresado no corresponde a un usuario registrado.'
+            });
           }
-        },
-        error => {
-          Swal.fire({
-            type: 'error',
-            title: 'Error al iniciar sesión',
-            text: error.message
-          });
-        }
-      );
+
+          this.router.navigateByUrl('/login');
+        });
     } catch (error) {
       console.log(error);
     }

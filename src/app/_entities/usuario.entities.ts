@@ -14,6 +14,14 @@ export class Usuario {
     constructor() { }
 }
 
+export class RecuperarPassword {
+    usu_email: string;
+    usu_nombre: string;
+    usu_nombreCompleto: string;
+    usu_password: string;
+    constructor() { }
+}
+
 export interface IUsuario {
     usu_IDUsuario: number;
     usu_dni: number;

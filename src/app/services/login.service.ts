@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { RecuperarPassword } from '../_entities/usuario.entities';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class LoginService {
               private router: Router) { }
 
   login(objSesion: string): Observable<string> {
-    return this.httpClient.get<string>(`${ environment.apiUrl }api/LoginController/ValidarSesion`, {
+    return this.httpClient.get<string>(`${environment.apiUrl}api/LoginController/ValidarSesion`, {
       params: new HttpParams().set('stObj', JSON.stringify(objSesion))
     });
   }
@@ -23,8 +24,10 @@ export class LoginService {
     this.router.navigateByUrl('/login');
   }
 
-  emailRecupPass(stEmail: string) {
-    return this.httpClient.post<any>(`${ environment.apiUrl }api/LoginController/RecuperarPassword`, { usu_email: stEmail });
+  recuperarPassword(objRecuperarPass: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/LoginController/RecuperarPassword`, { 
+      params: new HttpParams().set('stObj', JSON.stringify(objRecuperarPass))
+    });
   }
 
   /* LOGIN GUARD */

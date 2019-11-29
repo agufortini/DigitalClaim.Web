@@ -1,5 +1,9 @@
 .btnRating {
     float: right !important;
+    width: 60%;
+    color: white;
+    background-color: #1e88e5;
+    cursor: pointer;
 }
 
 button:disabled {
