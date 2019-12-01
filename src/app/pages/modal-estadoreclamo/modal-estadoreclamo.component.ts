@@ -26,6 +26,7 @@ export class ModalEstadoreclamoComponent implements OnInit {
   rating = false;
   objRating: SelectRating;
   ratingArr = [];
+  boRating = false;
 
   displayedColumns: string[] = [
     'his_fechaIngreso',
@@ -60,6 +61,15 @@ export class ModalEstadoreclamoComponent implements OnInit {
   selectHistorial() {
     this.reclamoService.selectHistorial(this.objIDRec).subscribe(data => {
       this.lstDatos = JSON.parse(data);
+
+      // VALIDACIÓN PARA SABER SI ESTÁ EL RECLAMO EN ESTADO CUMPLIDO Y ASI MOSTRAR EL BOTON PARA REGISTRAR RATING
+      // const fila = this.lstDatos.length;
+
+      // if (this.lstDatos[fila].estRec_nombre === 'Cumplido') {
+      //   this.boRating = true;
+      // }
+      
+
       this.dataSource = new MatTableDataSource<any>(this.lstDatos);
     });
   }

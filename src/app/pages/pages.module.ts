@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularMaterialModule } from './angular-material.module';
 import { AgmCoreModule } from '@agm/core';
+import { MatExpansionModule } from '@angular/material';
 
 // RUTAS
 import { PAGES_ROUTES } from './pages.routes';
@@ -94,6 +95,7 @@ import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-r
         AngularMaterialModule,
         PAGES_ROUTES,
         ChartsModule,
+        MatExpansionModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDBWEJMiZxWYYYRlSXA278OpR3V-0e5ZTo',
             libraries: ['places']

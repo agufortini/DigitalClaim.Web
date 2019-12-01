@@ -116,23 +116,18 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     });
   }
 
-  //#region GOOGLE MAPS
-
   getPlacesAutocomplete() {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
     this.setCurrentLocation();
-    // tslint:disable-next-line:new-parens
     this.geoCoder = new google.maps.Geocoder;
 
-    // tslint:disable-next-line:prefer-const
     let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
       types: ['address']
     });
     autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
         // get the place result
-        // tslint:disable-next-line:prefer-const
         let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
         // verify result
@@ -169,19 +164,18 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
 
   getAddress(latitude, longitude) {
     this.geoCoder = new google.maps.Geocoder();
-    // tslint:disable-next-line:object-literal-key-quotes
     this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
       if (status === 'OK') {
         if (results[0]) {
 
-          // Con el nombre de la calle, se buscan todos los barrios de esa calle
+          // Se asigna el nombre de la Calle al objeto
           this.objCalle = {
             cal_nombre: results[0].address_components[1].long_name
           };
 
+          // Se busca el nombre de la calle para asignarlo al select Calle
           this.reclamoService.selectBarrioPorCalle(this.objCalle).subscribe(dataBarrio => {
             this.arrBarrio = JSON.parse(dataBarrio);
-
             this.reclamoService.selectCalle(this.objCalle).subscribe(dataCalle => {
               this.arrCalle = JSON.parse(dataCalle);
               this.altura = results[0].address_components[0].long_name;
@@ -196,7 +190,6 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       }
     });
   }
-  //#endregion
 
   validarRealizacionReclamo() {
       if (this.user.usu_IDRol === 1) {
@@ -284,7 +277,6 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     this.altura = null;
   }
 
-  //#endregion FILTROS SELECTS
   cargaSelectTipoReclamo() {
     try {
       this.objIDArServ = {
@@ -334,7 +326,6 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.frmGenerar.calle.value)[0];
     }
   }
-  //#endregion
 
   // VALIDACION CONTROL ALTURA
   validarIngreso(event): boolean {

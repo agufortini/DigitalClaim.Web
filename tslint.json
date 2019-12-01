@@ -51,7 +51,7 @@
     "no-use-before-declare": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [
-      true,
+      false,
       "as-needed"
     ],
     "object-literal-sort-keys": false,
@@ -74,6 +74,8 @@
     "indent": true,
     "no-trailing-whitespace": false,
     "variable-name": false,
-    "align": true
+    "align": true,
+    "prefer-const": false,
+    "new-parens": false
   }
 }

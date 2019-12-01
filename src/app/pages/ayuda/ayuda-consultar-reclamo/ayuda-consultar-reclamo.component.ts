@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class AyudaConsultarReclamoComponent implements OnInit {
+  panelOpenState = false;
 
   constructor() { }
 

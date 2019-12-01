@@ -40,11 +40,12 @@
                     </select>
                 </div>
 
-
-                <div [hidden]="mapVisibility === 'hidden'">
-                    <agm-map id="googleMap" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-                        <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
-                    </agm-map>
+                <div class="form-group">
+                    <div [hidden]="mapVisibility === 'hidden'">
+                        <agm-map id="googleMap" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                            <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                        </agm-map>
+                    </div>
                 </div>
 
                 <div class="form-group">

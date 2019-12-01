@@ -113,9 +113,9 @@ export class ConsultarReclamoComponent implements OnInit {
 					this.frmConsultar.estado.patchValue(this.arrEstado[0].estRec_IDEstado);
 				});
 
-				// Se asigna valor predeterminado a select, estado "Sin Asignar"
+				/* Se asigna valor predeterminado a select, estado "Sin Asignar" y se llama al méotodo para buscar los reclamos
+				/ en ese estado */
 				this.frmConsultar.estado.patchValue(1);
-				// Se listan los reclamos en estado "Sin Asignar"				
 				this.listarReclamoPorEstado();
 				document.getElementById('idTableConsulta').style.visibility = 'visible';
 			} else {
