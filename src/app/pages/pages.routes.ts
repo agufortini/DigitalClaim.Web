@@ -23,12 +23,16 @@ import { UsuarioComponent } from '../pages/admin-municipal/usuario/usuario.compo
 import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
 import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
 import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
-import { AyudaRegistrarReclamoComponent } from '../pages/ayuda/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
-import { AyudaConsultarReclamoComponent } from '../pages/ayuda/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
-import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
+import { AyudaRegistrarReclamoComponent } from './ayuda/Reclamante/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
+import { AyudaConsultarReclamoComponent } from './ayuda/Reclamante/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
+import { AyudaCalificarReclamoComponent } from './ayuda/Reclamante/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
 
 // LOGIN GUARD
 import { LoginGuard } from '../_guards/login.guard';
+import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-registrar-reclamo-municipal/ayuda-registrar-reclamo-municipal.component';
+import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
+import { AyudaDominioMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
+import { AyudaReportesMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
 
 const pagesRoutes: Routes = [
     {
@@ -60,6 +64,11 @@ const pagesRoutes: Routes = [
             { path: 'ayuda-registrar-reclamo', component: AyudaRegistrarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'ayuda-consultar-reclamo', component: AyudaConsultarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'ayuda-calificar-reclamo', component: AyudaCalificarReclamoComponent, data: { titulo: 'Ayuda', subtitulo: 'Calificar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-registrar-reclamo-municipal', component: AyudaRegistrarReclamoMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-consultar-reclamo-municipal', component: AyudaConsultarReclamoMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-dominio-municipal', component: AyudaDominioMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Dominio' }, canActivate: [LoginGuard]},
+            { path: 'ayuda-reportes-municipal', component: AyudaReportesMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Reportes' }, canActivate: [LoginGuard]},
+
             // { path: '**', redirectTo: '/login'}
         ]
     },

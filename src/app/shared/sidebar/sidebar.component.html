@@ -98,6 +98,25 @@
                     </ul>
                 </li>
 
+                <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="material-icons">help</i><span class="hide-menu">Ayuda</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a [routerLink]="'/ayuda-registrar-reclamo-municipal'" routerLinkActive="active">¿Cómo registrar un Reclamo?</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-consultar-reclamo-municipal'" routerLinkActive="active">¿Cómo consultar un Reclamo?</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-reportes-municipal'" routerLinkActive="active">¿Cómo visualizar un Reporte?</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-dominio-municipal'" routerLinkActive="active">Dominios</a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6" class="nav-small-cap text-white">
                     Area de Servicio: {{ areaServicio | uppercase }}
                 </li>

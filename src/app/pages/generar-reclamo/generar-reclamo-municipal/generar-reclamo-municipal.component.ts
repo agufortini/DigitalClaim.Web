@@ -13,9 +13,6 @@ import { SelectService } from 'src/app/services/select-service.service';
 import { ReclamoService } from 'src/app/services/reclamo.service';
 import { UsuarioService } from '../../../services/usuario.service';
 
-// GOOGLE MAPS
-import { MapsAPILoader } from '@agm/core';
-
 @Component({
   selector: 'app-generar-reclamo-municipal',
   templateUrl: './generar-reclamo-municipal.component.html',
@@ -45,10 +42,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
   arrCalle: any;
   arrCanal: any;
   lstCanal: any[] = [];
-  arrOpcion = [
-    { stOpcion: 'visible', opcion: 'Si' },
-    { stOpcion: 'hidden', opcion: 'No' },
-  ];
 
   // PROPIEDADES PARA LOS FILTROS
   arServ: any;
@@ -66,32 +59,12 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
   objIDArServ: any = {};
   objIDBarrio: any = {};
 
-  // MOSTRAR Y OCULTAR MAPA
-  mapVisibility = 'hidden';
-
-  // GOOGLE MAP
-  inputMap: string;
-  lat: number;
-  lng: number;
-  zoom: number;
-  private geoCoder;
-  @ViewChild('agmSearch', {static: false}) public searchElementRef: ElementRef;
-  objCalle: any;
-
-  // CONTROLES FORMULARIO CIUDADANO
-  // dni = new FormControl('', Validators.required);
-  // nombre = new FormControl('', Validators.required);
-  // apellido = new FormControl('', Validators.required);
-  // telefono = new FormControl('', Validators.required);
-  // email = new FormControl('', [Validators.required, Validators.email]);
-
   constructor(private ddlService: SelectService,
               private reclamoService: ReclamoService,
               private usuarioService: UsuarioService,
               private router: Router,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.fechaHoy = datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
@@ -110,7 +83,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
         this.frmDatosReclamo = this.formBuilder.group({
           areaServicio: ['', Validators.required],
           tipoReclamo: ['', Validators.required],
-          ubicacion: ['', Validators.required],
           barrio: ['', Validators.required],
           calle: ['', Validators.required],
           altura: ['', Validators.required],
@@ -137,7 +109,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
     this.ddlService.selectEntitie('CanalController', 'SelectCanal').subscribe(data => {
       this.arrCanal = JSON.parse(data);
 
-      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.arrCanal.length; i++) {
         const IDCanal: number = this.arrCanal[i].can_IDCanal;
 
@@ -158,85 +129,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO RECLAMO
   get frmReclamante() {
     return this.frmDatosReclamante.controls;
-  }
-
-  getPlacesAutocomplete() {
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-    this.setCurrentLocation();
-    // tslint:disable-next-line:new-parens
-    this.geoCoder = new google.maps.Geocoder;
-
-    // tslint:disable-next-line:prefer-const
-    let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-      types: ['address']
-    });
-    autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-        // get the place result
-        // tslint:disable-next-line:prefer-const
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-        // verify result
-        if (place.geometry === undefined || place.geometry === null) {
-          return;
-        }
-
-        // set latitude, longitude and zoom
-        this.lat = place.geometry.location.lat();
-        this.lng = place.geometry.location.lng();
-        // this.zoom = 12;
-      });
-     });
-    });
-  }
-
-  // Get Current Location Coordinates
-  private setCurrentLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.zoom = 15;
-        this.getAddress(this.lat, this.lng);
-      });
-    }
-  }
-
-  markerDragEnd($event: any) {
-    this.lat = $event.coords.lat;
-    this.lng = $event.coords.lng;
-    this.getAddress(this.lat, this.lng);
-  }
-
-  getAddress(latitude, longitude) {
-    this.geoCoder = new google.maps.Geocoder();
-    // tslint:disable-next-line:object-literal-key-quotes
-    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
-      if (status === 'OK') {
-        if (results[0]) {
-
-          // Con el nombre de la calle, se buscan todos los barrios de esa calle
-          this.objCalle = {
-            cal_nombre: results[0].address_components[1].long_name
-          };
-
-          this.reclamoService.selectBarrioPorCalle(this.objCalle).subscribe(dataBarrio => {
-            this.arrBarrio = JSON.parse(dataBarrio);
-
-            this.reclamoService.selectCalle(this.objCalle).subscribe(dataCalle => {
-              this.arrCalle = JSON.parse(dataCalle);
-              this.altura = results[0].address_components[0].long_name;
-            });
-
-          });
-        } else {
-          window.alert('No results found');
-        }
-      } else {
-        window.alert('Geocoder failed due to: ' + status);
-      }
-    });
   }
 
   validarUsuario() {
@@ -304,25 +196,13 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
               observaciones: this.observacion
             };
 
-            localStorage.setItem('datosUsuario', JSON.stringify(this.objUser));
-            localStorage.setItem('datosReclamo', JSON.stringify(this.objRec));
+            localStorage.setItem('objUsuario', JSON.stringify(this.objUser));
+            localStorage.setItem('objReclamo', JSON.stringify(this.objRec));
             this.router.navigateByUrl('/registrar-reclamo');
           }
       });
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  ubicacionMapa() {
-    if (this.mapVisibility === 'hidden') {
-      this.cargaDDL();
-      this.resetSelects();
-      this.frmReclamo.altura.enable();
-    } else {
-      this.getPlacesAutocomplete();
-      this.resetSelects();
-      this.frmReclamo.altura.disable();
     }
   }
 
@@ -345,7 +225,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
 
   cargaSelectCalle() {
     try {
-      if (this.mapVisibility === 'hidden') {
         this.objIDBarrio = {
           bar_IDBarrio: this.frmReclamo.barrio.value
         };
@@ -356,9 +235,6 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
         });
 
         this.frmReclamo.calle.setValue('');
-      } else {
-        this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.frmReclamo.barrio.value)[0];
-      }
     } catch (error) {
       console.log(error);
     }
@@ -369,11 +245,7 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
   }
 
   selectCalle() {
-    if (document.getElementById('googleMap').style.visibility === 'hidden') {
       this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.CalleID)[0];
-    } else {
-      this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.frmReclamo.calle.value)[0];
-    }
   }
 
   selectCanal() {

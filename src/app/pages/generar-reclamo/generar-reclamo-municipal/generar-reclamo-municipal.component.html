@@ -92,21 +92,6 @@
             </div>
 
             <div class="form-group">
-                <label>¿INGRESAR UBICACION MEDIANTE EL MAPA?*</label>
-                <select (change)="ubicacionMapa()" formControlName="ubicacion" [(ngModel)]="mapVisibility" class="form-control" placeholder="Seleccione opción">
-                    <option *ngFor="let item of arrOpcion" [value]="item.stOpcion">
-                        {{ item.opcion }}
-                    </option>
-                </select>
-            </div>
-
-            <div [hidden]="mapVisibility === 'hidden'">
-                <agm-map id="googleMap" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-                    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
-                </agm-map>
-            </div>
-
-            <div class="form-group">
                 <label>BARRIO*</label>
                 <select (change)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
                     <option value="" disabled>Seleccione Barrio...</option>

@@ -42,9 +42,13 @@ import { RolComponent } from '../pages/admin-municipal/rol/rol.component';
 import { EstadoOrdenServicioComponent } from '../pages/admin-municipal/estado/estado-orden-servicio/estado-orden-servicio.component';
 import { EstadoReclamoComponent } from '../pages/admin-municipal/estado/estado-reclamo/estado-reclamo.component';
 import { PersonalComponent } from '../pages/admin-operativo/personal/personal.component';
-import { AyudaRegistrarReclamoComponent } from '../pages/ayuda/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
-import { AyudaConsultarReclamoComponent } from '../pages/ayuda/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
-import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
+import { AyudaRegistrarReclamoComponent } from './ayuda/Reclamante/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
+import { AyudaConsultarReclamoComponent } from './ayuda/Reclamante/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
+import { AyudaCalificarReclamoComponent } from './ayuda/Reclamante/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
+import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-registrar-reclamo-municipal/ayuda-registrar-reclamo-municipal.component';
+import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
+import { AyudaReportesMunicipalComponent } from './ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
+import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -80,7 +84,11 @@ import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-r
         AyudaRegistrarReclamoComponent,
         AyudaConsultarReclamoComponent,
         AyudaCalificarReclamoComponent,
-        GenerarReclamoMunicipalComponent
+        GenerarReclamoMunicipalComponent,
+        AyudaRegistrarReclamoMunicipalComponent,
+        AyudaConsultarReclamoMunicipalComponent,
+        AyudaReportesMunicipalComponent,
+        AyudaDominioMunicipalComponent
     ],
     exports: [
         HomeComponent,
@@ -95,11 +103,7 @@ import { AyudaCalificarReclamoComponent } from '../pages/ayuda/ayuda-calificar-r
         AngularMaterialModule,
         PAGES_ROUTES,
         ChartsModule,
-        MatExpansionModule,
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyDBWEJMiZxWYYYRlSXA278OpR3V-0e5ZTo',
-            libraries: ['places']
-        })
+        MatExpansionModule
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA

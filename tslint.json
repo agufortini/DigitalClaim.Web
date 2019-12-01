@@ -71,11 +71,13 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
+    // Agregadas
     "indent": true,
     "no-trailing-whitespace": false,
     "variable-name": false,
     "align": true,
     "prefer-const": false,
-    "new-parens": false
+    "new-parens": false,
+    "prefer-for-of": false
   }
 }

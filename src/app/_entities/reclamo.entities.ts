@@ -16,12 +16,16 @@ export class ValidarReclamo {
 
 export class Reclamo {
     rec_fechaAlta: string;
+    arServ_IDAreaServicio: number;
+    arServ_nombre: string;
+    tipRec_IDTipoReclamo: number;
+    tipRec_nombre: string;
+    bar_IDBarrio: number;
+    bar_nombre: string;
+    cal_IDCalle: number;
+    cal_nombre: string;
     rec_altura: number;
     rec_observaciones: string;
-    rec_IDTicket: number;
-    rec_IDOrdenServicio: number;
-    rec_IDTipoReclamo: number;
-    rec_IDCallePorBarrio: number;
     constructor() {}
 }
 
@@ -65,8 +69,6 @@ export class ReclamoC {
     tic_IDUsuario: number;
     constructor() {}
 }
-
-// Estado Reclamo
 
 export class EstadoReclamo {
     estRec_IDEstado: number;

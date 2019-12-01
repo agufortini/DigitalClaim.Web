@@ -11,7 +11,7 @@
             <form [formGroup]="frmLogin" (ngSubmit)="onSubmit()" class="form-horizontal form-material">
                 <div class="form-group m-t-40">
                     <div class="col-xs-12">
-                        <input id="txtUsuario" formControlName="username" type="text" class="form-control" placeholder="Nombre de Usuario" [ngClass]="{'is-invalid': !frmLogin.controls['username'].valid}">
+                        <input id="txtUsuario" formControlName="username" autocomplete="new-username" type="text" class="form-control" placeholder="Nombre de Usuario" [ngClass]="{'is-invalid': !frmLogin.controls['username'].valid}">
                         <div *ngIf="frmLogin.controls['username'].errors?.required && !frmLogin.controls['username'].pristine" class="invalid-feedback divValid">
                             *Ingrese nombre de usuario
                         </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input formControlName="password" class="form-control " type="password" placeholder="Contraseña " [ngClass]="{'is-invalid': !frmLogin.controls['password'].valid}">
+                        <input formControlName="password" class="form-control " type="password" autocomplete="new-password" placeholder="Contraseña " [ngClass]="{'is-invalid': !frmLogin.controls['password'].valid}">
                         <div *ngIf="frmLogin.controls[ 'password'].errors?.required && !frmLogin.controls[ 'password'].pristine" class="invalid-feedback divValid">
                             *Ingrese contraseña
                         </div>
