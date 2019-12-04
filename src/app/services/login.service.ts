@@ -13,9 +13,15 @@ export class LoginService {
   constructor(private httpClient: HttpClient,
               private router: Router) { }
 
-  login(objSesion: string): Observable<string> {
-    return this.httpClient.get<string>(`${environment.apiUrl}api/LoginController/ValidarSesion`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objSesion))
+  login(objSesionUsuario: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/LoginController/ValidarSesion`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objSesionUsuario))
+    });
+  }
+
+  registrarCierreSesion(objSesionUsuario: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/LoginController/RegistrarSesionUsuario`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objSesionUsuario))
     });
   }
 

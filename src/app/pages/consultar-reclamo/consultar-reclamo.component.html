@@ -1,7 +1,15 @@
 <div class="container myAnimated myFast myFadeIn">
-    <div class="divAyuda">
-        <label>¿No sabés como consultar tu Reclamo?</label>
-        <a [routerLink]="'/ayuda-consultar-reclamo'"> Haz click aquí</a>
+    <div *ngIf="user.usu_IDRol === 1">
+        <div class="divAyuda">
+            <label>¿No sabés como consultar tu Reclamo?</label>
+            <a [routerLink]="'/ayuda-consultar-reclamo'"> Haz click aquí</a>
+        </div>
+    </div>
+    <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+        <div class="divAyuda">
+            <label>¿Cómo consultar un Reclamo?</label>
+            <a [routerLink]="'/ayuda-consultar-reclamo-municipal'"> Haz click aquí</a>
+        </div>
     </div>
     <div class="card card-register mx-auto mt-5">
         <div class="card-header myCardHeader">Consultar Reclamo</div>

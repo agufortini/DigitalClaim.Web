@@ -78,6 +78,7 @@
     "align": true,
     "prefer-const": false,
     "new-parens": false,
-    "prefer-for-of": false
+    "prefer-for-of": false,
+    "curly": false
   }
 }
