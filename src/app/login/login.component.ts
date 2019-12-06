@@ -19,10 +19,9 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit {
   frmLogin: FormGroup;
   objLogin: any;
+  objSesion: SesionUsuario;
   submitted = false;
 
-  // Variables utilizadas para crear la Sesion de Usurio al loguearse
-  objSesionUsuario: SesionUsuario;
   fechaActual: any;
   horas: string;
   minutos: string;
@@ -31,14 +30,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private loginService: LoginService,              
+              private loginService: LoginService,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.frmLogin = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      providers: [DatePipe]
+      password: ['', Validators.required]
     });
   }
 
@@ -63,51 +61,56 @@ export class LoginComponent implements OnInit {
       });
       Swal.showLoading();
 
-      // Se inicializan los campos relacionados a fecha, hora y minutos
+      // Se inicializa Fecha y Hora actual para Registrar Inicio de Sesión de Usuario
       this.fechaActual = new Date();
+      this.fechaActual = this.datePipe.transform(this.fechaActual, 'dd/MM/yyyy');
       this.horas = ((this.getHour.getHours() < 10 ? '0' : '') + this.getHour.getHours()).toString();
       this.minutos = ((this.getMin.getMinutes() < 10 ? '0' : '') + this.getMin.getMinutes()).toString();
-
-      // Se crea el objeto Sesión Usuario
-      this.objSesionUsuario = new SesionUsuario();
-      this.objSesionUsuario.su_username = this.frmSesion.username.value;
-      this.objSesionUsuario.su_password = this.frmSesion.password.value;
-      this.objSesionUsuario.su_fechaInicio = this.datePipe.transform(this.fechaActual, 'dd/MM/yyyy');
-      this.objSesionUsuario.su_horaInicio = this.horas + ':' + this.minutos;
-      this.objSesionUsuario.su_fechaFin = null;
-      this.objSesionUsuario.su_horaFin = null;
-
-      this.loginService.login(this.objSesionUsuario).subscribe(data => {
-        const objSesion: SesionUsuario = JSON.parse(data);
         
-        if (objSesion !== null) {
+      this.objSesion = new SesionUsuario();
+      this.objSesion.su_fechaInicio = this.fechaActual;
+      this.objSesion.su_horaInicio = this.horas + ':' + this.minutos;
 
-          if (objSesion.su_IDRol === 1) {
-            localStorage.setItem('ayuda', JSON.stringify(true));
-            this.router.navigateByUrl('/home');
-          } else if (objSesion.su_IDRol === 2 || objSesion.su_IDRol === 5) {
-            this.router.navigateByUrl('/generar-reclamo-municipal');
-          } else if (objSesion.su_IDRol === 3 || objSesion.su_IDRol === 6) {
-            this.router.navigateByUrl('/crear-orden-servicio');
+      this.objLogin = {
+         usu_username: this.frmSesion.username.value,
+         usu_password: this.frmSesion.password.value,
+         su_fechaInicio: this.objSesion.su_fechaInicio,
+         su_horaInicio: this.objSesion.su_horaInicio
+      };
+
+      this.loginService.login(this.objLogin).subscribe(data => {
+          const objLogin = JSON.parse(data);
+
+          if (objLogin.usu_existe) {
+  
+              if (objLogin.usu_IDRol === 1) {
+                localStorage.setItem('ayuda', JSON.stringify(true));
+                this.router.navigateByUrl('/home');
+              } else if (objLogin.usu_IDRol === 2 || objLogin.usu_IDRol === 5) {
+                this.router.navigateByUrl('/generar-reclamo-municipal');
+              } else if (objLogin.usu_IDRol === 3 || objLogin.usu_IDRol === 6) {
+                this.router.navigateByUrl('/crear-orden-servicio');
+              }
+
+              Swal.close();
+              localStorage.setItem('currentUser', JSON.stringify(objLogin));
+          } else {
+            Swal.fire({
+              type: 'error',
+              title: 'Usuario y/o contraseña incorrectos'
+            }).then(result => {
+              if (result.value) {
+                this.frmLogin.reset({
+                  username: '',
+                  password: ''
+                });
+
+                document.getElementById('txtUsuario').focus();
+              }
+            });
           }
-
-          Swal.close();
-          localStorage.setItem('currentUser', JSON.stringify(objSesion));
-        } else {
-          Swal.fire({
-            type: 'error',
-            title: 'Usuario y/o contraseña incorrectos'
-          }).then(result => {
-            if (result.value) {
-              this.frmLogin.reset({
-                username: '',
-                password: ''
-              });
-              document.getElementById('txtUsuario').focus();
-            }
-          });
         }
-      });
+      );
     } catch (error) {
       console.log(error);
     }

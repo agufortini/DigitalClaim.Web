@@ -1,22 +1,11 @@
 export class SesionUsuario {
     su_IDSesion: number;
     su_fechaInicio: string;
-    su_horaInicio: string;
     su_fechaFin: string;
+    su_horaInicio: string;
     su_horaFin: string;
-    su_username: string;
-    su_password: string;
-    su_dni: number;
-    su_nombre: string;
-    su_apellido: string;
-    su_telefono: number;
-    su_email: string;
     su_IDUsuario: number;
-    su_IDRol: number;
-    su_IDAreaServicio: number;
-    su_areaServicioNombre: string;
-    su_existe: boolean;
-    constructor() { }
+    constructor() {}
 }
 
 export class Usuario {
@@ -31,6 +20,9 @@ export class Usuario {
     usu_IDRol: number;
     usu_IDAreaServicio: number;
     usu_arServNombre: string;
+    usu_IDSesion: number;
+    usu_fechaInicio: string;
+    usu_horaInicio: string;
     boExiste: boolean;
     constructor() { }
 }

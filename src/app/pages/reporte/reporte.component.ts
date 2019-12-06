@@ -62,11 +62,11 @@ export class ReporteComponent implements OnInit {
   ngOnInit() {
 
     this.frmReporte = this.formBuilder.group({
-      fechaDesde: ['', Validators.required],
-      fechaHasta: ['', Validators.required],
-      areaServicio: [''],
-      tipoReclamo: [''],
-      barrio: [''],
+      fechaDesde: [null, Validators.required],
+      fechaHasta: [null, Validators.required],
+      areaServicio: [null],
+      tipoReclamo: [null],
+      barrio: [null],
     });
 
     try {
@@ -89,7 +89,7 @@ export class ReporteComponent implements OnInit {
   }
 
   // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
-  get frmRep() { return this.frmReporte.controls; }
+  get f() { return this.frmReporte.controls; }
 
 
   cargarDDLTipoReclamo() {
@@ -97,26 +97,26 @@ export class ReporteComponent implements OnInit {
     try {
 
       this.objIDArServ = {
-        tipRec_IDArServ: this.frmRep.areaServicio.value
+        tipRec_IDArServ: this.f.areaServicio.value
       };
 
-      this.ddlService.selectTipoReclamo(this.objIDArServ).subscribe(data => {
+      this.ddlService.selectTipoReclamo(this.objIDArServ).subscribe(
+        (data) => {
           this.arrTipRec = JSON.parse(data);
-          this.frmRep.tipoReclamo.patchValue('');
         }
       );
 
-      // if (this.lstReclamo === null) {
+      if (this.lstReclamo === null) {
 
-      //   this.reclamoService.selectReclamo('arServ_ID = ' + this.f.areaServicio.value).subscribe(
-      //     (data) => {
-      //       this.lstReclamo = data;
-      //       console.log(this.lstReclamo);
-      //     }
-      //   );
-      // } else {
-      //   this.lstReclamo = this.lstReclamo.filter(x => x.arServ_ID === +this.f.areaServicio.value)[0];
-      // }
+        this.reclamoService.selectReclamo('arServ_ID = ' + this.f.areaServicio.value).subscribe(
+          (data) => {
+            this.lstReclamo = data;
+            console.log(this.lstReclamo);
+          }
+        );
+      } else {
+        this.lstReclamo = this.lstReclamo.filter(x => x.arServ_ID === +this.f.areaServicio.value)[0];
+      }
 
     } catch (error) {
       console.log(error);
@@ -127,7 +127,7 @@ export class ReporteComponent implements OnInit {
   selectTipoReclamo() {
 
     try {
-      this.lstReclamo = this.lstReclamo.filter(x => x.tipRec_ID === +this.frmRep.tipoReclamo.value)[0];
+      this.lstReclamo = this.lstReclamo.filter(x => x.tipRec_ID === +this.f.tipoReclamo.value)[0];
     } catch (error) {
       console.log(error);
     }
@@ -140,14 +140,14 @@ export class ReporteComponent implements OnInit {
 
       if (this.lstReclamo.length === null) {
 
-        this.reclamoService.selectReclamo('bar_ID = ' + this.frmRep.barrio.value).subscribe(
+        this.reclamoService.selectReclamo('bar_ID = ' + this.f.barrio.value).subscribe(
           (data) => {
             this.lstReclamo = data;
           }
         );
 
       } else {
-        this.lstReclamo = this.lstReclamo.filter(x => x.bar_ID === +this.frmRep.barrio.value)[0];
+        this.lstReclamo = this.lstReclamo.filter(x => x.bar_ID === +this.f.barrio.value)[0];
       }
 
     } catch (error) {

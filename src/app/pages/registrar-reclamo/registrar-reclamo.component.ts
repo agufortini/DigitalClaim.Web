@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 // ENTIDADES
 import { Usuario } from 'src/app/_entities/usuario.entities';

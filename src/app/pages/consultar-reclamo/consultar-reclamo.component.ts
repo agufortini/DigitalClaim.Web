@@ -62,11 +62,10 @@ export class ConsultarReclamoComponent implements OnInit {
 	FechaDesde: any;
 	FechaHasta: any;
 	filtroFecha: string;
-	filtroDNI = '';
-	filtroCodigo = '';
-	filtroAreaServicio = '';
-	filtroBarrio = '';
-	// lstFiltro: Array[];
+	filtroDNI: string;
+	filtroCodigo: string;
+	filtroAreaServicio: string;
+	filtroBarrio: string;
 
 	fechaHoy: Date;
 	objFiltro: any;
@@ -182,175 +181,125 @@ export class ConsultarReclamoComponent implements OnInit {
 		});
 	}
 
-	// selectReclamo() {
-	// 	try {
-	// 		const fechaDesde = (this.frmConsultar.fechaDesde.value);
-	// 		const fechaHasta = this.frmConsultar.fechaHasta.value;
-	// 		const dni = this.frmConsultar.dni.value;
-	// 		const codigo = this.frmConsultar.codigo.value;
-	// 		const areaServicio = this.frmConsultar.areaServicio.value;
-	// 		const barrio = this.frmConsultar.barrio.value;
+	selectReclamo() {
+		try {
+			const fechaDesde = this.frmConsultar.fechaDesde.value;
+			const fechaHasta = this.frmConsultar.fechaHasta.value;
+			const dni = this.frmConsultar.dni.value;
+			const codigo = this.frmConsultar.codigo.value;
+			const areaServicio = this.frmConsultar.areaServicio.value;
+			const barrio = this.frmConsultar.barrio.value;
 
-	// 		// Validación si se ingresó por algún campo de fecha
-	// 		if (fechaDesde !== '' || fechaHasta !== '') {
-	// 			// Validación por ingreso de ambas fechas
-	// 			if (fechaDesde !== '' && fechaHasta !== '') {
+			// Validación si se ingresó por algún campo de fecha
+			if (fechaDesde !== '' || fechaHasta !== '') {
+				// Validación por ingreso de ambas fechas
+				if (fechaDesde !== '' && fechaHasta !== '') {
 	
-	// 				// Valida si Fecha Desde es menor a Fecha Hasta
-	// 				if (fechaDesde <= fechaHasta) {
-	// 					this.filtroFecha = `rec_fechaAlta BETWEEN ${fechaDesde} AND ${fechaHasta}`;					
-	// 				} else {
-	// 					// Muestra error en rango de Fechas
-	// 					Swal.fire({
-	// 						allowOutsideClick: false,
-	// 						type: 'error',
-	// 						title: 'Consultar Reclamo',
-	// 						text: 'La fecha Desde debe ser menor a la fecha Hasta'
-	// 					});
-	// 				}
-	// 			// Validación por ingreso de fechas individuales
-	// 			} else if (fechaDesde !== '') {
-	// 				this.filtroFecha = `rec_fechaAlta >= ${fechaDesde}`;
-	// 			} else if (fechaHasta !== '') {
-	// 				this.filtroFecha = `rec_fechaAlta <= ${fechaHasta}`;
-	// 			}
+					// Valida si Fecha Desde es menor a Fecha Hasta
+					if (fechaDesde <= fechaHasta) {
+						this.filtroFecha = `rec_fechaAlta >= ${fechaDesde} and rec_fechaAlta <= ${fechaHasta}`;						
+					} else {
+						// Muestra error en rango de Fechas
+						Swal.fire({
+							allowOutsideClick: false,
+							type: 'error',
+							title: 'Consultar Reclamo',
+							text: 'La fecha Desde debe ser menor a la fecha Hasta'
+						});
+					}
+				// Validación por ingreso de fechas individuales
+				} else if (fechaDesde !== '') {
+					this.filtroFecha = `rec_fechaAlta >= ${fechaDesde}`;
+				} else if (fechaHasta !== '') {
+					this.filtroFecha = `rec_fechaAlta <= ${fechaHasta}`;
+				}
 
-	// 			// this.objFiltro = {
-	// 			// 	stFiltro: this.filtroFecha
-	// 			// };
-	// 		}
+				this.objFiltro = {
+					stFiltro: this.filtroFecha
+				};
+			}
 
+			// Si control DNI es distinto de "" asigno valor a filtroDNI
+			if (dni !== '') {
+				if (this.objFiltro !== '') {
+					this.objFiltro = {
+						
+					};
+				}
+				this.filtroDNI = `usu_DNI = ${dni}`;
 
+				// this.objFiltro = {
+				// 	stFiltro: this.stFiltro
+				// };
+			}
 
-	// 		if (this.filtroFecha !== '') {
-	// 			filtro {
-	// 				filtro: this.filtroFecha
-	// 			}
-	// 			this.lstFiltro.push(filtro);
-	// 		}
+			// // Si control codigo es distinto de "" asigno valor a filtroCodigo
+			// if (codigo !== '') {
+			// 	this.filtroCodigo = `rec_codigo = ${codigo}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroCodigo;
+			// 	} else {
+			// 		this.stFiltro = this.filtroCodigo;
+			// 	}
 
+			// 	// this.objFiltro = {
+			// 	// 	stFiltro: this.stFiltro
+			// 	// };
+			// }
 
-	// 		if (dni !== '') {
-	// 			this.filtroDNI = `usu_DNI = ${dni}`;
-	// 			filtro {
-	// 				filtro: this.filtroDNI
-	// 			}
-	// 			this.lstFiltro.push(filtro);
-	// 		}
+			// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
+			// if (areaServicio !== '') {
+			// 	this.filtroAreaServicio = `arServ_ID = ${areaServicio}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroAreaServicio;
+			// 	} else {
+			// 		this.stFiltro = this.filtroAreaServicio;
+			// 	}
 
-	// 		if (codigo !== '') {
-	// 			this.filtroCodigo = `rec_codigo = ${codigo}`;
-	// 			filtro {
-	// 				filtro: this.filtroCodigo
-	// 			}
-	// 			this.lstFiltro.push(filtro);
-	// 		}
+			// 	// this.objFiltro = {
+			// 	// 	stFiltro: this.stFiltro
+			// 	// };
+			// }
 
-	// 		if (areaServicio !== '') {
-	// 			this.filtroAreaServicio = `arServ_ID = ${areaServicio}`;
-	// 			filtro {
-	// 				filtro: this.filtroAreaServicio
-	// 			}
-	// 			this.lstFiltro.push(filtro);
-	// 		}
+			// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
+			// if (barrio !== '') {
+			// 	this.filtroBarrio = `bar_ID = ${barrio}`;
+			// 	if (this.stFiltro !== '') {
+			// 		this.stFiltro += ' and ' + this.filtroBarrio;
+			// 	} else {
+			// 		this.stFiltro = this.filtroBarrio;
+			// 	}		
+			// }
 
-	// 		if (barrio !== '') {
-	// 			this.filtroBarrio = `bar_ID = ${barrio}`;
-	// 			filtro {
-	// 				filtro: this.filtroBarrio
-	// 			}
-	// 			this.lstFiltro.push(filtro);
-	// 		}
+			// this.objFiltro = {
+			// 	stFiltro: this.stFiltro
+			// };
 
-	// 		console.log(this.lstFiltro);
-	// 		console.log(JSON.stringify(this.lstFiltro));
+			console.log(this.objFiltro);
 
+			// this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
+			//   if (data) {
+			//     this.lstReclamo = JSON.parse(data);
+			//     this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
+			//     this.dataSource.paginator = this.paginator;
+			//     document.getElementById('idTableConsulta').style.visibility = 'visible';
+			//   } else {
+			//     Swal.fire({
+			//       allowOutsideClick: false,
+			//       type: 'warning',
+			//       title: 'Consultar reclamo',
+			//       text: 'No se encontraron reclamos con el filtro aplicado'
+			//     });
+			//     this.frmConsultarReclamo.reset();
+			//   }
+			// });
 
+			this.objFiltro = '';
 
-
-
-
-	// 		// Si control DNI es distinto de "" asigno valor a filtroDNI
-	// 		// if (dni !== '') {
-	// 		// 	if (this.objFiltro !== '') {
-	// 		// 		this.objFiltro = {
-	// 		// 			stFiltro: += ` and usu_DNI = ${dni}`
-	// 		// 		};
-	// 		// 	}
-	// 		// 	this.filtroDNI = `usu_DNI = ${dni}`;
-
-	// 		// 	// this.objFiltro = {
-	// 		// 	// 	stFiltro: this.stFiltro
-	// 		// 	// };
-	// 		// }
-
-	// 		// // Si control codigo es distinto de "" asigno valor a filtroCodigo
-	// 		// if (codigo !== '') {
-	// 		// 	this.filtroCodigo = `rec_codigo = ${codigo}`;
-	// 		// 	if (this.stFiltro !== '') {
-	// 		// 		this.stFiltro += ' and ' + this.filtroCodigo;
-	// 		// 	} else {
-	// 		// 		this.stFiltro = this.filtroCodigo;
-	// 		// 	}
-
-	// 		// 	// this.objFiltro = {
-	// 		// 	// 	stFiltro: this.stFiltro
-	// 		// 	// };
-	// 		// }
-
-	// 		// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
-	// 		// if (areaServicio !== '') {
-	// 		// 	this.filtroAreaServicio = `arServ_ID = ${areaServicio}`;
-	// 		// 	if (this.stFiltro !== '') {
-	// 		// 		this.stFiltro += ' and ' + this.filtroAreaServicio;
-	// 		// 	} else {
-	// 		// 		this.stFiltro = this.filtroAreaServicio;
-	// 		// 	}
-
-	// 		// 	// this.objFiltro = {
-	// 		// 	// 	stFiltro: this.stFiltro
-	// 		// 	// };
-	// 		// }
-
-	// 		// // Si control areaServicio es distinto de "" asigno valor a filtroAreaServicio
-	// 		// if (barrio !== '') {
-	// 		// 	this.filtroBarrio = `bar_ID = ${barrio}`;
-	// 		// 	if (this.stFiltro !== '') {
-	// 		// 		this.stFiltro += ' and ' + this.filtroBarrio;
-	// 		// 	} else {
-	// 		// 		this.stFiltro = this.filtroBarrio;
-	// 		// 	}		
-	// 		// }
-
-	// 		// this.objFiltro = {
-	// 		// 	stFiltro: this.stFiltro
-	// 		// };
-
-	// 		console.log(this.objFiltro);
-
-	// 		// this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
-	// 		//   if (data) {
-	// 		//     this.lstReclamo = JSON.parse(data);
-	// 		//     this.dataSource = new MatTableDataSource<ConsultarReclamo>(this.lstReclamo);
-	// 		//     this.dataSource.paginator = this.paginator;
-	// 		//     document.getElementById('idTableConsulta').style.visibility = 'visible';
-	// 		//   } else {
-	// 		//     Swal.fire({
-	// 		//       allowOutsideClick: false,
-	// 		//       type: 'warning',
-	// 		//       title: 'Consultar reclamo',
-	// 		//       text: 'No se encontraron reclamos con el filtro aplicado'
-	// 		//     });
-	// 		//     this.frmConsultarReclamo.reset();
-	// 		//   }
-	// 		// });
-
-	// 		this.objFiltro = '';
-
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// }
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	cargarDDL() {
 		this.ddlService.selectEntitie('AreaServicioController', 'SelectAreaServicio').subscribe((data) => {

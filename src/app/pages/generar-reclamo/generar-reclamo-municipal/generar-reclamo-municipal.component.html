@@ -1,7 +1,3 @@
-<div class="divAyuda">
-    <label>¿Cómo registrar un Reclamo?</label>
-    <a [routerLink]="'/ayuda-registrar-reclamo-municipal'"> Haz click aquí</a>
-</div>
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step>
         <form [formGroup]="frmDatosReclamante">
@@ -57,7 +53,7 @@
                     </div>
                     <div class="col-md-6">
                         <div style="float: right;">
-                            <button (click)="validarUsuario()" [disabled]="!frmDatosReclamante.valid" mat-raised-button matStepperNext color="primary" matTooltip="Datos del Reclamo" matTooltipPosition="left">
+                            <button (click)="validarUsuario()" [disabled]="!frmDatosReclamante.valid" mat-raised-button matStepperNext color="primary" matTooltip="Datos del Reclamo" matTooltipPosition="below">
                                 Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                             </button>
                         </div>
@@ -145,12 +141,12 @@
             <div class="form-group">
                 <div class="form-row">
                     <div class="col-md-6">
-                        <button mat-raised-button matStepperPrevious color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="right">
+                        <button mat-raised-button matStepperPrevious color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="below">
                                         Anterior <i class="fa fa-fw fa-chevron-left"></i>
                                     </button>
                     </div>
                     <div class="col-md-6">
-                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
+                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="below" style="float: right;">
                                         Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                                     </button>
                     </div>
