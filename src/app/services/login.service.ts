@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 import { RecuperarPassword } from '../_entities/usuario.entities';
 
 @Injectable({
@@ -27,6 +29,7 @@ export class LoginService {
 
   logout() {
     localStorage.clear();
+    Swal.close();
     this.router.navigateByUrl('/login');
   }
 

@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-md-6">
                         <div style="float: right;">
-                            <button (click)="validarUsuario()" [disabled]="!frmDatosReclamante.valid" mat-raised-button matStepperNext color="primary" matTooltip="Datos del Reclamo" matTooltipPosition="below">
+                            <button (click)="validarUsuario()" [disabled]="!frmDatosReclamante.valid" mat-raised-button matStepperNext color="primary" matTooltip="Datos del Reclamo" matTooltipPosition="left">
                                 Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                             </button>
                         </div>
@@ -141,12 +141,12 @@
             <div class="form-group">
                 <div class="form-row">
                     <div class="col-md-6">
-                        <button mat-raised-button matStepperPrevious color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="below">
+                        <button mat-raised-button matStepperPrevious color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="right">
                                         Anterior <i class="fa fa-fw fa-chevron-left"></i>
                                     </button>
                     </div>
                     <div class="col-md-6">
-                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="below" style="float: right;">
+                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
                                         Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                                     </button>
                     </div>

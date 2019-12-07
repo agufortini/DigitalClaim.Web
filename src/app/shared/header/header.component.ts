@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit {
   getMin = new Date();
 
   constructor(private loginService: LoginService,
-              private router: Router,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -50,6 +48,13 @@ export class HeaderComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then(result => {
       if (result.value) {
+        Swal.fire({
+          allowOutsideClick: false,
+          type: 'info',
+          text: 'Espere por favor...'
+        });
+        Swal.showLoading();
+        
         // Se inicializa Fecha y Hora actual para registrar  Fin de Sesión de Usuario
         this.fechaActual = new Date();
         this.fechaActual = this.datePipe.transform(this.fechaActual, 'dd/MM/yyyy');
