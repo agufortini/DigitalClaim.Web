@@ -1,0 +1,39 @@
+<p>Ayuda Works!</p>
+<!-- <div id="idTableConsulta" style="visibility: hidden;">
+    <div>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese fecha">
+        </mat-form-field>
+        <p class="lblCampoObligatorio">Para visualizar una consulta específica, ingrese fecha.</p>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="rec_fechaAlta">
+            <th mat-header-cell *matHeaderCellDef style="width: 120px;">Fecha Alta</th>
+            <td mat-cell *matCellDef="let element">{{ element.con_fechaAlta }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bar_nombre">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px;">Mensaje</th>
+            <td mat-cell *matCellDef="let element">{{ element.con_mensaje }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="bar_nombre">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px;">Ciudadano</th>
+            <td mat-cell *matCellDef="let element">{{ element.con_nombreCompleto }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Ver">
+            <th mat-header-cell *matHeaderCellDef>Ver</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-flat-button (click)="verMensaje(element)" color="primary" matTooltip="Detalle del Reclamo" matTooltipPosition="below">
+                    <i class="material-icons">remove_red_eye</i>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div> -->

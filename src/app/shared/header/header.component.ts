@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
         Swal.fire({
           allowOutsideClick: false,
           type: 'info',
-          text: 'Espere por favor...'
+          text: 'Cerrando sesión...'
         });
         Swal.showLoading();
         
@@ -63,14 +63,11 @@ export class HeaderComponent implements OnInit {
 
         this.objSesion = new SesionUsuario();
         this.objSesion.su_IDSesion = this.user.usu_IDSesion;
-        this.objSesion.su_fechaInicio = this.user.usu_fechaInicio;
-        this.objSesion.su_horaInicio = this.user.usu_horaInicio;
         this.objSesion.su_fechaFin = this.fechaActual;
         this.objSesion.su_horaFin = this.horas + ':' + this.minutos;
-        this.objSesion.su_IDUsuario = this.user.usu_IDUsuario;
 
         this.loginService.registrarCierreSesion(this.objSesion).subscribe(data => {
-            if (JSON.parse(data) === null) {
+          if (+data === 1) {
               this.loginService.logout();
             }
         });

@@ -34,9 +34,9 @@ export class ContactoComponent implements OnInit {
 
   ngOnInit() {
     this.frmContacto = this.formBuilder.group({
-      nombreCompleto: [this.user.usu_nombre + ' ' + this.user.usu_apellido, Validators.required],
-      telefono: [this.user.usu_telefono, Validators.required],
-      email: [this.user.usu_email, Validators.required],
+      nombreCompleto: [{ value: this.user.usu_nombre + ' ' + this.user.usu_apellido, disabled: true}, Validators.required],
+      telefono: [{ value: this.user.usu_telefono, disabled: true}, Validators.required],
+      email: [{ value: this.user.usu_email, disabled: true}, Validators.required],
       mensaje: ['', [Validators.required, Validators.minLength(30)]]
     });
   }
@@ -58,14 +58,16 @@ export class ContactoComponent implements OnInit {
       this.objContacto.con_mensaje = this.f.mensaje.value;
       this.objContacto.con_fechaAlta = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
 
-      this.reclamoService.registrarConsulta(this.objContacto).subscribe((data) => {
-        if (data) {
+      this.reclamoService.registrarContacto(this.objContacto).subscribe((data) => {
+        const rtdo: number = JSON.parse(data);
+        
+        if (rtdo === 1) {
           Swal.close();
           Swal.fire({
             allowOutsideClick: false,
             type: 'success',
             title: 'Mensaje enviado',
-            text: 'El mensaje se ha enviado con éxito. Su consulta será revisada y le daremos una respuesta cuanto antes.'
+            text: 'El mensaje se ha enviado con éxito. Su consulta será revisada y le enviaremos una respuesta a su correo.'
           }).then(result => {
             if (result.value) {
               this.frmContacto.reset({

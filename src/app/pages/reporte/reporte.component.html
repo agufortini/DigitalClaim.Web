@@ -1,5 +1,5 @@
 <div class="container myAnimated myFast myFadeIn">
-    <div class="card card-register mx-auto mt-5">
+    <div class="card card-register mx-auto mt-3 myBorderCard">
 
         <div class="card-header myCardHeader">Reportes</div>
         <div class="card-body">
@@ -21,35 +21,14 @@
 
                 <div class="form-group">
                     <div class="form-row">
-                        <div class="col-md-6">
-                            <label>AREA DE SERVICIO</label>
-                            <select (change)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
+                        <label>REPORTE</label>
+                        <select (change)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
                                 <option value="" disabled>Seleccione Área de Servicio...</option>
-                                <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
-                                    {{ item.arServ_nombre }}
-                                </option>
+                                <option>Reporte por Area de Servicio</option>
+                                <option>Reporte por Tipo de Reclamo</option>
+                                <option>Reporte por Barrio</option>
                             </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label>TIPO DE RECLAMO</label>
-                            <select (change)="selectTipoReclamo()" [(ngModel)]="TipoReclamoID" formControlName="tipoReclamo" class="form-control">
-                                <option value="" disabled>Seleccione Tipo de Reclamo...</option>
-                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
-                                    {{ item.tipRec_nombre }}
-                                </option>
-                            </select>
-                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="barrio">BARRIO</label>
-                    <select formControlName="barrio" class="form-control">
-                        <option value="" disabled>Seleccione Barrio...</option>
-                        <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
-                            {{ item.bar_nombre }}
-                        </option>
-                    </select>
                 </div>
 
                 <div class="row">

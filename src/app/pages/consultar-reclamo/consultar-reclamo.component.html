@@ -3,7 +3,7 @@
         <label>¿No sabés como consultar tu Reclamo?</label>
         <a [routerLink]="'/ayuda-consultar-reclamo'"> Haz click aquí</a>
     </div>
-    <div class="card card-register mx-auto mt-5">
+    <div class="card card-register mx-auto mt-3 myBorderCard">
         <div class="card-header myCardHeader">Consultar Reclamo</div>
         <div class="card-body">
             <form [formGroup]="frmConsultarReclamo">
@@ -11,79 +11,35 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-5">
-                                <label>Estado</label>
-                                <select (change)="listarReclamoPorEstado()" formControlName="estado" class="form-control ddlEstado" [(ngModel)]="ddlEstRec" placeholder="Seleccione Estado de Reclamo">
-                                    <option value="" disabled>Seleccione Estado de Reclamo...</option>
-                                    <option *ngFor="let item of arrEstado" [value]="item.estRec_IDEstado">
-                                        {{ item.estRec_nombre }}
-                                    </option>
-                                </select>
+                                <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese algún dato del Reclamo">
+                                </mat-form-field>
                             </div>
-                            <div class="col-md-7">
-                                <label>Dato</label>
-                                <input (keyup)="applyFilter($event.target.value)" class="form-control" placeholder="Ingrese algún dato del Reclamo">
+                            <div class="lblCampoObligatorio">
+                                Para consultar un reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group lblCampoObligatorio">
-                        <p>*Para realizar la consulta de su reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
                     </div>
                 </div>
 
                 <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col-md-6">
-                                <label>FECHA DESDE</label>
-                                <input formControlName="fechaDesde" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha desde" matTooltipPosition="above">
+                            <div class="col-md-4">
+                                <label>DNI*</label>
+                                <input id="txtDNI" (keypress)="validarIngreso($event)" formControlName="dni" class="form-control" type="text" placeholder="Ingrese DNI" minlength="8" maxlength="8">
                             </div>
-                            <div class="col-md-6">
-                                <label>FECHA HASTA</label>
-                                <input formControlName="fechaHasta" class="form-control" type="date" [max]="maxDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <label>DNI</label>
-                                <input (keypress)="validarIngreso($event)" formControlName="dni" [(ngModel)]="inputDNI" class="form-control" type="text" placeholder="DNI" maxlength="8">
-                            </div>
-                            <div class="col-md-6">
-                                <label>CODIGO</label>
-                                <input (keypress)="validarIngreso($event)" formControlName="codigo" [(ngModel)]="inputCodigo" class="form-control" type="text" placeholder="Código reclamo">
+                            <div class="ml-2"></div>
+                            <div class="col-md-5">
+                                <button [disabled]="!frmConsultarReclamo.valid" (click)="consultarReclamo()" class="btn btn-block btnPrimario myBtnCard btnConsultar">
+                                    Buscar <i class="fa fa-fw fa-search"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <label>AREA DE SERVICIO</label>
-                                <select (change)="cargarDDLTipoReclamo()" formControlName="areaServicio" [(ngModel)]="ddlArServ" class="form-control" placeholder="Seleccione Area de Servicio">
-                                    <option disabled value="">Seleccione Área de Servicio...</option>
-                                    <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
-                                        {{ item.arServ_nombre }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="ddlBarrio">BARRIO</label><br>
-                                <select formControlName="barrio" class="form-control" [(ngModel)]="ddlBar" placeholder="Seleccione Barrio">
-                                    <option disabled value="">Seleccione Barrio...</option>
-                                    <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
-                                        {{ item.bar_nombre }}
-                                    </option>
-                                </select>
-                            </div>
+                        <br>
+                        <div class="lblCampoObligatorio">
+                            *Campos obligatorios
                         </div>
-                    </div>
-
-                    <div class="col-md-8">
-                        <button (click)="selectReclamo()" class="btn btn-block btnPrimario myBtnCard">
-                            Consultar <i class="fa fa-fw fa-search"></i>
-                        </button>
                     </div>
                 </div>
             </form>
@@ -94,9 +50,9 @@
 <div id="idTableConsulta" style="visibility: hidden;">
     <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese algún dato del Reclamo">
         </mat-form-field>
-        <p>Para consultar un reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
+        <p class="lblCampoObligatorio">Para consultar un reclamo ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.</p>
     </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="rec_codigo">

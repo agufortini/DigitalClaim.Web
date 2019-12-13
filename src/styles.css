@@ -3,6 +3,11 @@
 
 /* Cursor para formulario de cambio de colores, en configuración */
 
+.myBorderCard {
+    border: 0.5px solid #D3D3D3 !important;
+    border-radius: 5px !important;
+}
+
 
 /* ----------------------------- <ANGULAR MATERIAL> ----------------------------- */
 

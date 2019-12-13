@@ -55,19 +55,13 @@ export class PerfilComponent implements OnInit {
       usu_IDUsuario: this.user.usu_IDUsuario
     };
 
-    this.usuarioService.selectDataUsuario(this.objIDUser).subscribe(data => {
-      const dataUser: Usuario = JSON.parse(data);
-
-      if (dataUser) {
-        this.inputDNI = dataUser.usu_dni.toString();
-        this.inputUser = dataUser.usu_username;
-        this.inputPass = dataUser.usu_password;
-        this.inputNombre = dataUser.usu_nombre;
-        this.inputApellido = dataUser.usu_apellido;
-        this.inputTel = dataUser.usu_telefono.toString();
-        this.inputEmail = dataUser.usu_email;
-      }
-    });
+    this.inputDNI = this.user.usu_dni.toString();
+    this.inputUser = this.user.usu_username;
+    this.inputPass = this.user.usu_password;
+    this.inputNombre = this.user.usu_nombre;
+    this.inputApellido = this.user.usu_apellido;
+    this.inputTel = this.user.usu_telefono.toString();
+    this.inputEmail = this.user.usu_email;
   }
 
   guardarDatos() {
@@ -76,7 +70,7 @@ export class PerfilComponent implements OnInit {
         allowOutsideClick: false,
         type: 'info',
         text: 'Espere por favor...'
-      });
+          });
       Swal.showLoading();
 
       this.objUser = new Usuario();

@@ -187,4 +187,3 @@ export class CrearOrdenServicioComponent implements OnInit {
       this.selection.isSelected(row) ? 'deselect' : 'select' } row ${row.position + 1}`;
   }
 }
-

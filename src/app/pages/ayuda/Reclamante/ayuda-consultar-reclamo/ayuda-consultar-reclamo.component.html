@@ -1,79 +1,19 @@
 <h3>¿Cómo Consultar un reclamo?</h3>
 <div class="text-justify">
     Para <b>consultar</b> un Reclamo, dirígase a la sección <b>Reclamo > Consultar</b>.
-    <br><br>El sistema automáticamente listará todos sus reclamos realizados y usted podrá consultarlos aplicando un filtro de búsqueda:
-    <br><br>
-    <div align="center">
-        <img src="../../../assets/images/myImages/filtroConsultarReclamante.png">
-    </div>
-    <br> Para aplicar el filtro de búsqueda se cuenta con 2 campos: <b>Estado</b> y <b>Dato</b>.
-    <br><br> En cuanto a <b>Estado</b>, se hace referencia al estado en que se encuentra el reclamo, que pueden ser 6:
-    <br><br>
-    <mat-accordion>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>Sin Asignar</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo al momento de Registrarse.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>Pendiente</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo cuando se genera la Orden de Servicio que se encargará de abordar el mismo.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>En Proceso</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo cuando se comienza a realizar el trabajo por parte del Área de Servicio correspondiente.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>Cancelado</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo cuando es dado de baja. Por ejemplo, a la hora de abordar el problema, que no exista o ya haya sido solucionado.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>Rechazado</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo cuando es dado de baja, pero automáticamente el sistma lo inserta en una nueva Orden de Servicio para poder abordalo en otro momento. Por ejemplo, si los trabajadores se quedan sin insumos mientras están
-                trabajando.
-            </p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <b>Cumplido</b>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p>Estado en que se encuentra un Reclamo cuando fue abordado y solucionado exitosamente.
-            </p>
-        </mat-expansion-panel>
-    </mat-accordion>
-    <br> Predeterminadamente, el sistema muestra los Reclamos en Estado <b>Sin Asignar</b>. Si selecciona un Estado diferente, el sistema le mostrará todos los Reclamos realizados en ese estado al momento actual.
-    <br><br> Por otra parte, el campo <b>Dato</b> nos permite filtrar los Reclamos ingresado cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, etc.
-    <br><br> Ya sea por uno, o por ambos campos, el sistema listara todos los reclamos con sus datos en una grilla:
+    <br><br> El sistema listara todos los reclamos con sus datos en una grilla:
     <br><br>
     <div align="center">
         <img src="../../../assets/images/myImages/grillaConsultar.png">
     </div>
-
-    <br><br> Presionando el botón en la columna <b>Ver</b> de algún Reclamo específico, podrá visualizar las actividades llevadas a cabo en el proceso de resolución, empezando desde la Notificación al Área de Servicio cuando se registró el Reclamo hasta
-    el cumplimiento del Reclamo en caso que haya podido resolverse:
+    <br><br> Para consultar un Reclamo, puede ingresar cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, etc. En caso de utilizar su código, una vez ingresado, el sistema realiza la búsqueda del Reclamo:
     <br><br>
     <div align="center">
-        <img src="../../../assets/images/myImages/verReclamo.png">
+        <img src="../../../assets/images/myImages/reclamoFiltrado.png">
+    </div>
+    <br> Presionando el botón en la columna <b>Ver</b> de algún Reclamo específico, podrá visualizar las actividades llevadas a cabo en el proceso de resolución, empezando desde la <b>Notificación al Área de Servicio</b> hasta el <b>Cierre del Reclamo</b>    (en este ejemplo, Cumplido):
+    <br><br>
+    <div align="center">
+        <img src="../../../assets/images/myImages/detalleReclamo.png">
     </div>
 </div>

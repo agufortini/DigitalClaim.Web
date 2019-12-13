@@ -58,8 +58,8 @@
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
-                    <a [routerLink]="'/reporte'" routerLinkActive="active">
-                        <i class="material-icons">bar_chart</i>Reportes</a>
+                    <a [routerLink]="'/reporte'" routerLinkActive="active"><i class="material-icons">bar_chart</i>Reportes</a>
+                    <a [routerLink]="'/consulta'" routerLinkActive="active"><i class="material-icons">contact_mail</i>Consultas</a>
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 5">
@@ -121,13 +121,7 @@
                     Area de Servicio: {{ areaServicio | uppercase }}
                 </li>
                 <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
-                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
-                        <i class="material-icons">assignment</i><span class="hide-menu">Orden de Servicio</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li>
-                            <a [routerLink]="'/crear-orden-servicio'" routerLinkActive="active">Registrar</a>
-                        </li>
-                    </ul>
+                    <a [routerLink]="'/crear-orden-servicio'" routerLinkActive="active"><i class="material-icons">assignment</i>Orden de Servicio</a>
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 6">
@@ -142,9 +136,6 @@
                         </li>
                         <li>
                             <a [routerLink]="'/reclamo'" routerLinkActive="active">Reclamo</a>
-                        </li>
-                        <li>
-                            <a [routerLink]="'/tipo-personal'" routerLinkActive="active">Tipo Personal</a>
                         </li>
                         <li>
                             <a [routerLink]="'/usuario'" routerLinkActive="active">Usuario</a>

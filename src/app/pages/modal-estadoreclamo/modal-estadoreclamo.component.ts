@@ -23,10 +23,12 @@ export class ModalEstadoreclamoComponent implements OnInit {
   lstDatos: any;
   dataSource: MatTableDataSource<any>;
   objIDRec: any;
-  rating = false;
-  objRating: SelectRating;
-  ratingArr = [];
-  boRating = false;
+
+  // Variable utilizada para saber si existe o no un rating registrado
+  rating: boolean;
+
+  // Variable utilizada para habilitar el botón que permite registrar un rating
+  btnCalificar: boolean;
 
   displayedColumns: string[] = [
     'his_fechaIngreso',
@@ -42,54 +44,57 @@ export class ModalEstadoreclamoComponent implements OnInit {
               private dialog: MatDialog,
               private router: Router) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
+    // Se almacena el IDReclamo capturado al presionar botón "Ver", para luego hacer la búsqueda del detalle del reclamo en base a este ID en "selectHistorial"
     this.IDReclamo = this.data.obj.rec_ID;
   }
 
   ngOnInit() {
     try {
-      this.objIDRec = {
-        rec_IDReclamo: this.IDReclamo
-      };
-
       this.selectHistorial();
-      this.selectRating();
     } catch (error) {
       console.log(error);
     }
   }
 
   selectHistorial() {
+    this.objIDRec = {
+      rec_IDReclamo: this.IDReclamo
+    };
+
     this.reclamoService.selectHistorial(this.objIDRec).subscribe(data => {
       this.lstDatos = JSON.parse(data);
-
-      // VALIDACIÓN PARA SABER SI ESTÁ EL RECLAMO EN ESTADO CUMPLIDO Y ASI MOSTRAR EL BOTON PARA REGISTRAR RATING
-      // const fila = this.lstDatos.length;
-
-      // if (this.lstDatos[fila].estRec_nombre === 'Cumplido') {
-      //   this.boRating = true;
-      // }
-      
-
       this.dataSource = new MatTableDataSource<any>(this.lstDatos);
+
+      // Validación para saber si está el reclamo en estado cumplido y habilitar el boton para registrar rating
+      const fila = this.lstDatos.length;
+
+      // Pregunta si el estado del reclamo es cumplido, y habilita el boton para registrar rating
+      this.btnCalificar = (this.lstDatos[fila - 1].estRec_nombre === 'Cumplido') ? true : false;
     });
   }
-
+  
   selectRating() {
     this.reclamoService.selectRating(this.objIDRec).subscribe(data => {
       const dataRat: SelectRating = JSON.parse(data);
 
-      if (dataRat === null) {
-        this.rating = true;
-      } else {
-        this.objRating = new SelectRating();
-        this.objRating.rat_fechaAlta = dataRat.rat_fechaAlta;
-        this.objRating.rat_rating = dataRat.rat_rating;
-        this.objRating.rat_comentario = dataRat.rat_comentario;
-
-        for (let index = 0; index < this.objRating.rat_rating; index++) {
-          this.ratingArr.push(index);
-        }
+      this.rating = (dataRat === null) ? true : false;
+      
+      if (this.rating === false) {
+        document.getElementById('btnCalificar').textContent = 'Ver Calificación';
       }
+
+      // if (dataRat === null) {
+      //   this.rating = true;
+      // } else {
+      //   this.objRating = new SelectRating();
+      //   this.objRating.rat_fechaAlta = dataRat.rat_fechaAlta;
+      //   this.objRating.rat_rating = dataRat.rat_rating;
+      //   this.objRating.rat_comentario = dataRat.rat_comentario;
+
+      //   for (let index = 0; index < this.objRating.rat_rating; index++) {
+      //     this.ratingArr.push(index);
+      //   }
+      // }
     });
   }
 

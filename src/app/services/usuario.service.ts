@@ -24,8 +24,10 @@ export class UsuarioService {
     });
   }
 
-  actualizarUsuario(objUser: Usuario): Observable<Usuario> {
-    return this.httpClient.post<Usuario>(`${ environment.apiUrl }api/UsuarioController/ActualizarUsuario`, objUser);
+  actualizarUsuario(objUser: any): Observable<any> {
+    return this.httpClient.get<any>(`${ environment.apiUrl }api/UsuarioController/ActualizarUsuario`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objUser))
+    });
   }
 
   selectDataUsuario(objIDUser: any): Observable<any> {

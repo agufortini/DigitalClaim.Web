@@ -107,7 +107,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
       Swal.fire({
         allowOutsideClick: false,
         type: 'info',
-        text: 'Espere por favor, este proceso puede tardar unos segundos...'
+        text: 'Este proceso puede tardar unos segundos, espere por favor...'
       });
 
       Swal.showLoading();

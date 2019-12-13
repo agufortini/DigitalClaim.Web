@@ -60,7 +60,7 @@ export class RegistrarReclamoComponent implements OnInit {
       Swal.fire({
         allowOutsideClick: false,
         type: 'info',
-        text: 'Espere por favor...'
+        text: 'Este proceso puede tardar unos segundos, espere por favor...'
       });
       Swal.showLoading();
 
@@ -75,10 +75,9 @@ export class RegistrarReclamoComponent implements OnInit {
           rec_fechaAlta: this.fechaRec,
           rec_altura: +this.objRec.altura,
           rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
-          rec_IDOrdenServicio: null,
           rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
-          usu_IDUsuario: this.user.usu_IDUsuario,
-          can_IDCanal: 3,
+          rec_IDUsuario: this.user.usu_IDUsuario,
+          rec_IDCanal: 3,
           cal_IDCalle: +this.objRec.calle.cal_IDCalle,
           bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
           his_horaIngreso: this.horas + ':' + this.minutos,
@@ -86,7 +85,6 @@ export class RegistrarReclamoComponent implements OnInit {
           usu_boExiste: true,
           usu_nombre: this.user.usu_nombre,
           usu_email: this.user.usu_email,
-          estRec_nombre: this.objRec.tipoReclamo.tipRec_nombre
         };
       } else {
         // Si no es uno, entonces es un reclamo generado por un Usuario Municipal.
@@ -111,8 +109,7 @@ export class RegistrarReclamoComponent implements OnInit {
           bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
           his_horaIngreso: this.horas + this.minutos,
           tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
-          usu_boExiste: false,
-          estRec_nombre: this.objRec.tipoReclamo.tipRec_nombre
+          usu_boExiste: false
         };
       }
 
@@ -122,17 +119,32 @@ export class RegistrarReclamoComponent implements OnInit {
         }
 
         Swal.close();
-        Swal.fire({
-          allowOutsideClick: false,
-          type: 'success',
-          title: 'Reclamo registrado' + '<br>' + this.codRec,
-          text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
-            'a su casilla de correo para que pueda consultarlo posteriormente.'
-          }).then(result => {
-          if (result.value) {
-            this.router.navigateByUrl('/home');
-            }
-          });
+
+        if (this.user.usu_IDRol === 1) {
+          Swal.fire({
+            allowOutsideClick: false,
+            type: 'success',
+            title: 'Reclamo registrado' + '<br>' + this.codRec,
+            text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
+              'a su casilla de correo para que pueda consultarlo posteriormente.'
+            }).then(result => {
+            if (result.value) {
+              this.router.navigateByUrl('/home');
+              }
+            });
+        } else {
+          Swal.fire({
+            allowOutsideClick: false,
+            type: 'success',
+            title: 'Reclamo registrado' + '<br>' + this.codRec,
+            text: 'El reclamo ha sido registrado correctamente. Otórguele el código en pantalla al Ciudadano para que posteriormente pueda consultar el estado del mismo.'
+            }).then(result => {
+            if (result.value) {
+              this.router.navigateByUrl('/generar-reclamo-municipal');
+              }
+            });
+        }
+
       });
 
       localStorage.removeItem('objReclamo');
@@ -144,6 +156,7 @@ export class RegistrarReclamoComponent implements OnInit {
 
   cancelarEnvio() {
     if (this.user.usu_IDRol === 1) {
+      localStorage.setItem('modificarReclamo', JSON.stringify(true));
       this.router.navigateByUrl('/generar-reclamo-ciudadano');
     } else {
       this.router.navigateByUrl('/generar-reclamo-municipal');

@@ -1,0 +1,18 @@
+<div class="mat-elevation-z8 divCalificar">
+    <div class="ml-1">
+        <br>
+        <div align="center">
+            <h5 style="font-weight: 500;">Reclamo Calificado</h5>
+        </div>
+        <label>Fecha: {{ objRating.rat_fechaAlta }}</label>
+        <br>
+        <label>
+                Calificación:
+                <label *ngFor="let item of ratingArr; index as i">
+                    <mat-icon style="color: #FFD740 !important;">star</mat-icon>
+                </label>
+        </label>
+        <br>
+        <label>Comentario: {{ objRating.rat_comentario }}</label>
+    </div>
+</div>

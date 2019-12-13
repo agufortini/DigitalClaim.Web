@@ -21,8 +21,6 @@ export class Usuario {
     usu_IDAreaServicio: number;
     usu_arServNombre: string;
     usu_IDSesion: number;
-    usu_fechaInicio: string;
-    usu_horaInicio: string;
     boExiste: boolean;
     constructor() { }
 }

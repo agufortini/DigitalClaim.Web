@@ -1,5 +1,5 @@
 <div class="container myAnimated myFast myFadeIn">
-    <div class="card card-register mx-auto mt-5">
+    <div class="card card-register mx-auto mt-3 myBorderCard">
         <div class="card-header myCardHeader">Búsqueda de Reclamos</div>
         <div class="card-body">
             <form [formGroup]="frmCrearOrdenServicio">
@@ -20,7 +20,7 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label>RECLAMO</label>
-                            <select (change)="filtroGeneral('tipoReclamo')" formControlName="tipoReclamo" [(ngModel)]="ddlTipRec" class="form-control" placeholder="Seleccione Reclamo...">
+                            <select formControlName="tipoReclamo" [(ngModel)]="ddlTipRec" class="form-control" placeholder="Seleccione Reclamo...">
                                 <option disabled>Seleccione Reclamo...</option>
                                 <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
                                     {{ item.tipRec_nombre }}
@@ -30,7 +30,7 @@
 
                         <div class="col-md-6">
                             <label>PRIORIDAD</label>
-                            <select (change)="filtroGeneral('prioridad')" formControlName="prioridad" [(ngModel)]="ddlPri" class="form-control" placeholder="Seleccione Prioridad...">
+                            <select formControlName="prioridad" [(ngModel)]="ddlPri" class="form-control" placeholder="Seleccione Prioridad...">
                                 <option disabled>Seleccione Prioridad...</option>
                                 <option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
                                     {{ item.pri_nombre }}
@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label for="barrio">BARRIO</label><br>
-                            <select (change)="filtroGeneral('barrio')" formControlName="barrio" [(ngModel)]="ddlBar" class="form-control" placeholder="Seleccione Barrio...">
+                            <select formControlName="barrio" [(ngModel)]="ddlBar" class="form-control" placeholder="Seleccione Barrio...">
                                 <option disabled>Seleccione Barrio...</option>
                                 <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
                                     {{ item.bar_nombre }}

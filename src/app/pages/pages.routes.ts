@@ -11,7 +11,6 @@ import { CrearOrdenServicioComponent } from './crear-orden-servicio/crear-orden-
 import { RegistrarOrdenServicioComponent } from './registrar-orden-servicio/registrar-orden-servicio.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ReporteComponent } from './reporte/reporte.component';
-import { GestionarOrdenServicioComponent } from './gestionar-orden-servicio/gestionar-orden-servicio.component';
 import { AreaServicioComponent } from '../pages/admin-municipal/area-servicio/area-servicio.component';
 import { BarrioComponent } from '../pages/admin-municipal/barrio/barrio.component';
 import { CalleComponent } from '../pages/admin-municipal/calle/calle.component';
@@ -26,18 +25,18 @@ import { PersonalComponent } from '../pages/admin-operativo/personal/personal.co
 import { AyudaRegistrarReclamoComponent } from './ayuda/Reclamante/ayuda-registrar-reclamo/ayuda-registrar-reclamo.component';
 import { AyudaConsultarReclamoComponent } from './ayuda/Reclamante/ayuda-consultar-reclamo/ayuda-consultar-reclamo.component';
 import { AyudaCalificarReclamoComponent } from './ayuda/Reclamante/ayuda-calificar-reclamo/ayuda-calificar-reclamo.component';
-
-// LOGIN GUARD
-import { LoginGuard } from '../_guards/login.guard';
 import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-registrar-reclamo-municipal/ayuda-registrar-reclamo-municipal.component';
 import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
 import { AyudaDominioMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
 import { AyudaReportesMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
+import { ConsultaComponent } from '../pages/consulta/consulta.component';
+
+// LOGIN GUARD
+import { LoginGuard } from '../_guards/login.guard';
 
 const pagesRoutes: Routes = [
     {
-        path: '',
-        component: PagesComponent,
+        path: '', component: PagesComponent,
         children: [
             { path: 'home', component: HomeComponent, data: { titulo: 'Inicio' }, canActivate: [LoginGuard] },
             { path: 'generar-reclamo-ciudadano', component: GenerarReclamoCiudadanoComponent, data: { titulo: 'Reclamo', subtitulo: 'Registrar Reclamo' }, canActivate: [LoginGuard]},
@@ -47,9 +46,8 @@ const pagesRoutes: Routes = [
             { path: 'contacto', component: ContactoComponent, data: { titulo: 'Contacto' }, canActivate: [LoginGuard]},
             { path: 'crear-orden-servicio', component: CrearOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Generar Orden de Servicio' }, canActivate: [LoginGuard]},
             { path: 'registrar-orden-servicio', component: RegistrarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Registrar Orden de Servicio' }, canActivate: [LoginGuard]},
-            { path: 'gestionar-orden-servicio', component: GestionarOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Gestionar Orden de Servicio' }, canActivate: [LoginGuard]},
-            { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' }, canActivate: [LoginGuard]},
-            { path: 'reporte', component: ReporteComponent, data: { titulo: 'Reportes' }, canActivate: [LoginGuard]},
+            { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil', subtitulo: 'Perfil'}, canActivate: [LoginGuard]},
+            { path: 'reporte', component: ReporteComponent, data: { titulo: 'Reportes', subtitulo: 'Reportes' }, canActivate: [LoginGuard]},
             { path: 'area-servicio', component: AreaServicioComponent, data: { titulo: 'Dominio', subtitulo: 'Area de Servicio'}, canActivate: [LoginGuard]},
             { path: 'barrio', component: BarrioComponent, data: { titulo: 'Dominio', subtitulo: 'Barrio'}, canActivate: [LoginGuard]},
             { path: 'calle', component: CalleComponent, data: { titulo: 'Dominio', subtitulo: 'Calle'}, canActivate: [LoginGuard]},
@@ -68,8 +66,8 @@ const pagesRoutes: Routes = [
             { path: 'ayuda-consultar-reclamo-municipal', component: AyudaConsultarReclamoMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }, canActivate: [LoginGuard]},
             { path: 'ayuda-dominio-municipal', component: AyudaDominioMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Dominio' }, canActivate: [LoginGuard]},
             { path: 'ayuda-reportes-municipal', component: AyudaReportesMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Reportes' }, canActivate: [LoginGuard]},
-
-            // { path: '**', redirectTo: '/login'}
+            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consulta', subtitulo: 'Consultas' }, canActivate: [LoginGuard]},
+            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consulta', subtitulo: 'Consultas' }, canActivate: [LoginGuard]},
         ]
     },
 ];

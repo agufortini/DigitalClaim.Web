@@ -25,7 +25,6 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { CrearOrdenServicioComponent } from './crear-orden-servicio/crear-orden-servicio.component';
 import { RegistrarOrdenServicioComponent } from './registrar-orden-servicio/registrar-orden-servicio.component';
 import { ReporteComponent } from './reporte/reporte.component';
-import { GestionarOrdenServicioComponent } from './gestionar-orden-servicio/gestionar-orden-servicio.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ModalEstadoreclamoComponent } from './modal-estadoreclamo/modal-estadoreclamo.component';
 import { GraficoComponent } from '../components/grafico/grafico.component';
@@ -49,6 +48,8 @@ import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipa
 import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
 import { AyudaReportesMunicipalComponent } from './ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
 import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
+import { ConsultaComponent } from '../pages/consulta/consulta.component';
+import { ModalRatingComponent } from '../pages/modal-rating/modal-rating.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -65,7 +66,6 @@ import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-
         GenerarReclamoCiudadanoComponent,
         PerfilComponent,
         ReporteComponent,
-        GestionarOrdenServicioComponent,
         ModalEstadoreclamoComponent,
         GraficoComponent,
         RatingReclamoComponent,
@@ -88,7 +88,9 @@ import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-
         AyudaRegistrarReclamoMunicipalComponent,
         AyudaConsultarReclamoMunicipalComponent,
         AyudaReportesMunicipalComponent,
-        AyudaDominioMunicipalComponent
+        AyudaDominioMunicipalComponent,
+        ConsultaComponent,
+        ModalRatingComponent
     ],
     exports: [
         HomeComponent,

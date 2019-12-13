@@ -7,7 +7,8 @@ import { RecuperarPasswordComponent } from './login/recuperar-password.component
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
-    { path: 'recuperar-password', component: RecuperarPasswordComponent}
+    { path: 'recuperar-password', component: RecuperarPasswordComponent},
+    { path: '**', redirectTo: '/login'}
 ];
 
 export const APP_ROUTES = RouterModule.forRoot(appRoutes, {useHash: true});

@@ -91,8 +91,10 @@ export class ReclamoService {
     });
   }
 
-  registrarConsulta(objCon: Contacto): Observable<Contacto> {
-    return this.httpClient.post<Contacto>(`${environment.apiUrl}api/ReclamoController/RegistrarConsulta`, objCon);
+  registrarContacto(objCon: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/RegistrarContacto`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objCon))
+    });
   }
 
   selectRating(objIDRec: any): Observable<any> {

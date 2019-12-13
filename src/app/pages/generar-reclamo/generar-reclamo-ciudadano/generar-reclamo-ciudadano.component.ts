@@ -71,25 +71,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
         observaciones: ['']
       });
       this.cargaDDL();
-
-      if (this.objReclamo === null) {
-        this.validarRealizacionReclamo();
-      } else {
-        console.log(this.objReclamo);
-        
-        // ASIGNACION DE VALORES A CONTROLES EN CASO DE QUE USUARIO DESEE MODIFICAR EL RECLAMO
-        // this.frmGenerarReclamo.setValue({
-        //   areaServicio: this.objReclamo.arServ_nombre,
-        //   barrio: this.objReclamo.bar_nombre,
-        //   altura: this.objReclamo.altura,
-        //   observaciones: this.objReclamo.observacion
-        // });
-
-        // this.cargaSelectTipoReclamo();
-        // this.frmGenerar.tipoReclamo.patchValue(this.objReclamo.tipRec_nombre);
-        // this.cargaSelectCalle();
-        // this.frmGenerar.calle.patchValue(this.objReclamo.cal_nombre);
-      }
+      this.modificarReclamo();
     } catch (error) {
       console.log(error);
     }
@@ -108,6 +90,27 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     this.ddlService.selectEntitie('BarrioController', 'SelectBarrio').subscribe(data => {
       this.arrBarrio = JSON.parse(data);
     });
+  }
+
+  modificarReclamo() {
+    if (this.objReclamo === null) {
+      // this.validarRealizacionReclamo();
+    } else {
+      console.log(this.objReclamo);
+      
+      // Asignación de valores a controles para poder modificar los datos del Reclamo
+      // this.frmGenerarReclamo.setValue({
+      //   areaServicio: this.objReclamo.arServ_nombre,
+      //   barrio: this.objReclamo.bar_nombre,
+      //   altura: this.objReclamo.altura,
+      //   observaciones: this.objReclamo.observacion
+      // });
+
+      // this.cargaSelectTipoReclamo();
+      // this.frmGenerar.tipoReclamo.patchValue(this.objReclamo.tipRec_nombre);
+      // this.cargaSelectCalle();
+      // this.frmGenerar.calle.patchValue(this.objReclamo.cal_nombre);
+    }
   }
 
   validarRealizacionReclamo() {

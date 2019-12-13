@@ -3,7 +3,7 @@
         <label>¿No sabés como registrar tu Reclamo?</label>
         <a [routerLink]="'/ayuda-registrar-reclamo'"> Haz click aquí</a>
     </div>
-    <div class="card card-register mx-auto mt-5">
+    <div class="card card-register mx-auto mt-3 myBorderCard">
         <div class="card-header myCardHeader">Datos del Reclamo</div>
         <div class="card-body">
             <form [formGroup]="frmGenerarReclamo">
@@ -67,14 +67,19 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="text-center lblCampoObligatorio">
-                        *Campos obligatorios
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="text-center lblCampoObligatorio">
+                                *Campos obligatorios
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button mat-raised-button [disabled]="!frmGenerarReclamo.valid" (click)="validarReclamo()" color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
+                                Siguiente <i class="fa fa-fw fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <button [disabled]="!frmGenerarReclamo.valid" (click)="validarReclamo()" matTooltip="Resumen del Reclamo" matTooltipPosition="left" class="btn btn-primary btn-block btnSiguiente">
-                    Siguiente <i class="fa fa-fw fa-chevron-right"></i>
-                </button>
             </form>
         </div>
     </div>

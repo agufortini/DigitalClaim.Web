@@ -1,3 +1,7 @@
+<div class="divAyuda">
+    <label>¿No sabés como registrar un Reclamo?</label>
+    <a [routerLink]="'/ayuda-registrar-reclamo-municipal'"> Haz click aquí</a>
+</div>
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step>
         <form [formGroup]="frmDatosReclamante">
@@ -8,12 +12,10 @@
                     <div class="col-md-6">
                         <label>DNI*</label>
                         <input (keypress)="validarIngreso($event)" formControlName="dni" class="form-control" minlength="8" maxlength="8">
-                        <!-- <mat-error *ngIf="!dni.invalid">El DNI debe contener 8 números</mat-error> -->
                     </div>
                     <div class="col-md-6">
                         <label>NOMBRE*</label>
                         <input formControlName="nombre" class="form-control">
-                        <!-- <mat-error *ngIf="nombre.invalid">Ingrese Nombre</mat-error> -->
                     </div>
                 </div>
             </div>
@@ -23,12 +25,10 @@
                     <div class="col-md-6">
                         <label>APELLIDO*</label>
                         <input formControlName="apellido" class="form-control">
-                        <!-- <mat-error *ngIf="apellido.invalid">Ingrese Apellido</mat-error> -->
                     </div>
                     <div class="col-md-6">
-                        <label>TELEFONO*</label>
+                        <label>TELEFONO</label>
                         <input (keypress)="validarIngreso($event)" formControlName="telefono" class="form-control" minlength="7" maxlength="10">
-                        <!-- <mat-error *ngIf="telefono.invalid">Ingrese N° de teléfono</mat-error> -->
                     </div>
                 </div>
             </div>
@@ -38,7 +38,6 @@
                     <div class="col-md-6">
                         <label>EMAIL*</label>
                         <input formControlName="email" class="form-control">
-                        <!-- <mat-error *ngIf="email.invalid">{{mostrarErrorEmail()}}</mat-error> -->
 
                     </div>
                 </div>

@@ -74,10 +74,10 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
     try {
         this.frmDatosReclamante = this.formBuilder.group({
           dni: ['', Validators.required],
-          nombre: ['Martin', Validators.required],
-          apellido: ['Bono', Validators.required],
-          telefono: ['353429658', Validators.required],
-          email: ['agufortini@gmail.com', Validators.required]
+          nombre: ['', Validators.required],
+          apellido: ['', Validators.required],
+          telefono: ['', Validators.required],
+          email: ['', Validators.required]
         });
 
         this.frmDatosReclamo = this.formBuilder.group({
