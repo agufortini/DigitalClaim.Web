@@ -49,7 +49,7 @@ import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipa
 import { AyudaReportesMunicipalComponent } from './ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
 import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
 import { ConsultaComponent } from '../pages/consulta/consulta.component';
-import { ModalRatingComponent } from '../pages/modal-rating/modal-rating.component';
+import { ModalRatingComponent } from './modal-rating/modal-rating.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -112,7 +112,8 @@ import { ModalRatingComponent } from '../pages/modal-rating/modal-rating.compone
     ],
     entryComponents: [
         ModalEstadoreclamoComponent,
-        RatingReclamoComponent
+        RatingReclamoComponent,
+        ModalRatingComponent
     ],
     bootstrap: [RatingReclamoComponent],
 })

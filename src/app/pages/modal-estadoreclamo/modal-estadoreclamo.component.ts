@@ -11,6 +11,7 @@ import { SelectRating } from '../../_entities/reclamo.entities';
 
 // SERIVICIOS
 import { ReclamoService } from '../../services/reclamo.service';
+import { ModalRatingComponent } from '../modal-rating/modal-rating.component';
 
 @Component({
   selector: 'app-modal-estadoreclamo',
@@ -23,6 +24,7 @@ export class ModalEstadoreclamoComponent implements OnInit {
   lstDatos: any;
   dataSource: MatTableDataSource<any>;
   objIDRec: any;
+  dataRating: any;
 
   // Variable utilizada para saber si existe o no un rating registrado
   rating: boolean;
@@ -56,6 +58,7 @@ export class ModalEstadoreclamoComponent implements OnInit {
     }
   }
 
+  // METODO DE BUSQUEDA DE DETALLE DE RECLAMO
   selectHistorial() {
     this.objIDRec = {
       rec_IDReclamo: this.IDReclamo
@@ -70,14 +73,18 @@ export class ModalEstadoreclamoComponent implements OnInit {
 
       // Pregunta si el estado del reclamo es cumplido, y habilita el boton para registrar rating
       this.btnCalificar = (this.lstDatos[fila - 1].estRec_nombre === 'Cumplido') ? true : false;
+
+      // En caso de que el reclamo esté en estado "Cumplido", se llama al método para verificar si tiene o no un rating ya registrado
+      this.selectRating();
     });
   }
   
+  // METODO DE BUSQUEDA DE RATING DE RECLAMO
   selectRating() {
     this.reclamoService.selectRating(this.objIDRec).subscribe(data => {
-      const dataRat: SelectRating = JSON.parse(data);
+      this.dataRating = JSON.parse(data);
 
-      this.rating = (dataRat === null) ? true : false;
+      this.rating = (this.dataRating === null) ? true : false;
       
       if (this.rating === false) {
         document.getElementById('btnCalificar').textContent = 'Ver Calificación';
@@ -100,14 +107,24 @@ export class ModalEstadoreclamoComponent implements OnInit {
 
   ratingReclamo() {
     try {
-      const objIDRec = {
-        rec_IDReclamo: JSON.parse(localStorage.getItem('rec_IDReclamo'))
-      };
+      // Si el reclamo no esta calificado, habilita la modal para permitir registracion
+      if (this.rating) {
+        const objIDRec = {
+          rec_IDReclamo: JSON.parse(localStorage.getItem('rec_IDReclamo'))
+        };
+  
+        this.dialog.open(RatingReclamoComponent, {
+          width: '50%'
+        });
+        this.dialogRef.close();
+      } else {
+        // Si el reclamo ya esta calificado, habilita la modal para mostrar el su calificacion
+        localStorage.setItem('ratingReclamo', JSON.stringify(this.dataRating));
+        this.dialog.open(ModalRatingComponent, {
+          width: '50%'
+        });
+      }
 
-      this.dialog.open(RatingReclamoComponent, {
-        width: '50%'
-      });
-      this.dialogRef.close();
     } catch (error) {
       console.log(error);
     }
