@@ -64,12 +64,13 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     try {
       this.frmGenerarReclamo = this.formBuilder.group({
         areaServicio: ['', Validators.required],
-        tipoReclamo: ['', Validators.required],
+        tipoReclamo: [''],
         barrio: ['', Validators.required],
-        calle: ['', Validators.required],
+        calle: [''],
         altura: ['', Validators.required],
         observaciones: ['']
       });
+      this.observacion = '';
       this.cargaDDL();
       this.modificarReclamo();
     } catch (error) {
@@ -97,18 +98,26 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       // this.validarRealizacionReclamo();
     } else {
       console.log(this.objReclamo);
-      
-      // Asignación de valores a controles para poder modificar los datos del Reclamo
-      // this.frmGenerarReclamo.setValue({
-      //   areaServicio: this.objReclamo.arServ_nombre,
-      //   barrio: this.objReclamo.bar_nombre,
-      //   altura: this.objReclamo.altura,
-      //   observaciones: this.objReclamo.observacion
-      // });
+    
 
-      // this.cargaSelectTipoReclamo();
+      // Asignación de valores a controles para poder modificar los datos del Reclamo
+      this.frmGenerarReclamo.setValue({
+        areaServicio: this.objReclamo.areaServicio.arServ_IDAreaServicio,
+        tipoReclamo : this.objReclamo.tipoReclamo.tipRec_IDTipoReclamo,
+        barrio: this.objReclamo.barrio.bar_IDBarrio,
+        calle: this.objReclamo.calle.cal_IDCalle,
+        altura: this.objReclamo.altura,
+        observaciones: this.objReclamo.observaciones,
+      });
+
+      this.TipoReclamoID = this.objReclamo.tipoReclamo.tipRec_IDTipoReclamo,
+      this.CalleID = this.objReclamo.calle.cal_IDCalle;
+      this.altura = this.objReclamo.altura;
+      this.observacion = this.objReclamo.observaciones;
+      
+      this.cargaSelectTipoReclamo();
       // this.frmGenerar.tipoReclamo.patchValue(this.objReclamo.tipRec_nombre);
-      // this.cargaSelectCalle();
+      this.cargaSelectCalle();
       // this.frmGenerar.calle.patchValue(this.objReclamo.cal_nombre);
     }
   }
@@ -171,7 +180,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
               barrio: this.Barrio,
               calle: this.Calle,
               altura: this.frmGenerar.altura.value,
-              observaciones: this.observacion
+              observaciones: this.observacion.length > 0 ? this.observacion : ''
             };
 
               localStorage.setItem('objReclamo', JSON.stringify(this.objReclamo));
@@ -198,6 +207,8 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       this.ddlService.selectTipoReclamo(this.objIDArServ).subscribe(data => {
         this.arrTipRec = JSON.parse(data);
         this.arServ = this.arrArServ.filter(x => x.arServ_IDAreaServicio === +this.frmGenerar.areaServicio.value)[0];
+
+        this.selectTipoReclamo();
       });
 
       if (this.objReclamo === null) {
@@ -217,6 +228,8 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       this.ddlService.selectCalle(this.objIDBarrio).subscribe(data => {
         this.arrCalle = JSON.parse(data);
         this.Barrio = this.arrBarrio.filter(x => x.bar_IDBarrio === +this.frmGenerar.barrio.value)[0];
+
+        this.selectCalle();
       });
 
       if (this.objReclamo === null) {

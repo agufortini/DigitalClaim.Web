@@ -112,7 +112,7 @@ export class CrearOrdenServicioComponent implements OnInit {
     }
   }
 
-  selectReclamosSinAsignar() {
+  async selectReclamosSinAsignar() {
     try {
       this.objIDArServ = {
         usu_IDAreaServicio: this.user.usu_IDAreaServicio

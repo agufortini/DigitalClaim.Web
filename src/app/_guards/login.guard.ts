@@ -14,14 +14,13 @@ export class LoginGuard implements CanActivate {
 
     if (this.loginService.estaAutenticado()) {
       return true;
-    } else {
-      this.router.navigateByUrl('/login');
-      Swal.fire({
-        type: 'error',
-        title: 'Iniciar Sesión',
-        text: 'Para iniciar sesión debe ingresar usuario y contraseña'
-      });
-    }
+    } 
+    this.router.navigateByUrl('/login');
+    // Swal.fire({
+    //   type: 'error',
+    //   title: 'Iniciar Sesión',
+    //   text: 'Para iniciar sesión debe ingresar usuario y contraseña'
+    // });
+    return false;
   }
-
 }

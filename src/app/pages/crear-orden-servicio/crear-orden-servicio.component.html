@@ -73,7 +73,7 @@
 
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()" matTooltip="Seleccionar todo" matTooltipPosition="above">
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" matTooltip="Seleccionar todo" matTooltipPosition="above">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row">

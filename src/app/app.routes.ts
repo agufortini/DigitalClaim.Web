@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { RecuperarPasswordComponent } from './login/recuperar-password.component';
+import { LoginGuard } from './_guards/login.guard';
 
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent},
