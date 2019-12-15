@@ -58,7 +58,7 @@ export class ContactoComponent implements OnInit {
       this.objContacto.con_mensaje = this.f.mensaje.value;
       this.objContacto.con_fechaAlta = this.datePipe.transform(this.fechaHoy, 'dd/MM/yyyy');
 
-      this.reclamoService.registrarContacto(this.objContacto).subscribe((data) => {
+      this.reclamoService.registrarConsulta(this.objContacto).subscribe((data) => {
         const rtdo: number = JSON.parse(data);
         
         if (rtdo === 1) {

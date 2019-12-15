@@ -81,6 +81,17 @@ export class SelectRating {
     rat_rating: number;
     rat_comentario: string;
     rat_fechaAlta: string;
+    constructor() { }
+}
+
+export class ListarConsulta {
+    con_IDContacto: number;
+    con_mensaje: string;
+    con_fechaAlta: string;
+    con_IDUsuario: number;
+    usu_nombre: string;
+    usu_apellido: string;
+    constructor() { }
 }
 
 /* -------------------------------------------------- INTERFACES -------------------------------------------------- */

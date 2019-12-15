@@ -16,44 +16,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label>RECLAMO</label>
-                            <select formControlName="tipoReclamo" [(ngModel)]="ddlTipRec" class="form-control" placeholder="Seleccione Reclamo...">
-                                <option disabled>Seleccione Reclamo...</option>
-                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
-                                    {{ item.tipRec_nombre }}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label>PRIORIDAD</label>
-                            <select formControlName="prioridad" [(ngModel)]="ddlPri" class="form-control" placeholder="Seleccione Prioridad...">
-                                <option disabled>Seleccione Prioridad...</option>
-                                <option *ngFor="let item of arrPrioridad" [value]="item.pri_IDPrioridad">
-                                    {{ item.pri_nombre }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="barrio">BARRIO</label><br>
-                            <select formControlName="barrio" [(ngModel)]="ddlBar" class="form-control" placeholder="Seleccione Barrio...">
-                                <option disabled>Seleccione Barrio...</option>
-                                <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
-                                    {{ item.bar_nombre }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-8">
                         <button class="btn btn-block btnPrimario myBtnCard">
@@ -68,46 +30,56 @@
 
 <br />
 
-<div id="idTableConsulta" style="visibility: hidden;" class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+<div>
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ingrese algún dato del Reclamo">
+        </mat-form-field>
+        <div class="lblCampoObligatorio">
+            Para filtrar reclamos ingrese cualquier dato referido al mismo, ya sea código, fecha de alta, reclamo, dirección, etc.
+        </div>
+    </div>
+    <br>
+    <div id="idTableConsulta" style="visibility: hidden;" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" matTooltip="Seleccionar todo" matTooltipPosition="above">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
 
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" matTooltip="Seleccionar todo" matTooltipPosition="above">
-                </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-                </mat-checkbox>
-            </td>
-        </ng-container>
+            <ng-container matColumnDef="rec_fechaAlta">
+                <th mat-header-cell *matHeaderCellDef>Fecha Alta</th>
+                <td mat-cell *matCellDef="let element">{{ element.rec_fechaAlta }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="rec_fechaAlta">
-            <th mat-header-cell *matHeaderCellDef>Fecha Alta</th>
-            <td mat-cell *matCellDef="let element">{{ element.rec_fechaAlta }}</td>
-        </ng-container>
+            <ng-container matColumnDef="tipRec_nombre">
+                <th mat-header-cell *matHeaderCellDef>Reclamo</th>
+                <td mat-cell *matCellDef="let element">{{ element.tipRec_nombre }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="tipRec_nombre">
-            <th mat-header-cell *matHeaderCellDef>Reclamo</th>
-            <td mat-cell *matCellDef="let element">{{ element.tipRec_nombre }}</td>
-        </ng-container>
+            <ng-container matColumnDef="rec_direccion">
+                <th mat-header-cell *matHeaderCellDef>Dirección</th>
+                <td mat-cell *matCellDef="let element">{{ element.rec_direccion }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="rec_direccion">
-            <th mat-header-cell *matHeaderCellDef>Dirección</th>
-            <td mat-cell *matCellDef="let element">{{ element.rec_direccion }}</td>
-        </ng-container>
+            <ng-container matColumnDef="bar_nombre">
+                <th mat-header-cell *matHeaderCellDef>Barrio</th>
+                <td mat-cell *matCellDef="let element">{{ element.bar_nombre }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="bar_nombre">
-            <th mat-header-cell *matHeaderCellDef>Barrio</th>
-            <td mat-cell *matCellDef="let element">{{ element.bar_nombre }}</td>
-        </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+            </tr>
+        </table>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-        </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
 </div>
 
 <br>

@@ -97,9 +97,6 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     if (this.objReclamo === null) {
       // this.validarRealizacionReclamo();
     } else {
-      console.log(this.objReclamo);
-    
-
       // Asignación de valores a controles para poder modificar los datos del Reclamo
       this.frmGenerarReclamo.setValue({
         areaServicio: this.objReclamo.areaServicio.arServ_IDAreaServicio,

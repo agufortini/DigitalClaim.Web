@@ -33,39 +33,20 @@ export class CrearOrdenServicioComponent implements OnInit {
 
   frmCrearOrdenServicio: FormGroup;
   user: Usuario;
+  // Objeto que almacena IDAreaServicio para salir a buscar los reclamos en estado "Sin Asignar"
+  objIDArServ: any = {};
+  IDAreaServicio: number;
 
   displayedColumns: string[] = ['select', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre'];
   dataSource: MatTableDataSource<ReclamoPendiente>;
   selection = new SelectionModel<ReclamoPendiente>(true, []);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  // OBJETOS PARA CARGAR DDLS
-  objArServ: any;
-
-  // OBJETO PARA HACER LA CONSULTA DE RECLAMOS PENDIENTES
-  objIDArServ: any = {};
-
-  // CARGA DDLS
-  arrTipRec: any;
-  arrPrioridad: any;
-  arrBarrio: any;
-
-  IDAreaServicio: number;
-
-  // Fecha máxima DatePicker
-  maxDate = new Date();
-
   // VISTA
   stFiltro: string;
   objFiltro: any;
   boFecha = false;
   lstReclamo: any = null;
-
-
-  // VARIABLES NGMODEL PARA CONTROLES ANGULAR MATERIAL
-  ddlTipRec = '';
-  ddlPri = '';
-  ddlBar = '';
 
   constructor(private ddlService: SelectService,
               private router: Router,
@@ -84,32 +65,8 @@ export class CrearOrdenServicioComponent implements OnInit {
       barrio: ['']
     });
 
-    // Carga de selects de formulario
-    this.cargaDDL();
     // Select de Reclamos en estado "Sin Asignar", para añadir a la Orden de Servicio.
     this.selectReclamosSinAsignar();
-  }
-
-  cargaDDL() {
-    try {
-      this.objArServ = {
-        tipRec_IDArServ: this.user.usu_IDAreaServicio
-      };
-
-      this.ddlService.selectTipoReclamo(this.objArServ).subscribe(data => {
-        this.arrTipRec = JSON.parse(data);
-      });
-
-      this.ddlService.selectEntitie('PrioridadController', 'SelectPrioridad').subscribe(data => {
-        this.arrPrioridad = JSON.parse(data);
-      });
-
-      this.ddlService.selectEntitie('BarrioController', 'SelectBarrio').subscribe(data => {
-        this.arrBarrio = JSON.parse(data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async selectReclamosSinAsignar() {
@@ -145,20 +102,6 @@ export class CrearOrdenServicioComponent implements OnInit {
     return this.frmCrearOrden.controls;
   }
 
-  cancelarSeleccion(value: string) {
-    switch (value) {
-      case 'ddlTipRec':
-        this.ddlTipRec = '';
-        break;
-      case 'ddlPri':
-        this.ddlPri = '';
-        break;
-      case 'ddlBar':
-        this.ddlBar = '';
-        break;
-    }
-  }
-
   registrarOrdenServicio() {
     try {
       const arrReclamosPendientes: ReclamoPendiente[] = this.selection.selected;
@@ -186,4 +129,13 @@ export class CrearOrdenServicioComponent implements OnInit {
     return `${
       this.selection.isSelected(row) ? 'deselect' : 'select' } row ${row.position + 1}`;
   }
+
+  // Filtro tabla
+	applyFilter(filterValue: string) {
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
+	}
 }

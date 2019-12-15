@@ -165,7 +165,8 @@ export class UsuarioComponent implements OnInit {
 
   selectDataUsuario(IDUsuario: number, userDNI: number, IDRol: number) {
     this.boBand = false;
-    this.IDUsuario = IDUsuario; // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
+    // ESTA VARIABLE LE ASIGNO EL IDUSUARIO PARA LUEGO PODER HACER LA ACTUALIZACIÓN DE LOS DATOS
+    this.IDUsuario = IDUsuario;
     this.IDRol = IDRol;
 
     this.objIDUser = {

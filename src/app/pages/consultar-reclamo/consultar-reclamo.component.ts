@@ -134,7 +134,6 @@ export class ConsultarReclamoComponent implements OnInit {
 				}
 			});
 
-			console.log(this.objFiltro);
 			// Se vacía el filtro para poder aplicar una búsqueda nuevamente si fuese necesario
 			this.objFiltro = '';
 
