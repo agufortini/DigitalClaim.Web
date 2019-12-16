@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 // ENTIDADES
-import { ConsultarReclamo, ListarConsulta } from 'src/app/_entities/reclamo.entities';
+import { ListarConsulta } from 'src/app/_entities/reclamo.entities';
 import { Contacto } from '../../_entities/contacto.entities';
+import { IListarConsulta } from '../../_entities/reclamo.entities';
 
 // SERVICIOS
 import { ReclamoService } from '../../services/reclamo.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-consulta',
@@ -14,36 +18,56 @@ import { ReclamoService } from '../../services/reclamo.service';
   styles: []
 })
 export class ConsultaComponent implements OnInit {
+   frmConsulta: FormGroup;
+   mensaje: string;
 
   // TABLA
   displayedColumns = [
 	'con_fechaAlta',
-    'con_mensaje',
-    'con_nombreCompleto',
-  	'Ver'
+	'usu_nombreCompleto',
+	'Ver'
   ];
-  dataSource: MatTableDataSource<ListarConsulta>;
+  dataSource: MatTableDataSource<IListarConsulta>;
   lstConsulta: ListarConsulta[];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
   dialog: any;
 
-  constructor(private reclamoService: ReclamoService) { }
+  constructor(private reclamoService: ReclamoService,
+			  private router: Router,
+			  private formBuilder: FormBuilder) { }
 
   ngOnInit() {
 	try {
-		this.reclamoService.listarConsulta().subscribe(data => {
-			const rtdo: [] = JSON.parse(data);
-
-			if (rtdo.length > 0) {
-				this.lstConsulta = rtdo;
-				this.dataSource = new MatTableDataSource<ListarConsulta>(this.lstConsulta);
-				this.dataSource.paginator = this.paginator;
-			}
+		this.frmConsulta = this.formBuilder.group({
+			mensaje: ['', Validators.required],
+			respuesta: ['', Validators.required]
 		});
+
+		this.listarConsulta();
 	} catch (error) {
 		console.log(error);
 	}
+  }
+
+  listarConsulta() {
+	this.reclamoService.listarConsulta().subscribe(data => {
+		this.lstConsulta = JSON.parse(data);
+
+		if (this.lstConsulta !== null) {
+			this.dataSource = new MatTableDataSource<IListarConsulta>(this.lstConsulta);
+			this.dataSource.paginator = this.paginator;
+		} else {
+			Swal.fire({
+				allowOutsideClick: false,
+				type: 'warning',
+				title: 'Consultas',
+				text: 'No hay consultas pendientes de responder.'
+			 }).then(result => {
+				this.router.navigateByUrl('/generar-reclamo-ciudadano');
+			});
+		}
+	});
   }
 
   // MODAL DETALLE RECLAMO

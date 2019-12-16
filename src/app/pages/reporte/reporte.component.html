@@ -21,21 +21,35 @@
 
                 <div class="form-group">
                     <div class="form-row">
-                        <label>REPORTE</label>
-                        <!-- <select (change)="cargarDDLTipoReclamo()" class="form-control" formControlName="areaServicio">
-                                <option value="" disabled>Seleccione Área de Servicio...</option>
-                                <option>Reporte por Area de Servicio</option>
-                                <option>Reporte por Tipo de Reclamo</option>
-                                <option>Reporte por Barrio</option>
-                            </select> -->
+                        <div class="col-md-6">
+                            <label>REPORTE</label>
+                            <select class="form-control" formControlName="reporte">
+                                <option value="" disabled>Seleccione Reporte...</option>
+                                <option *ngFor="let item of arrReporte" [value]="item.stReporte">
+                                    {{ item.reporte }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>TIPO DE REPORTE</label>
+                            <select class="form-control" formControlName="tipoReporte">
+                                <option value="" disabled>Seleccione Tipo de Reporte...</option>
+                                <option *ngFor="let item of arrTipoReporte" [value]="item.stTipoReporte">
+                                    {{ item.tipoReporte }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-8">
-                        <button type="button" class="btn btn-block btnPrimario myBtnCard">
+                        <button (click)="verReporte()" [disabled]="!frmReporte.valid" type="button" class="btn btn-block btnPrimario myBtnCard">
                           Ver reporte <i class="fa fa-fw fa-search"></i>
                       </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button (click)="resetForm()" mat-mini-fab class="btnFiltro" class="btnLimpiar" matTooltip="Limpiar campos" matTooltipPosition="left"><i class="material-icons">clear</i></button>
                     </div>
                 </div>
             </form>
@@ -46,7 +60,33 @@
 
 <br>
 
-<div class="row">
+<div class="card">
+    <div class="card-body">
+        <div>
+            <div>
+                <div class="chart">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType">
+                        </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <div>
+                <div style="display: block">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [chartType]="barChartType">
+                            </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
     <div class="col-8">
         <div class="card">
             <div class="card-body">
@@ -105,4 +145,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

@@ -86,11 +86,12 @@ export class SelectRating {
 
 export class ListarConsulta {
     con_IDContacto: number;
-    con_mensaje: string;
     con_fechaAlta: string;
-    con_IDUsuario: number;
+    con_mensaje: string;
     usu_nombre: string;
     usu_apellido: string;
+    usu_nombreCompleto: string;
+    con_IDUsuario: number;
     constructor() { }
 }
 
@@ -118,6 +119,11 @@ export interface ReclamoPendiente {
     pri_IDPrioridad: number;
     bar_IDBarrio: number;
     bar_nombre: string;
+}
+
+export interface IListarConsulta {
+    con_fechaAlta: string;
+    usu_nombreCompleto: string;
 }
 
 // ABMS

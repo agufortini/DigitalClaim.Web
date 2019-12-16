@@ -102,7 +102,7 @@ export class ConsultarReclamoComponent implements OnInit {
 	selectReclamo() {
 		try {
 			// Se realiza la búsqueda de los reclamos de acuerdo a los filtros aplicados
-			this.reclamoService.selectReclamo(this.objFiltro).subscribe((data) => {
+			this.reclamoService.selectReclamo(this.objFiltro).subscribe(data => {
 				this.lstReclamo = JSON.parse(data);
 				
 				// Si la lista tiene datos, los muestra en una tabla

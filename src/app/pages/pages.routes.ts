@@ -66,8 +66,8 @@ const pagesRoutes: Routes = [
             { path: 'ayuda-consultar-reclamo-municipal', component: AyudaConsultarReclamoMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }},
             { path: 'ayuda-dominio-municipal', component: AyudaDominioMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Dominio' }},
             { path: 'ayuda-reportes-municipal', component: AyudaReportesMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Reportes' }},
-            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consulta', subtitulo: 'Consultas' }},
-            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consulta', subtitulo: 'Consultas' }},
+            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consultas' }},
+            { path: 'consulta', component: ConsultaComponent, data: { titulo: 'Consultas' }},
         ], canActivate: [LoginGuard]
     },
 ];
