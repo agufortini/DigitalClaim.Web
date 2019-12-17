@@ -16,4 +16,28 @@ export class ReporteService {
     });
   }
 
+  reportePorBarrio(objReporte: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReporteController/ReportePorBarrio`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objReporte))
+    });
+  }
+
+  reportePorTipoReclamo(objReporte: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReporteController/ReportePorTipoReclamo`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objReporte))
+    });
+  }
+
+  reporteReclamoPorEstado(objReporte: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReporteController/ReporteReclamoPorEstado`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objReporte))
+    });
+  }
+
+  reporteOrdServPorEstado(objReporte: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}api/ReporteController/ReporteOrdServPorEstado`, {
+      params: new HttpParams().set('stObj', JSON.stringify(objReporte))
+    });
+  }
+
 }

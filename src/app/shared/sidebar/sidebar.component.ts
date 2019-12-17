@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
     try {
       // ASIGNACION DE NOMBRE DE AREA DE SERVICIO A LABEL EN SIDEBAR
       if (this.user.usu_IDAreaServicio !== null) {
-        this.areaServicio = this.user.usu_arServNombre;
+        this.areaServicio = this.user.usu_areaServicio;
       }
     } catch (error) {
       console.log(error);

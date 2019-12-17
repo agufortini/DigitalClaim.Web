@@ -38,10 +38,6 @@
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 1">
-                    <a [routerLink]="'/contacto'" routerLinkActive="active"><i class="material-icons">forum</i>Contacto</a>
-                </li>
-
-                <li *ngIf="user.usu_IDRol === 1">
                     <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
                         <i class="material-icons">help</i><span class="hide-menu">Ayuda</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -59,7 +55,6 @@
 
                 <li *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
                     <a [routerLink]="'/reporte'" routerLinkActive="active"><i class="material-icons">bar_chart</i>Reportes</a>
-                    <a [routerLink]="'/consulta'" routerLinkActive="active"><i class="material-icons">contact_mail</i>Consultas</a>
                 </li>
 
                 <li *ngIf="user.usu_IDRol === 5">
@@ -111,9 +106,6 @@
                         <li>
                             <a [routerLink]="'/ayuda-reportes-municipal'" routerLinkActive="active">¿Cómo visualizar un Reporte?</a>
                         </li>
-                        <li>
-                            <a [routerLink]="'/ayuda-dominio-municipal'" routerLinkActive="active">Dominios</a>
-                        </li>
                     </ul>
                 </li>
 
@@ -123,7 +115,9 @@
                 <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
                     <a [routerLink]="'/crear-orden-servicio'" routerLinkActive="active"><i class="material-icons">assignment</i>Orden de Servicio</a>
                 </li>
-
+                <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
+                    <a [routerLink]="'/reporte'" routerLinkActive="active"><i class="material-icons">bar_chart</i>Reportes</a>
+                </li>
                 <li *ngIf="user.usu_IDRol === 6">
                     <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="material-icons">how_to_reg</i>
                             <span class="hide-menu">Dominio</span></a>

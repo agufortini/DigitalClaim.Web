@@ -9,11 +9,11 @@
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label>FECHA DESDE</label>
+                            <label>FECHA DESDE*</label>
                             <input formControlName="fechaDesde" type="date" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label>FECHA HASTA</label>
+                            <label>FECHA HASTA*</label>
                             <input formControlName="fechaHasta" type="date" class="form-control">
                         </div>
                     </div>
@@ -22,25 +22,36 @@
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label>REPORTE</label>
-                            <select class="form-control" formControlName="reporte">
-                                <option value="" disabled>Seleccione Reporte...</option>
-                                <option *ngFor="let item of arrReporte" [value]="item.stReporte">
-                                    {{ item.reporte }}
-                                </option>
-                            </select>
+                            <label>REPORTE*</label>
+                            <div *ngIf="user.usu_IDRol === 2 || user.usu_IDRol === 5">
+                                <select class="form-control" formControlName="reporte">
+                                    <option value="" disabled>Seleccione Reporte...</option>
+                                    <option *ngFor="let item of arrReporteMunicipal" [value]="item.stReporte">
+                                        {{ item.reporte }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
+                                <select class="form-control" formControlName="reporte">
+                                            <option value="" disabled>Seleccione Reporte...</option>
+                                            <option *ngFor="let item of arrReporteOperativo" [value]="item.stReporte">
+                                                {{ item.reporte }}
+                                            </option>
+                                        </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label>TIPO DE REPORTE</label>
-                            <select class="form-control" formControlName="tipoReporte">
-                                <option value="" disabled>Seleccione Tipo de Reporte...</option>
-                                <option *ngFor="let item of arrTipoReporte" [value]="item.stTipoReporte">
-                                    {{ item.tipoReporte }}
-                                </option>
-                            </select>
+                            <label>RANKING*</label>
+                            <input formControlName="ranking" class="form-control" type="number" placeholder="Seleccione valor entre uno (1) y diez (10)" min="1" max="10">
                         </div>
                     </div>
                 </div>
+
+                <div class="text-center lblCampoObligatorio">
+                    *Campos obligatorios
+                </div>
+
+                <br>
 
                 <div class="row">
                     <div class="col-md-8">
@@ -60,89 +71,16 @@
 
 <br>
 
-<div class="card">
-    <div class="card-body">
-        <div>
-            <div>
+<div id="cardReporte" style="visibility: hidden;" align="center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 id="tituloReporte"></h2>
                 <div class="chart">
-                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType">
-                        </canvas>
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [colors]="pieChartColors">
+                                    </canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="card">
-    <div class="card-body">
-        <div>
-            <div>
-                <div style="display: block">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [chartType]="barChartType">
-                            </canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- <div class="row">
-    <div class="col-8">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">{{ lstReclamo.arServ_nombre }}</h4>
-                <app-grafico [chartLabels]="lstReclamo.arServ_nombre" [chartData]="" [chartType]="">
-                </app-grafico>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <div>
-                    <div>
-                        <div class="chart">
-                            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <div>
-                    <div>
-                        <div style="display: block">
-                            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [chartType]="barChartType">
-                                </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <div>
-                    <div>
-                        <div style="display: block">
-                            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
-                                </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 // ENTIDADES
 import { Ticket } from '../_entities/ticket.entities';
 import { Historial } from '../_entities/historial.entities';
-import { Contacto } from '../_entities/contacto.entities';
 import { ReclamoPendiente, EstadoReclamo } from '../_entities/reclamo.entities';
 
 @Injectable({
@@ -90,17 +89,7 @@ export class ReclamoService {
       params: new HttpParams().set('stObj', JSON.stringify(objRec))
     });
   }
-
-  registrarConsulta(objCon: any): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/RegistrarConsulta`, {
-      params: new HttpParams().set('stObj', JSON.stringify(objCon))
-    });
-  }
-
-  listarConsulta(): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/ListarConsulta`);
-  }
-
+  
   selectRating(objIDRec: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}api/ReclamoController/SelectRating`, {
       params: new HttpParams().set('stObj', JSON.stringify(objIDRec))

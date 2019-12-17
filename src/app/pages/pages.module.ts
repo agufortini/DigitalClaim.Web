@@ -21,7 +21,6 @@ import { GenerarReclamoCiudadanoComponent } from '../pages/generar-reclamo/gener
 import { GenerarReclamoMunicipalComponent } from '../pages/generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
 import { RegistrarReclamoComponent } from './registrar-reclamo/registrar-reclamo.component';
 import { ConsultarReclamoComponent } from './consultar-reclamo/consultar-reclamo.component';
-import { ContactoComponent } from './contacto/contacto.component';
 import { CrearOrdenServicioComponent } from './crear-orden-servicio/crear-orden-servicio.component';
 import { RegistrarOrdenServicioComponent } from './registrar-orden-servicio/registrar-orden-servicio.component';
 import { ReporteComponent } from './reporte/reporte.component';
@@ -48,7 +47,6 @@ import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipa
 import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
 import { AyudaReportesMunicipalComponent } from './ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
 import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
-import { ConsultaComponent } from '../pages/consulta/consulta.component';
 import { ModalRatingComponent } from './modal-rating/modal-rating.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
@@ -60,7 +58,6 @@ import { ModalRatingComponent } from './modal-rating/modal-rating.component';
         HomeComponent,
         RegistrarReclamoComponent,
         ConsultarReclamoComponent,
-        ContactoComponent,
         CrearOrdenServicioComponent,
         RegistrarOrdenServicioComponent,
         GenerarReclamoCiudadanoComponent,
@@ -89,7 +86,6 @@ import { ModalRatingComponent } from './modal-rating/modal-rating.component';
         AyudaConsultarReclamoMunicipalComponent,
         AyudaReportesMunicipalComponent,
         AyudaDominioMunicipalComponent,
-        ConsultaComponent,
         ModalRatingComponent
     ],
     exports: [
