@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ChartsModule, Label, MultiDataSet, SingleDataSet } from 'ng2-charts';
+import { Label } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
-import { ChartType, ChartDataSets } from 'chart.js';
+import { ChartType, ChartOptions, ChartData } from 'chart.js';
 
 // ENTIDADES
 import { ReporteService } from '../../services/reporte.service';
@@ -12,6 +12,7 @@ import { Usuario } from '../../_entities/usuario.entities';
 // SERVICIOS
 import { SelectService } from '../../services/select-service.service';
 import { ReclamoService } from '../../services/reclamo.service';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-reporte',
@@ -37,7 +38,9 @@ export class ReporteComponent implements OnInit {
     { stReporte: 'OrdServPorEstado', reporte: 'Reporte de Ordenes de Servicio por Estado' },
   ];
 
-  // Gráfico Circular
+  // GRAFICO CIRCULAR
+  // Para mostrar labels en el gráfico sin tener que pasar el cursor por encima
+  // public pieChartOptions: ChartOptions = { };
   public pieChartLabels: Label[] = [];
   public pieChartData: number[] = [];
   public pieChartType: ChartType = 'pie';
@@ -46,6 +49,7 @@ export class ReporteComponent implements OnInit {
       'rgba(151,90,251,0.85)', 'rgba(251,90,161,0.85)', 'rgba(205,98,205,0.85)', 'rgba(24,162,218,0.85)', 'rgba(20,161,8,0.85)']
     },
   ];
+
 
   constructor(private ddlService: SelectService,
               private formBuilder: FormBuilder,

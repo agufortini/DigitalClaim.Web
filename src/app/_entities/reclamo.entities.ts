@@ -117,6 +117,7 @@ export interface ReclamoPendiente {
     tipRec_nombre: string;
     rec_direccion: string;
     pri_IDPrioridad: number;
+    pri_nombre;
     bar_IDBarrio: number;
     bar_nombre: string;
 }

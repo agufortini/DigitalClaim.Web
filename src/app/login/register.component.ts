@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
         Swal.close();
         Swal.fire(
           'Registro',
-          'Usuario' + this.objUsuario.usu_username + ' creado con éxito!',
+          'Usuario ' + this.objUsuario.usu_username + ' creado con éxito!',
           'success'
         );
       } else {

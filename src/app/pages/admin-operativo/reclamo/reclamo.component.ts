@@ -98,7 +98,7 @@ export class ReclamoComponent implements OnInit {
               'success'
             );
 
-            this.resetForm('');
+            this.resetForm();
             this.selectTipoReclamo();
           } else {
             Swal.close();
@@ -108,7 +108,7 @@ export class ReclamoComponent implements OnInit {
               'warning'
             );
 
-            this.resetForm('');
+            this.resetForm();
           }
         });
     } catch (error) {
@@ -123,16 +123,8 @@ export class ReclamoComponent implements OnInit {
     this.f.prioridad.patchValue(this.arrPrioridad[IDPri].pri_IDPrioridad);
   }
 
-  resetForm(stValue: string) {
-    if (stValue === 'reclamo') {
-      this.inputRec = '';
-    } else if (stValue === 'prioridad') {
-      this.inputPri = '';
-    } else {
-      this.inputRec = '';
-      this.inputPri = '';
-    }
-
+  resetForm() {
+    this.frmTipoReclamo.reset();
     this.boBand = true;
     document.getElementById('txtReclamo').focus();
   }

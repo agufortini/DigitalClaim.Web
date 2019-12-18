@@ -141,7 +141,7 @@ export class GenerarReclamoMunicipalComponent implements OnInit {
           Swal.fire({
             allowOutsideClick: false,
             type: 'warning',
-            title: 'Datos de Reclamante',
+            title: 'Datos del Ciudadano',
             text: 'El usuario ya se encuentra registrado.'
           }).then(result => {
               if (result.value) {

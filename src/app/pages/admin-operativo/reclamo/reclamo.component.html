@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-4">
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Reclamo">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tipo de Reclamo">
         </mat-form-field>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="tipRec_nombre">
-                <th mat-header-cell *matHeaderCellDef style="width: 300px;">Reclamo</th>
+                <th mat-header-cell *matHeaderCellDef style="width: 300px;">Tipo de Reclamo</th>
                 <td mat-cell *matCellDef="let element">{{ element.tipRec_nombre }}</td>
             </ng-container>
 
@@ -34,9 +34,6 @@
                             <div class="form-row">
                                 <label>NOMBRE*</label>
                                 <input id="txtReclamo" matInput formControlName="nombre" [(ngModel)]="inputRec" type="text" class="form-control inputAbm" placeholder="Ingrese nombre de Tipo de Reclamo">
-                                <button mat-button *ngIf="inputRec !== ''" (click)="resetForm('reclamo')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Borrar texto">
-                                    <i class="material-icons">clear</i>
-                                </button>
                             </div>
                             <br>
                             <div class="form-row">
@@ -46,16 +43,18 @@
                                         {{ item.pri_nombre }}
                                     </mat-option>
                                 </mat-select>
-                                <button mat-button (click)="resetForm('prioridad')" matSuffix mat-icon-button aria-label="Clear" matTooltip="Cancelar selección">
-                                    <i class="material-icons">clear</i>
-                                </button>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-8">
-                                <button id="btnClear" (click)="registrarTipoReclamo()" [disabled]="!frmTipoReclamo.valid" class="btn btn-block btnPrimario myBtnCard">
-                                    Guardar
-                                </button>
+                            <div class="form-row">
+                                <div class="col-md-8">
+                                    <button id="btnClear" (click)="registrarTipoReclamo()" [disabled]="!frmTipoReclamo.valid" class="btn btn-block btnPrimario myBtnCard">
+                                        Guardar
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button (click)="resetForm()" mat-mini-fab class="btnFiltro" class="btnLimpiar" matTooltip="Limpiar campos" matTooltipPosition="left"><i class="material-icons">clear</i></button>
+                                </div>
                             </div>
                         </div>
                     </form>

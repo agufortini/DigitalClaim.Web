@@ -62,7 +62,7 @@
                             <span class="hide-menu">Dominio</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li>
-                            <a [routerLink]="'/area-servicio'" routerLinkActive="active">Area de Servicio</a>
+                            <a [routerLink]="'/area-servicio'" routerLinkActive="active">Área de Servicio</a>
                         </li>
                         <li>
                             <a [routerLink]="'/barrio'" routerLinkActive="active">Barrio</a>
@@ -106,6 +106,9 @@
                         <li>
                             <a [routerLink]="'/ayuda-reportes-municipal'" routerLinkActive="active">¿Cómo visualizar un Reporte?</a>
                         </li>
+                        <li>
+                            <a [routerLink]="'/ayuda-consultar-reclamo-municipal'" routerLinkActive="active">Dominio</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -133,6 +136,21 @@
                         </li>
                         <li>
                             <a [routerLink]="'/usuario'" routerLinkActive="active">Usuario</a>
+                        </li>
+                    </ul>
+                </li>
+                <li *ngIf="user.usu_IDRol === 3 || user.usu_IDRol === 6">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="material-icons">help</i><span class="hide-menu">Ayuda</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a>¿Cómo registrar una Orden de Servicio?</a>
+                        </li>
+                        <li>
+                            <a>¿Cómo visualizar un Reporte?</a>
+                        </li>
+                        <li>
+                            <a>Dominio</a>
                         </li>
                     </ul>
                 </li>

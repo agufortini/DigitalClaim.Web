@@ -33,20 +33,18 @@ export class CrearOrdenServicioComponent implements OnInit {
 
   frmCrearOrdenServicio: FormGroup;
   user: Usuario;
+  fechaDesde: string;
+  fechaHasta: string;
+  ingresaFecha: boolean;
   // Objeto que almacena IDAreaServicio para salir a buscar los reclamos en estado "Sin Asignar"
-  objIDArServ: any = {};
+  objFiltro: any = {};
   IDAreaServicio: number;
+  lstReclamo: any = null;
 
-  displayedColumns: string[] = ['select', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre'];
+  displayedColumns: string[] = ['select', 'rec_fechaAlta', 'tipRec_nombre', 'rec_direccion', 'bar_nombre', 'pri_nombre'];
   dataSource: MatTableDataSource<ReclamoPendiente>;
   selection = new SelectionModel<ReclamoPendiente>(true, []);
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
-  // VISTA
-  stFiltro: string;
-  objFiltro: any;
-  boFecha = false;
-  lstReclamo: any = null;
 
   constructor(private ddlService: SelectService,
               private router: Router,
@@ -58,24 +56,37 @@ export class CrearOrdenServicioComponent implements OnInit {
 
   ngOnInit() {
     this.frmCrearOrdenServicio = this.formBuilder.group({
-      fechaDesde: null,
-      fechaHasta: null,
-      tipoReclamo: [''],
-      prioridad: [''],
-      barrio: ['']
+      fechaDesde: [null, Validators.required],
+      fechaHasta: [null, Validators.required]
     });
 
-    // Select de Reclamos en estado "Sin Asignar", para añadir a la Orden de Servicio.
+    // Listado de reclamos en estado "Sin Asignar", para añadir a la Orden de Servicio.
+    this.selectReclamosSinAsignar();
+  }
+
+  selectReclamo() {
+    if (this.fechaDesde !== undefined && this.fechaHasta !== undefined) {
+      this.ingresaFecha = true;
+      this.fechaDesde = this.datePipe.transform(this.frmCrearOrdenServicio.controls.fechaDesde.value, 'dd/MM/yyyy');
+      this.fechaHasta = this.datePipe.transform(this.frmCrearOrdenServicio.controls.fechaHasta.value, 'dd/MM/yyyy');
+    }
+
     this.selectReclamosSinAsignar();
   }
 
   async selectReclamosSinAsignar() {
     try {
-      this.objIDArServ = {
-        usu_IDAreaServicio: this.user.usu_IDAreaServicio
-      };
+      if (this.ingresaFecha) {
+        this.objFiltro = {
+          stFiltro: `arServ_IDAreaServicio = ${this.user.usu_IDAreaServicio}` + ' and ' + `rec_fechaAlta between '${this.fechaDesde}'` + ' and ' + `'${this.fechaHasta}'`
+        };
+      } else {
+        this.objFiltro = {
+          stFiltro: `arServ_IDAreaServicio = ${this.user.usu_IDAreaServicio}`
+        };
+      }
 
-      this.reclamoService.selectReclamoSinAsignar(this.objIDArServ).subscribe(data => {
+      this.reclamoService.selectReclamoSinAsignar(this.objFiltro).subscribe(data => {
         if (data !== '[]') {
             this.lstReclamo = JSON.parse(data);
             this.dataSource = new MatTableDataSource<ReclamoPendiente>(this.lstReclamo);

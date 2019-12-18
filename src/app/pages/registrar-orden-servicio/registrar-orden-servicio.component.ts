@@ -174,7 +174,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
                           text: 'La Orden de Servicio se registró correctamente. Número de Orden: ' + this.objDetalle.ordServ_numero
                         }).then(result => {
                           if (result.value) {
-                            this.router.navigateByUrl('/crear-ordenServicio');
+                            this.router.navigateByUrl('/crear-orden-servicio');
                           }
                         });
                       }

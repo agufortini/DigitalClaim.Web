@@ -187,16 +187,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   resetForm() {
-    this.frmRegistrarUsuario.reset({
-      dni: '',
-      usuario: '',
-      password: '',
-      nombre: '',
-      apellido: '',
-      telefono: '',
-      email: ''
-    });
-
+    this.frmRegistrarUsuario.reset();
     this.boBand = true;
     document.getElementById('inputDNI').focus();
   }
