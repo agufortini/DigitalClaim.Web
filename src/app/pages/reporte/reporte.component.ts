@@ -79,6 +79,10 @@ export class ReporteComponent implements OnInit {
 
   verReporte() {
     try {
+      // Se restauran los atributos del reporte para que no acumule valores
+      this.pieChartLabels = [];
+      this.pieChartData = [];
+      
       // Captura de datos ingresados en formulario
       const fechaDesde = this.frmReporte.controls.fechaDesde.value;
       const fechaHasta = this.frmReporte.controls.fechaHasta.value;

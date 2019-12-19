@@ -104,7 +104,7 @@ export class RegistrarReclamoComponent implements OnInit {
           rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
           rec_IDOrdenServicio: null,
           rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
-          can_IDCanal: this.objRec.canal.can_IDCanal,
+          rec_IDCanal: this.objRec.canal.can_IDCanal,
           cal_IDCalle: +this.objRec.calle.cal_IDCalle,
           bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
           his_horaIngreso: this.horas + this.minutos,

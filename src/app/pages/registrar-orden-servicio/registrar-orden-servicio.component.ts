@@ -59,7 +59,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    this.arrReclamosPendientes = JSON.parse(localStorage.getItem('reclamosPendientes'));
+    this.arrReclamosPendientes = JSON.parse(localStorage.getItem('reclamosSinAsignar'));
     this.fechaHoy = this.datePipe.transform(this.fecha, 'dd/MM/yyyy');
   }
 
@@ -128,7 +128,6 @@ export class RegistrarOrdenServicioComponent implements OnInit {
             this.splitted = this.IDOrdServYNum.split(';', 2);
 
             this.arrReclamosPendientes.forEach(element => {
-              // tslint:disable-next-line:prefer-for-of
               for (let i = 0; i < this.f.personal.value.length; i++) {
                 const IDPersonal = this.f.personal.value[i];
 
@@ -174,6 +173,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
                           text: 'La Orden de Servicio se registró correctamente. Número de Orden: ' + this.objDetalle.ordServ_numero
                         }).then(result => {
                           if (result.value) {
+                            localStorage.removeItem('reclamosSinAsignar');
                             this.router.navigateByUrl('/crear-orden-servicio');
                           }
                         });

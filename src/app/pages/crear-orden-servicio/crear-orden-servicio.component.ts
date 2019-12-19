@@ -116,7 +116,7 @@ export class CrearOrdenServicioComponent implements OnInit {
   registrarOrdenServicio() {
     try {
       const arrReclamosPendientes: ReclamoPendiente[] = this.selection.selected;
-      localStorage.setItem('reclamosPendientes', JSON.stringify(arrReclamosPendientes));
+      localStorage.setItem('reclamosSinAsignar', JSON.stringify(arrReclamosPendientes));
       this.router.navigateByUrl('/registrar-orden-servicio');
     } catch (error) {
       console.log(error);
