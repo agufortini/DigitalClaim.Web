@@ -65,8 +65,7 @@ export class RegistrarOrdenServicioComponent implements OnInit {
 
   ngOnInit() {
     this.frmRegistrarOrden = this.formBuilder.group({
-      fechaDesde: [null, Validators.required],
-      fechaHasta: [null, Validators.required],
+      fechaVencimiento: [null, Validators.required],
       responsable: ['', Validators.required],
       personal: ['', Validators.required],
       observaciones: ['']
@@ -115,8 +114,9 @@ export class RegistrarOrdenServicioComponent implements OnInit {
       // CREACION DE LA ORDEN DE SERVICIO
       this.objOrdServ = new OrdenServicio();
       this.objOrdServ.orServ_fechaAlta = this.fechaHoy;
+      this.objOrdServ.orServ_fechaInicio = null;
       this.objOrdServ.orServ_fechaCierre = null;
-      this.objOrdServ.orServ_fechaVencimiento = this.datePipe.transform(this.f.fechaHasta.value, 'dd/MM/yyyy');
+      this.objOrdServ.orServ_fechaVencimiento = this.datePipe.transform(this.f.fechaVencimiento.value, 'dd/MM/yyyy');
       this.objOrdServ.orServ_observaciones = this.observaciones;
       this.objOrdServ.orServ_IDAreaServicio = this.user.usu_IDAreaServicio;
       this.objOrdServ.orServ_IDEstado = 1;

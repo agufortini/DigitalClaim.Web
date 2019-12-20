@@ -28,13 +28,11 @@ export class RegistrarReclamoComponent implements OnInit {
   IDUsuario: number;
   IDCanal: number;
   boExiste: boolean;
-  codRec: number;
 
   // OBJETOS PARA REGISTRAR RECLAMO
-  objRec: any = {};
-  objUser: any;
-  objReclamo: any;
-  objUsuario: any;
+  objReclamo: any; // Objeto que contiene todos los atributos del reclamo
+  objRec: any; // Objeto que se envia al método para registrar el reclamo
+  objUsuario: Usuario;
   estado = false;
 
   // Variables para dar formato a horario para guardar historial
@@ -46,8 +44,8 @@ export class RegistrarReclamoComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe) {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    this.objUser = JSON.parse(localStorage.getItem('objUsuario'));
-    this.objRec = JSON.parse(localStorage.getItem('objReclamo'));
+    this.objUsuario = JSON.parse(localStorage.getItem('objUsuario'));
+    this.objReclamo = JSON.parse(localStorage.getItem('objReclamo'));
   }
 
   ngOnInit() {
@@ -70,53 +68,51 @@ export class RegistrarReclamoComponent implements OnInit {
 
       // Pregunta por Rol de Usuario, si es 1 corresponde a Usuario Ciudadano
       if (this.user.usu_IDRol === 1) {
-        this.objReclamo = {
+        this.objRec = {
           // Se genera el objeto con los datos del Reclamo.
           rec_fechaAlta: this.fechaRec,
-          rec_altura: +this.objRec.altura,
-          rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
-          rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
+          rec_altura: +this.objReclamo.altura,
+          rec_observaciones: (this.objReclamo.observaciones) ? this.objReclamo.observaciones : null,
+          rec_IDTipoReclamo: +this.objReclamo.tipoReclamo.tipRec_IDTipoReclamo,
           rec_IDUsuario: this.user.usu_IDUsuario,
           rec_IDCanal: 3,
-          cal_IDCalle: +this.objRec.calle.cal_IDCalle,
-          bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
+          cal_IDCalle: +this.objReclamo.calle.cal_IDCalle,
+          bar_IDBarrio: +this.objReclamo.barrio.bar_IDBarrio,
           his_horaIngreso: this.horas + ':' + this.minutos,
-          tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
+          tipRec_nombre: this.objReclamo.tipoReclamo.tipRec_nombre,
           usu_boExiste: true,
           usu_nombre: this.user.usu_nombre,
-          usu_email: this.user.usu_email,
+          usu_email: this.user.usu_email
         };
       } else {
         // Si no es uno, entonces es un reclamo generado por un Usuario Municipal.
-        this.objReclamo = {
+        this.objRec = {
           // Se genera el objeto Reclamo con los datos del Usuario Ciudadano y del Reclamo.
           // Datos Ciudadano.
-          usu_username: this.objUser.dni,
-          usu_password: this.objUser.dni,
-          usu_dni: this.objUser.dni,
-          usu_nombre: this.objUser.nombre,
-          usu_apellido: this.objUser.apellido,
-          usu_telefono: this.objUser.telefono,
-          usu_email: this.objUser.email,
+          usu_username: this.objUsuario.usu_dni,
+          usu_password: this.objUsuario.usu_dni,
+          usu_dni: this.objUsuario.usu_dni,
+          usu_nombre: this.objUsuario.usu_nombre,
+          usu_apellido: this.objUsuario.usu_apellido,
+          usu_telefono: this.objUsuario.usu_telefono,
+          usu_email: this.objUsuario.usu_email,
           // Datos Reclamo.
           rec_fechaAlta: this.fechaRec,
-          rec_altura: +this.objRec.altura,
-          rec_observaciones: (this.objRec.observaciones) ? this.objRec.observaciones : null,
+          rec_altura: +this.objReclamo.altura,
+          rec_observaciones: (this.objReclamo.observaciones) ? this.objReclamo.observaciones : null,
           rec_IDOrdenServicio: null,
-          rec_IDTipoReclamo: +this.objRec.tipoReclamo.tipRec_IDTipoReclamo,
-          rec_IDCanal: this.objRec.canal.can_IDCanal,
-          cal_IDCalle: +this.objRec.calle.cal_IDCalle,
-          bar_IDBarrio: +this.objRec.barrio.bar_IDBarrio,
+          rec_IDTipoReclamo: +this.objReclamo.tipoReclamo.tipRec_IDTipoReclamo,
+          rec_IDCanal: this.objReclamo.canal.can_IDCanal,
+          cal_IDCalle: +this.objReclamo.calle.cal_IDCalle,
+          bar_IDBarrio: +this.objReclamo.barrio.bar_IDBarrio,
           his_horaIngreso: this.horas + this.minutos,
-          tipRec_nombre: this.objRec.tipoReclamo.tipRec_nombre,
+          tipRec_nombre: this.objReclamo.tipoReclamo.tipRec_nombre,
           usu_boExiste: false
         };
       }
 
-      this.reclamoService.registrarReclamo(this.objReclamo).subscribe(data => {
-        if (data) {
-          this.codRec = +JSON.parse(data);
-        }
+      this.reclamoService.registrarReclamo(this.objRec).subscribe(data => {
+        const rec_codigo: number = +JSON.parse(data);
 
         Swal.close();
 
@@ -124,7 +120,7 @@ export class RegistrarReclamoComponent implements OnInit {
           Swal.fire({
             allowOutsideClick: false,
             type: 'success',
-            title: 'Reclamo registrado' + '<br>' + this.codRec,
+            title: 'Reclamo registrado' + '<br>' + rec_codigo,
             text: 'El reclamo ha sido registrado correctamente. El código mostrado en pantalla corresponde al de su reclamo. Se envió ' +
               'a su casilla de correo para que pueda consultarlo posteriormente.'
             }).then(result => {
@@ -136,16 +132,21 @@ export class RegistrarReclamoComponent implements OnInit {
           Swal.fire({
             allowOutsideClick: false,
             type: 'success',
-            title: 'Reclamo registrado' + '<br>' + this.codRec,
+            title: 'Reclamo registrado' + '<br>' + rec_codigo,
             text: 'El reclamo ha sido registrado correctamente. Otórguele el código en pantalla al Ciudadano para que posteriormente pueda consultar el estado del mismo.'
             }).then(result => {
             if (result.value) {
-              this.router.navigateByUrl('/generar-reclamo-municipal');
+              this.router.navigateByUrl('/generar-reclamo-datos-ciudadano');
               }
             });
         }
 
       });
+
+      // Se pregunta si el objeto usuario contiene datos, se borra
+      if (JSON.parse(localStorage.getItem('objUsuario')) !== null) {
+        localStorage.removeItem('objUsuario');  
+      }
 
       localStorage.removeItem('objReclamo');
 
@@ -155,12 +156,8 @@ export class RegistrarReclamoComponent implements OnInit {
   }
 
   cancelarEnvio() {
-    if (this.user.usu_IDRol === 1) {
-      localStorage.setItem('modificarReclamo', JSON.stringify(true));
-      this.router.navigateByUrl('/generar-reclamo-ciudadano');
-    } else {
-      this.router.navigateByUrl('/generar-reclamo-municipal');
-    }
+    const stRuta: string = (this.user.usu_IDRol === 1) ? '/generar-reclamo-ciudadano' : '/generar-reclamo-municipal';
+    this.router.navigateByUrl(stRuta);
   }
 
 }

@@ -24,6 +24,8 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
   user: Usuario;
   objValidarRec: ValidarReclamo;
   objReclamo: any;
+  // boTipoReclamo = true;
+  // boCalle = true;
 
   // Propiedades utilizadas para corroborar que el usuario no registre mas de 1 reclamo por día.
   fechaRealizacion: any;
@@ -78,7 +80,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     }
   }
 
-  // OBTENCIÓN DE LOS CONTROLES DEL FORMULARIO
+  // Obtención de controles del formulario
   get frmGenerar() {
     return this.frmGenerarReclamo.controls;
   }
@@ -211,6 +213,9 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       if (this.objReclamo === null) {
         this.frmGenerar.tipoReclamo.setValue('');
       }
+
+      // this.boTipoReclamo = true;
+
     } catch (error) {
       console.log(error);
     }
@@ -232,6 +237,9 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
       if (this.objReclamo === null) {
         this.frmGenerar.calle.setValue('');
       }
+
+      // this.boCalle = true;
+      
     } catch (error) {
       console.log(error);
     }
@@ -245,7 +253,7 @@ export class GenerarReclamoCiudadanoComponent implements OnInit {
     this.Calle = this.arrCalle.filter(x => x.cal_IDCalle === +this.CalleID)[0];
   }
 
-  // VALIDACION CONTROL ALTURA
+   // Validación para controles numéricos
   validarIngreso(event): boolean {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {

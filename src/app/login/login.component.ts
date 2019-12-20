@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('ayuda', JSON.stringify(true));
                 this.router.navigateByUrl('/home');
               } else if (objLogin.usu_IDRol === 2 || objLogin.usu_IDRol === 5) {
-                this.router.navigateByUrl('/generar-reclamo-municipal');
+                this.router.navigateByUrl('/generar-reclamo-datos-ciudadano');
               } else if (objLogin.usu_IDRol === 3 || objLogin.usu_IDRol === 6) {
                 this.router.navigateByUrl('/crear-orden-servicio');
               }

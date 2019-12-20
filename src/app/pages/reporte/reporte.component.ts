@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Label } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
 import { ChartType, ChartOptions, ChartData } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 // ENTIDADES
 import { ReporteService } from '../../services/reporte.service';
@@ -35,15 +36,15 @@ export class ReporteComponent implements OnInit {
   arrReporteOperativo = [
     { stReporte: 'TipoReclamo', reporte: 'Reporte por Tipo de Reclamo' },
     { stReporte: 'ReclamoPorEstado', reporte: 'Reporte de Reclamos por Estado' },
-    { stReporte: 'OrdServPorEstado', reporte: 'Reporte de Ordenes de Servicio por Estado' },
   ];
 
   // GRAFICO CIRCULAR
   // Para mostrar labels en el gráfico sin tener que pasar el cursor por encima
-  // public pieChartOptions: ChartOptions = { };
+  public pieChartOptions: ChartOptions = {};
   public pieChartLabels: Label[] = [];
   public pieChartData: number[] = [];
   public pieChartType: ChartType = 'pie';
+  public pieChartPlugins = [pluginDataLabels];
   public pieChartColors = [{
       backgroundColor: ['rgba(251,90,90,0.85)', 'rgba(251,178,90,0.85)', 'rgba(227,251,90,0.85)', 'rgba(90,251,112,0.85)', 'rgba(90,205,251,0.85)', 
       'rgba(151,90,251,0.85)', 'rgba(251,90,161,0.85)', 'rgba(205,98,205,0.85)', 'rgba(24,162,218,0.85)', 'rgba(20,161,8,0.85)']
@@ -118,11 +119,34 @@ export class ReporteComponent implements OnInit {
           this.graficoReclamoPorEstado();
           document.getElementById('tituloReporte').textContent = 'Reporte de Reclamo por Estado';
         break;
-        case 'OrdServPorEstado':
-          // this.graficoOrdenServicioPorEstado();
-          document.getElementById('tituloReporte').textContent = 'Reporte de Orden de Servicio por Estado';
-        break;
       }
+
+      this.pieChartOptions = {
+        responsive: true,
+        plugins: {
+          datalabels: {
+            formatter: (value, ctx) => {
+              const label = ctx.chart.data.labels[ctx.dataIndex] + ':' + value;
+              return label;
+            },
+          },
+        }
+      };
+
+      // this.pieChartOptions = {
+      //   responsive: true,
+      //   plugins: {
+      //     datalabels: {
+      //       formatter: (value, ctx) => {            
+      //         let dataArr = ctx.chart.data.datasets[0].data;
+      //         let total = Sum(dataArr);
+      //         let percentage = (value * 100 / total).toFixed(2) + "%";
+      //         return percentage;
+      //       },
+      //       color: 'black',
+      //     }
+      //   }
+      // };
 
       document.getElementById('cardReporte').style.visibility = 'visible';
       this.resetForm();
@@ -187,20 +211,6 @@ export class ReporteComponent implements OnInit {
       }
     });
   }
-
-  // graficoOrdenServicioPorEstado() {
-  //   // Llamada a método para traer los valores a mostrar en reporte
-  //   this.reporteService.reportePorBarrio(this.objReporte).subscribe(data => {
-  //     this.lstReclamo = JSON.parse(data);
-      
-  //     if (this.lstReclamo !== null) {
-  //       for (let i = 0; i < this.lstReclamo.length; i++) {
-  //         this.pieChartLabels.push(this.lstReclamo[i].Barrio);
-  //         this.pieChartData.push(this.lstReclamo[i].ReclamosPorBarrio);
-  //       }
-  //     }
-  //   });
-  // }
 
   resetForm() {
     this.frmReporte.reset();

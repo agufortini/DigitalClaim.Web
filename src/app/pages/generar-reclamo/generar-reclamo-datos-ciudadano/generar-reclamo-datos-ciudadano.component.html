@@ -1,0 +1,65 @@
+<div class="container myAnimated myFast myFadeIn">
+    <div class="divAyuda">
+        <label>¿No sabés como registrar tu Reclamo?</label>
+        <a [routerLink]="'/ayuda-registrar-reclamo'"> Haz click aquí</a>
+    </div>
+    <div class="card card-register mx-auto mt-3 myBorderCard">
+        <div class="card-header myCardHeader">Datos del Ciudadano</div>
+        <div class="card-body">
+            <form [formGroup]="frmDatosCiudadano">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>DNI*</label>
+                            <input (keypress)="validarIngreso($event)" formControlName="dni" class="form-control" minlength="8" maxlength="8">
+                        </div>
+                        <div class="col-md-6">
+                            <label>NOMBRE*</label>
+                            <input formControlName="nombre" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>APELLIDO*</label>
+                            <input formControlName="apellido" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>TELEFONO</label>
+                            <input (keypress)="validarIngreso($event)" formControlName="telefono" class="form-control" minlength="7" maxlength="10">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>EMAIL*</label>
+                            <input formControlName="email" class="form-control">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="text-center lblCampoObligatorio">
+                                *Campos obligatorios
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="float: right;">
+                                <button mat-raised-button (click)="validarUsuario()" [disabled]="!frmDatosCiudadano.valid" color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
+                                    Siguiente <i class="fa fa-fw fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

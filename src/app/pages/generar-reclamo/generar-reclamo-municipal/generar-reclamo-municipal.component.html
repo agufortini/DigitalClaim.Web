@@ -1,164 +1,101 @@
-<div class="divAyuda">
-    <label>¿No sabés como registrar un Reclamo?</label>
-    <a [routerLink]="'/ayuda-registrar-reclamo-municipal'"> Haz click aquí</a>
-</div>
-<mat-horizontal-stepper [linear]="isLinear" #stepper>
-    <mat-step>
-        <form [formGroup]="frmDatosReclamante">
-            <!-- DATOS CIUDADANO -->
-            <ng-template matStepLabel>DATOS DEL CIUDADANO</ng-template>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label>DNI*</label>
-                        <input (keypress)="validarIngreso($event)" formControlName="dni" class="form-control" minlength="8" maxlength="8">
-                    </div>
-                    <div class="col-md-6">
-                        <label>NOMBRE*</label>
-                        <input formControlName="nombre" class="form-control">
-                    </div>
-                </div>
-            </div>
+<div class="container myAnimated myFast myFadeIn">
+    <div class="divAyuda">
+        <label>¿No sabés como registrar tu Reclamo?</label>
+        <a [routerLink]="'/ayuda-registrar-reclamo'"> Haz click aquí</a>
+    </div>
+    <div class="card card-register mx-auto mt-3 myBorderCard">
+        <div class="card-header myCardHeader">Datos del Reclamo</div>
+        <div class="card-body">
+            <form [formGroup]="frmDatosReclamo">
 
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label>APELLIDO*</label>
-                        <input formControlName="apellido" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label>TELEFONO</label>
-                        <input (keypress)="validarIngreso($event)" formControlName="telefono" class="form-control" minlength="7" maxlength="10">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label>EMAIL*</label>
-                        <input formControlName="email" class="form-control">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <div class="text-center lblCampoObligatorio">
-                            *Campos obligatorios
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>AREA DE SERVICIO*</label>
+                            <select (change)="cargaSelectTipoReclamo()" formControlName="areaServicio" class="form-control" placeholder="Seleccione Area de Servicio">
+                                <option value="" disabled>Seleccione Área de Servicio...</option>
+                                <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
+                                    {{ item.arServ_nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>RECLAMO*</label>
+                            <select id="ddlReclamo" (change)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control">
+                                <option value="" disabled>Seleccione Reclamo</option>
+                                <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
+                                    {{ item.tipRec_nombre }}
+                                </option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div style="float: right;">
-                            <button (click)="validarUsuario()" [disabled]="!frmDatosReclamante.valid" mat-raised-button matStepperNext color="primary" matTooltip="Datos del Reclamo" matTooltipPosition="left">
+                </div>
+
+                <div class="form-group">
+                    <label>BARRIO*</label>
+                    <select (change)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
+                        <option value="" disabled>Seleccione Barrio...</option>
+                        <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
+                            {{ item.bar_nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>CALLE*</label>
+                            <select #ddlCalle id="ddlCalle" (change)="selectCalle()" formControlName="calle" [(ngModel)]="CalleID" class="form-control" placeholder="Seleccione Calle">
+                                <option value="" disabled>Seleccione Calle</option>
+                                <option *ngFor="let item of arrCalle" [value]="item.cal_IDCalle">
+                                    {{ item.cal_nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>ALTURA*</label>
+                            <input (keypress)="validarIngreso($event)" formControlName="altura" [(ngModel)]="altura" class="form-control" type="text" placeholder="Ingrese altura" maxlength="4" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label>CANAL*</label>
+                        <select (change)="selectCanal()" formControlName="canal" [(ngModel)]="CanalID" class="form-control" placeholder="Seleccione Canal de Comunicación">
+                            <option value="" disabled>Seleccione Canal de Comunicación...</option>
+                            <option *ngFor="let item of lstCanal" [value]="item.can_IDCanal">
+                                {{ item.can_nombre }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label>OBSERVACIONES</label>
+                        <textarea formControlName="observaciones" [(ngModel)]="observacion" class="form-control" placeholder="Detalle su reclamo. Puede especificar datos puntuales, referencias, etc" cols="100" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <button mat-raised-button (click)="datosCiudadano()" color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="right">
+                                Anterior <i class="fa fa-fw fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button mat-raised-button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
                                 Siguiente <i class="fa fa-fw fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </mat-step>
-
-    <!-- DATOS DEL RECLAMO -->
-    <mat-step>
-        <form [formGroup]="frmDatosReclamo">
-            <ng-template matStepLabel>DATOS DEL RECLAMO</ng-template>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label>AREA DE SERVICIO*</label>
-                        <select (change)="cargaSelectTipoReclamo()" formControlName="areaServicio" class="form-control" placeholder="Seleccione Area de Servicio">
-                            <option value="" disabled>Seleccione Área de Servicio...</option>
-                            <option *ngFor="let item of arrArServ" [value]="item.arServ_IDAreaServicio">
-                                {{ item.arServ_nombre }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label>RECLAMO*</label>
-                        <select id="ddlReclamo" (change)="selectTipoReclamo()" formControlName="tipoReclamo" [(ngModel)]="TipoReclamoID" class="form-control">
-                            <option value="" disabled>Seleccione Reclamo...</option>
-                            <option *ngFor="let item of arrTipRec" [value]="item.tipRec_IDTipoReclamo">
-                                {{ item.tipRec_nombre }}
-                            </option>
-                        </select>
-                    </div>
+                <div class="text-center lblCampoObligatorio">
+                    *Campos obligatorios
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>BARRIO*</label>
-                <select (change)="cargaSelectCalle()" formControlName="barrio" class="form-control" placeholder="Seleccione Barrio">
-                    <option value="" disabled>Seleccione Barrio...</option>
-                    <option *ngFor="let item of arrBarrio" [value]="item.bar_IDBarrio">
-                        {{ item.bar_nombre }}
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <label>CALLE*</label>
-                        <select #ddlCalle id="ddlCalle" (change)="selectCalle()" formControlName="calle" [(ngModel)]="CalleID" class="form-control" placeholder="Seleccione Calle">
-                            <option value="" disabled>Seleccione Calle...</option>
-                            <option *ngFor="let item of arrCalle" [value]="item.cal_IDCalle">
-                                {{ item.cal_nombre }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label>ALTURA*</label>
-                        <input (keypress)="validarIngreso($event)" formControlName="altura" [(ngModel)]="altura" class="form-control" type="text" placeholder="Ingrese altura" maxlength="4" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <label>CANAL*</label>
-                    <select (change)="selectCanal()" formControlName="canal" [(ngModel)]="CanalID" class="form-control" placeholder="Seleccione Canal de Comunicación">
-                        <option value="" disabled>Seleccione Canal de Comunicación...</option>
-                        <option *ngFor="let item of lstCanal" [value]="item.can_IDCanal">
-                            {{ item.can_nombre }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <label>OBSERVACIONES</label>
-                    <textarea formControlName="observaciones" [(ngModel)]="observacion" class="form-control" placeholder="Detalle su reclamo. Puede especificar datos puntuales, referencias, etc" cols="100" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <button mat-raised-button matStepperPrevious color="primary" matTooltip="Datos del Ciudadano" matTooltipPosition="right">
-                                        Anterior <i class="fa fa-fw fa-chevron-left"></i>
-                                    </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button (click)="validarReclamo()" [disabled]="!frmDatosReclamo.valid" mat-raised-button color="primary" matTooltip="Resumen del Reclamo" matTooltipPosition="left" style="float: right;">
-                                        Siguiente <i class="fa fa-fw fa-chevron-right"></i>
-                                    </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-6">
-                    <div class="text-center lblCampoObligatorio">
-                        *Campos obligatorios
-                    </div>
-                </div>
-            </div>
-        </form>
-    </mat-step>
-</mat-horizontal-stepper>
+            </form>
+        </div>
+    </div>
+</div>

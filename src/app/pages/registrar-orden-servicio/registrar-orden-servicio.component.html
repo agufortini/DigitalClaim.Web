@@ -8,12 +8,12 @@
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label>FECHA ALTA*</label>
-                            <input formControlName="fechaDesde" class="form-control" type="date">
+                            <label>FECHA ALTA</label>
+                            <input class="form-control" type="text" [value]="fechaHoy" disabled>
                         </div>
                         <div class="col-md-6">
                             <label>FECHA VENCIMIENTO*</label>
-                            <input formControlName="fechaHasta" class="form-control" type="date" [min]="minDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
+                            <input formControlName="fechaVencimiento" class="form-control" type="date" [min]="minDate" matTooltip="Seleccionar fecha hasta" matTooltipPosition="above">
                         </div>
                     </div>
                 </div>

@@ -74,6 +74,8 @@ export class ModalEstadoreclamoComponent implements OnInit {
       // Pregunta si el estado del reclamo es cumplido, y habilita el boton para registrar rating
       this.btnCalificar = (this.lstDatos[fila - 1].estRec_nombre === 'Cumplido') ? true : false;
 
+      
+
       // En caso de que el reclamo esté en estado "Cumplido", se llama al método para verificar si tiene o no un rating ya registrado
       this.selectRating();
     });

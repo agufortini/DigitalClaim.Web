@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { GenerarReclamoCiudadanoComponent } from './generar-reclamo/generar-reclamo-ciudadano/generar-reclamo-ciudadano.component';
+import { GenerarReclamoDatosCiudadanoComponent } from '../pages/generar-reclamo/generar-reclamo-datos-ciudadano/generar-reclamo-datos-ciudadano.component';
 import { GenerarReclamoMunicipalComponent } from './generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
 import { RegistrarReclamoComponent } from './registrar-reclamo/registrar-reclamo.component';
 import { ConsultarReclamoComponent } from './consultar-reclamo/consultar-reclamo.component';
@@ -28,6 +29,7 @@ import { AyudaRegistrarReclamoMunicipalComponent } from '../pages/ayuda/Municipa
 import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-consultar-reclamo-municipal/ayuda-consultar-reclamo-municipal.component';
 import { AyudaDominioMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
 import { AyudaReportesMunicipalComponent } from '../pages/ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
+import { AyudaRegistrarOrdenServicioComponent } from '../pages/ayuda/Operativo/ayuda-registrar-orden-servicio/ayuda-registrar-orden-servicio.component';
 
 // LOGIN GUARD
 import { LoginGuard } from '../_guards/login.guard';
@@ -38,7 +40,8 @@ const pagesRoutes: Routes = [
         children: [
             { path: 'home', component: HomeComponent, data: { titulo: 'Inicio' }, canActivate: [LoginGuard] },
             { path: 'generar-reclamo-ciudadano', component: GenerarReclamoCiudadanoComponent, data: { titulo: 'Reclamo', subtitulo: 'Generar Reclamo' }},
-            { path: 'generar-reclamo-municipal', component: GenerarReclamoMunicipalComponent, data: { titulo: 'Reclamo', subtitulo: 'Generar Reclamo' }, canActivate: [LoginGuard]},
+            { path: 'generar-reclamo-datos-ciudadano', component: GenerarReclamoDatosCiudadanoComponent, data: { titulo: 'Reclamo', subtitulo: 'Datos del Ciudadano' }, canActivate: [LoginGuard]},
+            { path: 'generar-reclamo-municipal', component: GenerarReclamoMunicipalComponent, data: { titulo: 'Reclamo', subtitulo: 'Datos del Reclamo' }, canActivate: [LoginGuard]},
             { path: 'registrar-reclamo', component: RegistrarReclamoComponent, data: { titulo: 'Reclamo', subtitulo: 'Registrar Reclamo' }},
             { path: 'consultar-reclamo', component: ConsultarReclamoComponent, data: { titulo: 'Reclamo', subtitulo: 'Consultar Reclamo' }},
             { path: 'crear-orden-servicio', component: CrearOrdenServicioComponent, data: { titulo: 'Orden de Servicio', subtitulo: 'Generar Orden de Servicio' }, canActivate: [LoginGuard]},
@@ -63,6 +66,7 @@ const pagesRoutes: Routes = [
             { path: 'ayuda-consultar-reclamo-municipal', component: AyudaConsultarReclamoMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Consultar Reclamo' }},
             { path: 'ayuda-dominio-municipal', component: AyudaDominioMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Dominio' }},
             { path: 'ayuda-reportes-municipal', component: AyudaReportesMunicipalComponent, data: { titulo: 'Ayuda', subtitulo: 'Reportes' }},
+            { path: 'ayuda-registrar-orden-servicio', component: AyudaRegistrarOrdenServicioComponent, data: { titulo: 'Ayuda', subtitulo: 'Registrar Orden de Servicio' }},
         ], canActivate: [LoginGuard]
     },
 ];

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularMaterialModule } from './angular-material.module';
-import { AgmCoreModule } from '@agm/core';
 import { MatExpansionModule } from '@angular/material';
 
 // RUTAS
@@ -18,7 +17,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { GenerarReclamoCiudadanoComponent } from '../pages/generar-reclamo/generar-reclamo-ciudadano/generar-reclamo-ciudadano.component';
-import { GenerarReclamoMunicipalComponent } from '../pages/generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
+import { GenerarReclamoMunicipalComponent } from './generar-reclamo/generar-reclamo-municipal/generar-reclamo-municipal.component';
 import { RegistrarReclamoComponent } from './registrar-reclamo/registrar-reclamo.component';
 import { ConsultarReclamoComponent } from './consultar-reclamo/consultar-reclamo.component';
 import { CrearOrdenServicioComponent } from './crear-orden-servicio/crear-orden-servicio.component';
@@ -48,6 +47,8 @@ import { AyudaConsultarReclamoMunicipalComponent } from '../pages/ayuda/Municipa
 import { AyudaReportesMunicipalComponent } from './ayuda/Municipal/ayuda-reportes-municipal/ayuda-reportes-municipal.component';
 import { AyudaDominioMunicipalComponent } from './ayuda/Municipal/ayuda-dominio-municipal/ayuda-dominio-municipal.component';
 import { ModalRatingComponent } from './modal-rating/modal-rating.component';
+import { GenerarReclamoDatosCiudadanoComponent } from '../pages/generar-reclamo/generar-reclamo-datos-ciudadano/generar-reclamo-datos-ciudadano.component';
+import { AyudaRegistrarOrdenServicioComponent } from '../pages/ayuda/Operativo/ayuda-registrar-orden-servicio/ayuda-registrar-orden-servicio.component';
 
 /* Dentro de la sección "exports" vamos a insertar todos los componentes que sean accesados fuera
     de este módulo en caso de ser necesario, sino se dejan solamente en "declarations"   */
@@ -86,7 +87,9 @@ import { ModalRatingComponent } from './modal-rating/modal-rating.component';
         AyudaConsultarReclamoMunicipalComponent,
         AyudaReportesMunicipalComponent,
         AyudaDominioMunicipalComponent,
-        ModalRatingComponent
+        ModalRatingComponent,
+        GenerarReclamoDatosCiudadanoComponent,
+        AyudaRegistrarOrdenServicioComponent
     ],
     exports: [
         HomeComponent,

@@ -1,5 +1,6 @@
 export class OrdenServicio {
     orServ_fechaAlta: string;
+    orServ_fechaInicio: string;
     orServ_fechaCierre: string;
     orServ_fechaVencimiento: string;
     orServ_observaciones: string;
